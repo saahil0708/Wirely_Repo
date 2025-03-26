@@ -1,0 +1,90 @@
+@keyframes floating {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+  }
+  
+  @keyframes moving-planes {
+    0% { transform: translateX(-10vw) translateY(0); }
+    50% { transform: translateX(110vw) translateY(20px); }
+    100% { transform: translateX(-10vw) translateY(0); }
+  }
+  
+  @keyframes rotating {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Background Animation */
+  .animated-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  /* Planes moving across the screen */
+  .plane {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2232/2232688.png');
+    background-size: cover;
+    opacity: 0.8;
+  }
+  
+  .plane:nth-child(1) {
+    top: 20%;
+    left: -10vw;
+    animation: moving-planes 12s linear infinite;
+  }
+  
+  .plane:nth-child(2) {
+    top: 50%;
+    left: -10vw;
+    animation: moving-planes 15s linear infinite;
+  }
+  
+  .plane:nth-child(3) {
+    top: 80%;
+    left: -10vw;
+    animation: moving-planes 18s linear infinite;
+  }
+  
+  /* Floating Planets */
+  .planet {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/616/616495.png');
+    background-size: cover;
+    opacity: 0.6;
+    animation: floating 6s ease-in-out infinite;
+  }
+  
+  .planet:nth-child(4) {
+    left: 10%;
+    top: 30%;
+    animation-duration: 7s;
+  }
+  
+  .planet:nth-child(5) {
+    right: 15%;
+    top: 60%;
+    animation-duration: 9s;
+  }
+  
+  .planet:nth-child(6) {
+    left: 50%;
+    top: 10%;
+    animation-duration: 8s;
+  }
+  
+  /* Floating Login Box */
+  .animate-floating {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.2);
+    animation: floating 5s ease-in-out infinite;
+  }
+  

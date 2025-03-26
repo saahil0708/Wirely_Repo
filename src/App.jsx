@@ -1,5 +1,12 @@
-export default function() {
-    return (
-       <h1 className="font-[Poppins]">Hello World</h1>
-    )
+import React from 'react'
+import AuthPage from './Pages/Login_Regis'
+
+function App() {
+  return (
+    <div>
+      <AuthPage/>
+    </div>
+  )
 }
+
+export default App

@@ -29,7 +29,7 @@
     position: absolute;
     width: 80px;
     height: 80px;
-    background-image: url('https://cdn-icons-png.flaticon.com/512/2232/2232688.png');
+    background-image: url('https://png.pngtree.com/png-clipart/20230504/original/pngtree-soft-yellow-glow-lightning-thunder-png-image_9141038.png');
     background-size: cover;
     opacity: 0.8;
   }
@@ -41,41 +41,46 @@
   }
   
   .plane:nth-child(2) {
-    top: 50%;
+    top: 40%;
     left: -10vw;
     animation: moving-planes 15s linear infinite;
   }
   
   .plane:nth-child(3) {
-    top: 80%;
+    top: 60%;
     left: -10vw;
     animation: moving-planes 18s linear infinite;
+  }
+  .plane:nth-child(4) {
+    top: 80%;
+    left: -10vw;
+    animation: moving-planes 21s linear infinite;
   }
   
   /* Floating Planets */
   .planet {
     position: absolute;
-    width: 120px;
-    height: 120px;
-    background-image: url('https://cdn-icons-png.flaticon.com/512/616/616495.png');
+    width: 200px;
+    height: 200px;
+    background-image: url('https://pngimg.com/uploads/world_map/world_map_PNG20.png');
     background-size: cover;
     opacity: 0.6;
     animation: floating 6s ease-in-out infinite;
   }
   
-  .planet:nth-child(4) {
+  .planet:nth-child(5) {
     left: 10%;
     top: 30%;
     animation-duration: 7s;
   }
   
-  .planet:nth-child(5) {
+  .planet:nth-child(6) {
     right: 15%;
     top: 60%;
     animation-duration: 9s;
   }
   
-  .planet:nth-child(6) {
+  .planet:nth-child(7) {
     left: 50%;
     top: 10%;
     animation-duration: 8s;

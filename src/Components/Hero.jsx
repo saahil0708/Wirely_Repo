@@ -42,7 +42,7 @@ const Hero = () => {
           </div>
 
           {/* Trust Badges */}
-          <div className="grid grid-cols-3 gap-8 max-w-xl mt-14">
+          {/* <div className="grid grid-cols-3 gap-8 max-w-xl mt-14">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Star className="w-7 h-7 text-[#FBC800]" />
@@ -64,7 +64,7 @@ const Hero = () => {
               </div>
               <p className="text-base text-gray-600">Secure</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Column - Flash Vector */}

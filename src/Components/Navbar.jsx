@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Search, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,9 +16,39 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleServices = () => setIsServicesOpen(!isServicesOpen);
+
+  // Services organized in a 3x5 grid
+  const services = [
+    [
+      "Electrical Repair & Installation",
+      "AC / Refrigerator / Washing Machine Repair",
+      "CCTV Installation & Repair"
+    ],
+    [
+      "Inverter & Battery Installation / Repair",
+      "Home Appliance Repair",
+      "Computer & Laptop Repair"
+    ],
+    [
+      "Plumbing Services",
+      "Carpenter Services",
+      "Mobile Phone Repair"
+    ],
+    [
+      "Solar Panel Installation & Maintenance",
+      "Smart Home Setup",
+      "Wiring & Circuit Fixing"
+    ],
+    [
+      "Generator Repair & Installation",
+      "Electrical Inspection & Consultation",
+      "Emergency Repair Services (24x7)"
+    ]
+  ];
 
   const navLinks = [
-    { href: "/services", label: "Services" },
+    { href: "/services", label: "Services", dropdown: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
@@ -61,16 +92,74 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative group font-medium text-gray-700 hover:text-black transition-colors"
-              >
-                <span className="relative">
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                </span>
-              </a>
+              <div key={link.href} className="relative group">
+                {link.dropdown ? (
+                  <>
+                    <button
+                      onClick={toggleServices}
+                      className="flex items-center font-medium text-gray-700 hover:text-black transition-colors"
+                    >
+                      <span className="relative">
+                        {link.label}
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                      </span>
+                      <ChevronDown
+                        size={16}
+                        className={`ml-1 transition-transform ${
+                          isServicesOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {isServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
+                          onMouseLeave={() => setIsServicesOpen(false)}
+                        >
+                          <div className="p-4">
+                            <table className="w-full">
+                              <tbody>
+                                {services.map((row, rowIndex) => (
+                                  <tr key={rowIndex}>
+                                    {row.map((service, colIndex) => (
+                                      <td key={colIndex} className="p-2">
+                                        <a
+                                          href={`/services/${service
+                                            .toLowerCase()
+                                            .replace(/[^a-z0-9]+/g, "-")
+                                            .replace(/-$/, "")}`}
+                                          className="block text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                          onClick={() => setIsServicesOpen(false)}
+                                        >
+                                          {service}
+                                        </a>
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="relative group font-medium text-gray-700 hover:text-black transition-colors"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </a>
+                )}
+              </div>
             ))}
           </div>
 
@@ -135,14 +224,61 @@ const Navbar = () => {
                 {/* Mobile Navigation Links */}
                 <div className="space-y-3">
                   {navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="block text-gray-700 hover:text-black py-2 font-medium transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.label}
-                    </a>
+                    <div key={link.href}>
+                      {link.dropdown ? (
+                        <>
+                          <button
+                            onClick={toggleServices}
+                            className="flex items-center justify-between w-full text-gray-700 hover:text-black py-2 font-medium transition-colors"
+                          >
+                            <span>{link.label}</span>
+                            <ChevronDown
+                              size={16}
+                              className={`transition-transform ${
+                                isServicesOpen ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+                          {isServicesOpen && (
+                            <div className="pl-2">
+                              <table className="w-full">
+                                <tbody>
+                                  {services.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                      {row.map((service, colIndex) => (
+                                        <td key={colIndex} className="p-1">
+                                          <a
+                                            href={`/services/${service
+                                              .toLowerCase()
+                                              .replace(/[^a-z0-9]+/g, "-")
+                                              .replace(/-$/, "")}`}
+                                            className="block text-xs text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                            onClick={() => {
+                                              setIsServicesOpen(false);
+                                              setIsMenuOpen(false);
+                                            }}
+                                          >
+                                            {service}
+                                          </a>
+                                        </td>
+                                      ))}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <a
+                          href={link.href}
+                          className="block text-gray-700 hover:text-black py-2 font-medium transition-colors"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {link.label}
+                        </a>
+                      )}
+                    </div>
                   ))}
                 </div>
 

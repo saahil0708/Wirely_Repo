@@ -18,8 +18,8 @@ export default function AuthPage() {
         <div className="planet"></div>
       </div>
 
-      {/* Login/Register Box */}
-      <div className={`flex flex-col md:flex-row w-full max-w-5xl backdrop-blur-md bg-white bg-opacity-20 shadow-2xl rounded-2xl overflow-hidden relative p-6 md:p-10 z-10 border-8 border-black transition-transform duration-500 ease-in-out transform animate-floating ${isLogin ? '' : 'md:flex-row-reverse'}`}>
+      {/* Login/Register Box (Removed Floating Animation) */}
+      <div className={`flex flex-col md:flex-row w-full max-w-5xl backdrop-blur-md bg-white bg-opacity-20 shadow-2xl rounded-2xl overflow-hidden relative p-6 md:p-10 z-10 transition-transform duration-500 ease-in-out transform ${isLogin ? '' : 'md:flex-row-reverse'}`}>
         {/* Image Section */}
         <div
           className="hidden md:flex w-1/2 flex-col justify-between p-8 bg-cover bg-center text-white transition-all duration-500"

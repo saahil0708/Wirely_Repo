@@ -112,9 +112,12 @@
 // export default Timeline;
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { FaCheckCircle, FaUndo } from "react-icons/fa"; // Importing icons
 
 const ProgressRoadmap = () => {
   const [step, setStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState([]);
+
   const totalSteps = 5;
 
   const stepsData = [
@@ -126,23 +129,37 @@ const ProgressRoadmap = () => {
   ];
 
   const handleNext = () => {
-    if (step < totalSteps - 1) setStep(step + 1);
+    if (step < totalSteps - 1) {
+      setStep(step + 1);
+    }
   };
 
   const handlePrevious = () => {
-    if (step > 0) setStep(step - 1);
+    if (step > 0) {
+      setStep(step - 1);
+    }
+  };
+
+  const markAsDone = (index) => {
+    if (!completedSteps.includes(index)) {
+      setCompletedSteps([...completedSteps, index]);
+    }
+  };
+
+  const markAsPending = (index) => {
+    setCompletedSteps(completedSteps.filter((s) => s !== index));
   };
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 overflow-hidden">
-      <h1 className="text-4xl font-extrabold text-[#fcb800] mb-10">Track Your Progress</h1>
+      <h1 className="text-4xl font-extrabold text-[#fcb800] mb-10">Know Your Flow</h1>
 
       {/* Progress Path */}
       <div className="relative w-full max-w-4xl flex flex-col items-center">
         {stepsData.map((stepData, index) => (
           <div key={index} className="relative w-full flex flex-col items-center">
             {/* Dotted Path */}
-            {index > 0 && step >= index && (
+            {index > 0 && (
               <motion.div
                 className="absolute w-1 h-16 border-l-4 border-dotted border-gray-600 top-[-40px] left-[50%] translate-x-[-50%]"
                 initial={{ opacity: 0 }}
@@ -152,30 +169,57 @@ const ProgressRoadmap = () => {
             )}
 
             {/* Step Circle */}
-            {step >= index && (
-              <motion.div
-                className="w-16 h-16 flex items-center justify-center rounded-full border-4 border-[#fcb800] bg-[#fcb800] text-white relative z-10 shadow-xl"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.5 }}
-              >
-                {index + 1}
-              </motion.div>
-            )}
+            <motion.div
+              className={`w-16 h-16 flex items-center justify-center rounded-full border-4 text-white relative z-10 shadow-xl
+                ${
+                  completedSteps.includes(index)
+                    ? "border-green-600 bg-green-600" // Completed steps
+                    : index === step
+                    ? "border-[#fcb800] bg-[#fcb800]" // Current step
+                    : "border-gray-400 bg-gray-400" // Upcoming steps
+                }`}
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 0.5 }}
+            >
+              {index + 1}
+            </motion.div>
 
             {/* Step Description Box */}
-            {step >= index && (
-              <motion.div
-                className={`w-80 p-6 bg-white text-black rounded-lg shadow-xl mt-4 relative z-20 border-l-4 border-[#fcb800] ${
-                  index % 2 === 0 ? "self-start ml-20" : "self-end mr-20"
+            <motion.div
+              className={`w-80 p-6 bg-white text-black rounded-lg shadow-xl mt-4 relative z-20 border-l-4 ${
+                completedSteps.includes(index) ? "border-green-600" : "border-[#fcb800]"
+              } ${index % 2 === 0 ? "self-start ml-20" : "self-end mr-20"}`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2
+                className={`text-2xl font-bold ${
+                  completedSteps.includes(index) ? "text-green-600" : "text-[#fcb800]"
                 }`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
               >
-                <h2 className="text-2xl font-bold text-[#fcb800]">{stepData.title}</h2>
-                <p className="text-gray-700 font-medium">{stepData.description}</p>
-              </motion.div>
-            )}
+                {stepData.title}
+              </h2>
+              <p className="text-gray-700 font-medium">{stepData.description}</p>
+
+              {/* Action Buttons */}
+              <div className="flex gap-4 mt-4">
+                <button
+                  className="text-green-600 text-2xl hover:text-green-800 transition-transform transform hover:scale-110"
+                  onClick={() => markAsDone(index)}
+                  disabled={completedSteps.includes(index)}
+                >
+                  <FaCheckCircle />
+                </button>
+                <button
+                  className="text-[#fcb800] text-2xl hover:text-[#fcb800] transition-transform transform hover:scale-110"
+                  onClick={() => markAsPending(index)}
+                  disabled={!completedSteps.includes(index)}
+                >
+                  <FaUndo />
+                </button>
+              </div>
+            </motion.div>
           </div>
         ))}
       </div>

@@ -1,3 +1,9 @@
-export default () => {
-    return <>This is Contact Pages</>
+import Contact from '../Components/Location'
+
+export default() => {
+    return (
+        <>
+            <Contact />
+        </>
+    )
 }

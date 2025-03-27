@@ -35,7 +35,7 @@ export default function ServiceCategories() {
   };
 
   return (
-    <div className="relative max-w-5xl mx-auto p-10">
+    <div className="relative max-w-5xl mx-auto p-10 font-[Poppins]">
       <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">Our Services</h2>
 
       {/* Carousel Container */}

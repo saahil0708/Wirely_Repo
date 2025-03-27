@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "base-config": "^0.5.2",
     "dotenv": "^16.4.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

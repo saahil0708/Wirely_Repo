@@ -1,5 +1,7 @@
-export default function() {
+import Model from './Components/Model'
+
+export default() => {
     return (
-       <h1 className="font-[Poppins]">Hello World</h1>
+        <Model />
     )
 }

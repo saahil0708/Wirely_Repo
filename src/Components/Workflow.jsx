@@ -202,4 +202,3 @@ const ProgressRoadmap = () => {
 };
 
 export default ProgressRoadmap;
-fvrtgth

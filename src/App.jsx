@@ -1,5 +1,10 @@
-export default function() {
-    return (
-       <h1 className="font-[Poppins]">Hello World</h1>
-    )
+import React from 'react'
+import Testimonials from './Components/testimonials'
+
+function App() {
+  return (
+    <Testimonials />
+  )
 }
+
+export default App

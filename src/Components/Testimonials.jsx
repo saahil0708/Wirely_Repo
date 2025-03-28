@@ -35,28 +35,28 @@ export default function TestimonialSection() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
+  const [direction, setDirection] = useState(1);
   const [autoPlay, setAutoPlay] = useState(true);
 
   const nextTestimonial = () => {
     setDirection(1);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
     setAutoPlay(false);
-    setTimeout(() => setAutoPlay(true), 10000); // Resume autoplay after 10s
+    setTimeout(() => setAutoPlay(true), 10000);
   };
 
   const prevTestimonial = () => {
     setDirection(-1);
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
     setAutoPlay(false);
-    setTimeout(() => setAutoPlay(true), 10000); // Resume autoplay after 10s
+    setTimeout(() => setAutoPlay(true), 10000);
   };
 
   const goToTestimonial = (index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
     setAutoPlay(false);
-    setTimeout(() => setAutoPlay(true), 10000); // Resume autoplay after 10s
+    setTimeout(() => setAutoPlay(true), 10000);
   };
 
   useEffect(() => {
@@ -92,48 +92,60 @@ export default function TestimonialSection() {
   };
 
   return (
-    <section className="py-16 px-4 md:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-            What our <span className="text-[#fbc800]">Customers</span> love what we do
-          </h2>
-          <p className="text-lg text-gray-700 max-w-md">
-            Over 500,000 companies of all sizes use Stateline to understand their business and their market better.
-          </p>
-          <div className="flex items-center space-x-2">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon key={i} filled={i < testimonials[currentIndex].rating} />
-            ))}
-            <span className="text-sm text-gray-600 ml-1">
-              {testimonials[currentIndex].rating}.0 rating
-            </span>
+    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-7xl mx-auto">
+        {/* Mobile Layout - Column */}
+        <div className="flex flex-col md:hidden space-y-6">
+          {/* Text Content */}
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-gray-900 leading-tight">
+              What our <span className="text-[#fbc800]">Customers</span> love what we do
+            </h2>
+            <p className="text-base text-gray-700">
+              Over 500,000 companies of all sizes use Stateline to understand their business and their market better.
+            </p>
+            <div className="flex items-center space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} filled={i < testimonials[currentIndex].rating} />
+              ))}
+              <span className="text-sm text-gray-600 ml-1">
+                {testimonials[currentIndex].rating}.0 rating
+              </span>
+            </div>
+            <div className="pt-2">
+              <a 
+                href="#" 
+                className="inline-flex items-center px-5 py-2 bg-[#fbc800] text-white font-medium rounded-lg hover:bg-[#ffa100] transition-colors shadow-md hover:shadow-lg text-sm"
+              >
+                Read success stories
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
           </div>
-          <div className="pt-4">
-            <a 
-              href="#" 
-              className="inline-flex items-center px-6 py-3 bg-[#fbc800] text-white font-medium rounded-lg hover:bg-[#ffa100] transition-colors shadow-md hover:shadow-lg"
+
+          {/* Mobile Navigation Buttons */}
+          <div className="flex justify-center space-x-4">
+            <button 
+              onClick={prevTestimonial} 
+              className="rounded-full h-10 w-10 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+              aria-label="Previous testimonial"
             >
-              Read success stories
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </a>
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button 
+              onClick={nextTestimonial} 
+              className="rounded-full h-10 w-10 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
-          <div className="flex space-x-2 md:hidden mt-4">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToTestimonial(index)}
-                className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-6" : "bg-gray-300"}`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="relative">
-          <div className="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden">
+
+          {/* Testimonial Card */}
+          <div className="bg-white rounded-xl shadow-lg p-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#fbc800] to-[#ffa100]"></div>
-            <div className="text-[#ffa100] text-5xl font-serif leading-none mb-4 opacity-20">
-              <Quote className="w-12 h-12" />
+            <div className="text-[#ffa100] text-4xl font-serif leading-none mb-2 opacity-20">
+              <Quote className="w-10 h-10" />
             </div>
             
             <AnimatePresence custom={direction} mode="wait">
@@ -145,58 +157,140 @@ export default function TestimonialSection() {
                 animate="center"
                 exit="exit"
                 transition={transition}
-                className="min-h-[160px]"
+                className="min-h-[140px]"
               >
-                <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                <p className="text-gray-700 text-base mb-4 leading-relaxed">
                   {testimonials[currentIndex].quote}
                 </p>
-                <div className="flex items-center mt-6">
-                  <div className="mr-4">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#fbc800] to-[#ffa100] p-0.5">
+                <div className="flex items-center mt-4">
+                  <div className="mr-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#fbc800] to-[#ffa100] p-0.5">
                       <img
                         src={testimonials[currentIndex].image}
                         alt={testimonials[currentIndex].name}
-                        width={52}
-                        height={52}
-                        className="rounded-full object-cover border-2 border-white"
+                        className="rounded-full object-cover border-2 border-white w-full h-full"
                       />
                     </div>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">{testimonials[currentIndex].name}</p>
-                    <p className="text-sm text-gray-600">{testimonials[currentIndex].role}</p>
+                    <p className="font-semibold text-gray-900 text-sm">{testimonials[currentIndex].name}</p>
+                    <p className="text-xs text-gray-600">{testimonials[currentIndex].role}</p>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-          
-          <div className="hidden md:flex justify-between items-center mt-6">
-            <div className="flex space-x-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-6" : "bg-gray-300"}`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
+
+          {/* Dots Indicator - Now at the bottom */}
+          <div className="flex justify-center space-x-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToTestimonial(index)}
+                className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-4" : "bg-gray-300"}`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Layout - Grid */}
+        <div className="hidden md:grid md:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              What our <span className="text-[#fbc800]">Customers</span> love what we do
+            </h2>
+            <p className="text-lg text-gray-700 max-w-md">
+              Over 500,000 companies of all sizes use Stateline to understand their business and their market better.
+            </p>
+            <div className="flex items-center space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} filled={i < testimonials[currentIndex].rating} />
               ))}
+              <span className="text-sm text-gray-600 ml-1">
+                {testimonials[currentIndex].rating}.0 rating
+              </span>
             </div>
-            <div className="flex space-x-3">
-              <button 
-                onClick={prevTestimonial} 
-                className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
-                aria-label="Previous testimonial"
+            <div className="pt-4">
+              <a 
+                href="#" 
+                className="inline-flex items-center px-6 py-3 bg-[#fbc800] text-white font-medium rounded-lg hover:bg-[#ffa100] transition-colors shadow-md hover:shadow-lg"
               >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button 
-                onClick={nextTestimonial} 
-                className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
+                Read success stories
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#fbc800] to-[#ffa100]"></div>
+              <div className="text-[#ffa100] text-5xl font-serif leading-none mb-4 opacity-20">
+                <Quote className="w-12 h-12" />
+              </div>
+              
+              <AnimatePresence custom={direction} mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={transition}
+                  className="min-h-[160px]"
+                >
+                  <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                    {testimonials[currentIndex].quote}
+                  </p>
+                  <div className="flex items-center mt-6">
+                    <div className="mr-4">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#fbc800] to-[#ffa100] p-0.5">
+                        <img
+                          src={testimonials[currentIndex].image}
+                          alt={testimonials[currentIndex].name}
+                          width={52}
+                          height={52}
+                          className="rounded-full object-cover border-2 border-white"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonials[currentIndex].name}</p>
+                      <p className="text-sm text-gray-600">{testimonials[currentIndex].role}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
+            <div className="flex justify-between items-center mt-6">
+              <div className="flex space-x-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToTestimonial(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-6" : "bg-gray-300"}`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <div className="flex space-x-3">
+                <button 
+                  onClick={prevTestimonial} 
+                  className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+                  aria-label="Previous testimonial"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button 
+                  onClick={nextTestimonial} 
+                  className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+                  aria-label="Next testimonial"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -209,7 +303,7 @@ function StarIcon({ filled }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`h-5 w-5 ${filled ? "text-yellow-400" : "text-gray-300"}`}
+      className={`h-4 w-4 md:h-5 md:w-5 ${filled ? "text-yellow-400" : "text-gray-300"}`}
       viewBox="0 0 20 20"
       fill="currentColor"
     >

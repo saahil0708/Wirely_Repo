@@ -16,7 +16,6 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleServices = () => setIsServicesOpen(!isServicesOpen);
 
   // Services organized in a 3x5 grid
   const services = [
@@ -95,9 +94,10 @@ const Navbar = () => {
               <div key={link.href} className="relative group">
                 {link.dropdown ? (
                   <>
-                    <button
-                      onClick={toggleServices}
-                      className="flex items-center font-medium text-gray-700 hover:text-black transition-colors"
+                    <div
+                      className="flex items-center font-medium text-gray-700 hover:text-black transition-colors cursor-pointer"
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onMouseLeave={() => setIsServicesOpen(false)}
                     >
                       <span className="relative">
                         {link.label}
@@ -109,7 +109,7 @@ const Navbar = () => {
                           isServicesOpen ? "rotate-180" : ""
                         }`}
                       />
-                    </button>
+                    </div>
                     <AnimatePresence>
                       {isServicesOpen && (
                         <motion.div
@@ -118,6 +118,7 @@ const Navbar = () => {
                           exit={{ opacity: 0, y: 10 }}
                           transition={{ duration: 0.2 }}
                           className="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
+                          onMouseEnter={() => setIsServicesOpen(true)}
                           onMouseLeave={() => setIsServicesOpen(false)}
                         >
                           <div className="p-4">
@@ -228,7 +229,7 @@ const Navbar = () => {
                       {link.dropdown ? (
                         <>
                           <button
-                            onClick={toggleServices}
+                            onClick={() => setIsServicesOpen(!isServicesOpen)}
                             className="flex items-center justify-between w-full text-gray-700 hover:text-black py-2 font-medium transition-colors"
                           >
                             <span>{link.label}</span>

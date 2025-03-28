@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock, FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiInstagram, FiTwitter, FiFacebook, FiLinkedin } from "react-icons/fi";
 import { MdOutlineSupportAgent, MdSend } from "react-icons/md";
 
@@ -35,7 +35,6 @@ const FAQItem = ({ question, answer, isOpen, toggle, index }) => {
 
 const ContactUs = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -140,11 +139,6 @@ const ContactUs = () => {
       answer: "You can modify or cancel your order within 1 hour of placement by contacting our support team. After this window, orders enter processing and cannot be changed."
     }
   ];
-
-  const filteredFAQs = faqs.filter(faq => 
-    faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fbc800]/10 to-gray-50">
@@ -386,67 +380,30 @@ const ContactUs = () => {
                 <p className="text-gray-600 max-w-2xl mx-auto">Find quick answers to common questions about our products and services.</p>
               </div>
 
-              {/* FAQ Search */}
-              <div className="mb-8 relative max-w-md mx-auto">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaSearch className="text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search FAQs..."
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#fbc800] focus:border-[#fbc800] transition duration-200"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <button
-                    onClick={() => setSearchTerm('')}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-
               {/* FAQ Categories */}
-              <div className="flex flex-wrap justify-center gap-3 mb-8">
+              {/* <div className="flex flex-wrap justify-center gap-3 mb-8">
                 {['Shipping', 'Returns', 'Payments', 'Orders', 'Support'].map((category) => (
                   <button
                     key={category}
                     className="px-4 py-2 bg-[#fbc800]/10 text-[#fbc800] rounded-full text-sm font-medium hover:bg-[#fbc800]/20 transition-colors"
-                    onClick={() => setSearchTerm(category)}
                   >
                     {category}
                   </button>
                 ))}
-              </div>
+              </div> */}
 
               {/* FAQ Results */}
               <div className="max-w-3xl mx-auto">
-                {filteredFAQs.length > 0 ? (
-                  filteredFAQs.map((faq, index) => (
-                    <FAQItem
-                      key={index}
-                      question={faq.question}
-                      answer={faq.answer}
-                      isOpen={activeIndex === index}
-                      toggle={() => toggleFAQ(index)}
-                      index={index}
-                    />
-                  ))
-                ) : (
-                  <div className="text-center py-10">
-                    <p className="text-gray-500">No results found for "{searchTerm}"</p>
-                    <button 
-                      onClick={() => setSearchTerm('')}
-                      className="mt-4 text-[#fbc800] hover:underline"
-                    >
-                      Clear search
-                    </button>
-                  </div>
-                )}
+                {faqs.map((faq, index) => (
+                  <FAQItem
+                    key={index}
+                    question={faq.question}
+                    answer={faq.answer}
+                    isOpen={activeIndex === index}
+                    toggle={() => toggleFAQ(index)}
+                    index={index}
+                  />
+                ))}
               </div>
 
               {/* Still have questions? */}

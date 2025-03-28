@@ -1,14 +1,12 @@
-import React from 'react'
-import Home from './Pages/Home'
-// import CustomCursor from './Components/CustomCursor'
+import React from "react";
+import Home from "./Pages/Home";
 
 const App = () => {
   return (
     <>
-    <Home />
-    {/* <CustomCursor /> */}
+      <Home />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

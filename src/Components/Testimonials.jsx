@@ -1,232 +1,315 @@
-import { useState, useEffect } from "react"
-import { ChevronLeft, ChevronRight, Star, CircuitBoardIcon as Circuit, Cpu } from "lucide-react"
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Sample testimonial data
-const testimonials = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    content:
-      "This product has completely transformed our workflow. The intuitive interface and powerful features have increased our team's productivity by 40%.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    content:
-      "After trying multiple solutions, this is the only one that met all our requirements. The customer support team is also incredibly responsive and helpful.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 4,
-  },
-  {
-    id: 3,
-    name: "Emily Rodriguez",
-    content:
-      "I was skeptical at first, but after using it for just one week, I was convinced. It's now an essential part of our tech stack that we can't imagine working without.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "David Thompson",
-    content:
-      "The ROI we've seen since implementing this solution has been remarkable. It's rare to find a product that delivers on all its promises, but this one certainly does.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 4,
-  },
-  {
-    id: 5,
-    name: "Alex Rivera",
-    content:
-      "The API documentation is exceptional, and the integration was seamless. We were able to deploy in record time with minimal issues.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "Jennifer Wu",
-    content: "As a designer, I appreciate the attention to detail in this product. It's not just functional but also beautifully crafted with the user experience in mind.",
-    avatar: "https://th.bing.com/th/id/OIP.YHCtUpoNz1wqYbf0d9tIUQHaLO?rs=1&pid=ImgDetMain",
-    rating: 4,
-  },
-]
+export default function TestimonialSection() {
+  const testimonials = [
+    {
+      id: 1,
+      quote: "This product has a bunch of amazing tools which improves our business.",
+      name: "Maya Halin",
+      image: "https://th.bing.com/th/id/OIP.qvOIsZgjY_k1tnkz0E8g5QHaHa?rs=1&pid=ImgDetMain",
+      rating: 5,
+    },
+    {
+      id: 2,
+      quote: "Wow! Using Stateline has helped our company constantly improve.",
+      name: "Leopold Nilsen",
+      image: "https://static.vecteezy.com/system/resources/previews/014/194/215/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg",
+      rating: 4,
+    },
+    {
+      id: 3,
+      quote: "The analytics dashboard has transformed how we make decisions.",
+      name: "Sarah Johnson",
+      image: "https://th.bing.com/th/id/OIP.qvOIsZgjY_k1tnkz0E8g5QHaHa?rs=1&pid=ImgDetMain",
+      rating: 5,
+    },
+    {
+      id: 4,
+      quote: "Customer support is exceptional. They're always there when we need them.",
+      name: "Michael Chen",
+      image: "https://static.vecteezy.com/system/resources/previews/014/194/215/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg",
+      rating: 5,
+    },
+  ];
 
-export default function TestimonialCarousel() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [direction, setDirection] = useState(null)
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    
-    handleResize() // Set initial value
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  const cardsToShow = isMobile ? 1 : 2
-  const maxIndex = testimonials.length - cardsToShow
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [autoPlay, setAutoPlay] = useState(true);
 
   const nextTestimonial = () => {
-    if (activeIndex < maxIndex) {
-      setDirection("right")
-      setActiveIndex(prev => prev + 1)
-    } else {
-      setActiveIndex(0)
-    }
-  }
+    setDirection(1);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    setAutoPlay(false);
+    setTimeout(() => setAutoPlay(true), 10000);
+  };
 
   const prevTestimonial = () => {
-    if (activeIndex > 0) {
-      setDirection("left")
-      setActiveIndex(prev => prev - 1)
-    } else {
-      setActiveIndex(maxIndex)
-    }
-  }
+    setDirection(-1);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+    setAutoPlay(false);
+    setTimeout(() => setAutoPlay(true), 10000);
+  };
 
-  // Auto-advance the carousel
+  const goToTestimonial = (index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+    setAutoPlay(false);
+    setTimeout(() => setAutoPlay(true), 10000);
+  };
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextTestimonial()
-    }, 5000)
+    let interval;
+    if (autoPlay) {
+      interval = setInterval(() => {
+        setDirection(1);
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [autoPlay, testimonials.length]);
 
-    return () => clearInterval(interval)
-  }, [activeIndex])
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? 100 : -100,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? 100 : -100,
+      opacity: 0,
+    }),
+  };
 
-  // Render star ratings
-  const renderStars = (rating) => {
-    return (
-      <div className="flex gap-1 mt-2">
-        {[...Array(5)].map((_, i) => (
-          <Star 
-            key={i} 
-            className={`w-4 h-4 ${i < rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
-          />
-        ))}
-      </div>
-    )
-  }
+  const transition = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+  };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 font-[Poppins] mt-10 pb-12 relative">
-      {/* Tech-inspired background elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-10 z-0">
-        <div className="absolute top-10 left-10">
-          <Circuit className="w-32 h-32 text-yellow-500" />
-        </div>
-        <div className="absolute bottom-10 right-10">
-          <Cpu className="w-24 h-24 text-yellow-500" />
-        </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-96 h-96 border border-dashed border-yellow-500 rounded-full opacity-20" />
-        </div>
-      </div>
-
-      <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-xl border border-gray-200 overflow-hidden">
-        {/* Tech accent line */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-yellow-500 to-purple-500" />
-
-        {/* Left navigation button */}
-        <button
-          onClick={prevTestimonial}
-          className="absolute left-0 top-1/2 -translate-y-1/2 px-3 py-2 bg-gray-100/80 text-gray-700 rounded-r-md z-10 transition-all backdrop-blur-sm border-none cursor-pointer hover:bg-yellow-500"
-          aria-label="Previous testimonial"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        {/* Right navigation button */}
-        <button
-          onClick={nextTestimonial}
-          className="absolute right-0 top-1/2 -translate-y-1/2 px-3 py-2 bg-gray-100/80 text-gray-700 rounded-l-md z-10 transition-all backdrop-blur-sm border-none cursor-pointer hover:bg-yellow-500"
-          aria-label="Next testimonial"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
-        {/* Testimonial cards container */}
-        <div className="relative py-10 px-8 flex flex-col">
-          <h2 className="text-center text-2xl font-bold text-gray-900 mb-8 tracking-wide">
-            CUSTOMER <span className="text-yellow-500">TESTIMONIALS</span>
-          </h2>
-
-          <div
-            className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-6 transition-all duration-500 ease-in-out ${
-              direction === "left" ? 'translate-x-5' : direction === "right" ? '-translate-x-5' : 'translate-x-0'
-            } ${direction ? 'opacity-90' : 'opacity-100'}`}
-            onTransitionEnd={() => setDirection(null)}
-          >
-            {testimonials.slice(activeIndex, activeIndex + cardsToShow).map((testimonial) => (
-              <div
-                key={testimonial.id}
-                className="bg-white rounded-lg p-6 border border-gray-200 shadow-md transition-all relative overflow-hidden"
+    <section className="py-20 mt-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 font-[Poppins]">
+      <div className="max-w-7xl mx-auto">
+        {/* Mobile Layout - Column */}
+        <div className="flex flex-col md:hidden space-y-6">
+          {/* Text Content */}
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-gray-900 leading-tight">
+              What our <span className="text-[#fbc800]">Customers</span> love what we do
+            </h2>
+            <p className="text-base text-gray-700">
+              Over 500,000 companies of all sizes use Stateline to understand their business and their market better.
+            </p>
+            <div className="flex items-center space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} filled={i < testimonials[currentIndex].rating} />
+              ))}
+              <span className="text-sm text-gray-600 ml-1">
+                {testimonials[currentIndex].rating}.0 rating
+              </span>
+            </div>
+            <div className="pt-2">
+              <a 
+                href="#" 
+                className="inline-flex items-center px-5 py-2 bg-[#fbc800] text-white font-medium rounded-lg hover:bg-[#ffa100] transition-colors shadow-md hover:shadow-lg text-sm"
               >
-                {/* Tech corner accent */}
-                <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
-                  <div className="absolute rotate-45 bg-yellow-500 text-white w-24 h-5 -right-1.5 top-5"></div>
-                </div>
+                Read success stories
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-yellow-500 shadow-sm">
+          {/* Mobile Navigation Buttons */}
+          <div className="flex justify-center space-x-4">
+            <button 
+              onClick={prevTestimonial} 
+              className="rounded-full h-10 w-10 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button 
+              onClick={nextTestimonial} 
+              className="rounded-full h-10 w-10 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* Testimonial Card */}
+          <div className="bg-white rounded-xl shadow-lg p-6 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#fbc800] to-[#ffa100]"></div>
+            <div className="text-[#ffa100] text-4xl font-serif leading-none mb-2 opacity-20">
+              <Quote className="w-10 h-10" />
+            </div>
+            
+            <AnimatePresence custom={direction} mode="wait">
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={transition}
+                className="min-h-[140px]"
+              >
+                <p className="text-gray-700 text-base mb-4 leading-relaxed">
+                  {testimonials[currentIndex].quote}
+                </p>
+                <div className="flex items-center mt-4">
+                  <div className="mr-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#fbc800] to-[#ffa100] p-0.5">
                       <img
-                        src={testimonial.avatar || "/placeholder.svg"}
-                        alt={testimonial.name}
-                        className="w-full h-full rounded-full object-cover"
-                        width={64}
-                        height={64}
+                        src={testimonials[currentIndex].image}
+                        alt={testimonials[currentIndex].name}
+                        className="rounded-full object-cover border-2 border-white w-full h-full"
                       />
                     </div>
                   </div>
-
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-gray-900">
-                      {testimonial.name}
-                    </h3>
-
-                    <div className="mt-4 text-gray-500 text-sm">
-                      "{testimonial.content}"
-                    </div>
-
-                    {/* Star ratings */}
-                    <div className="mt-4">{renderStars(testimonial.rating)}</div>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm">{testimonials[currentIndex].name}</p>
+                    <p className="text-xs text-gray-600">{testimonials[currentIndex].role}</p>
                   </div>
                 </div>
-
-                {/* Tech grid pattern */}
-                <div className="absolute bottom-0 right-0 w-32 h-32 opacity-5 transition-opacity">
-                  <div className="grid grid-cols-4 gap-1">
-                    {[...Array(16)].map((_, i) => (
-                      <div 
-                        key={i} 
-                        className="w-6 h-6 border border-yellow-500"
-                      ></div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Indicators */}
-          <div className="flex justify-center gap-2 mt-8">
-            {[...Array(maxIndex + 1)].map((_, index) => (
+          {/* Dots Indicator - Now at the bottom */}
+          <div className="flex justify-center space-x-2">
+            {testimonials.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`h-1.5 rounded-full transition-all ${
-                  activeIndex === index ? 'bg-yellow-500 w-8' : 'bg-gray-300 w-4'
-                } border-none cursor-pointer`}
-                aria-label={`Go to testimonial set ${index + 1}`}
+                onClick={() => goToTestimonial(index)}
+                className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-4" : "bg-gray-300"}`}
+                aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
           </div>
         </div>
+
+        {/* Desktop Layout - Grid */}
+        <div className="hidden md:grid md:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              What our <span className="text-[#fbc800]">Customers</span> love what we do
+            </h2>
+            <p className="text-lg text-gray-700 max-w-md">
+              Over 500,000 companies of all sizes use Stateline to understand their business and their market better.
+            </p>
+            <div className="flex items-center space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon key={i} filled={i < testimonials[currentIndex].rating} />
+              ))}
+              <span className="text-sm text-gray-600 ml-1">
+                {testimonials[currentIndex].rating}.0 rating
+              </span>
+            </div>
+            <div className="pt-4">
+              <a 
+                href="#" 
+                className="inline-flex items-center px-6 py-3 bg-[#fbc800] text-white font-medium rounded-lg hover:bg-[#ffa100] transition-colors shadow-md hover:shadow-lg"
+              >
+                Read success stories
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="bg-white rounded-xl shadow-lg p-8 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#fbc800] to-[#ffa100]"></div>
+              <div className="text-[#ffa100] text-5xl font-serif leading-none mb-4 opacity-20">
+                <Quote className="w-12 h-12" />
+              </div>
+              
+              <AnimatePresence custom={direction} mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={transition}
+                  className="min-h-[160px]"
+                >
+                  <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+                    {testimonials[currentIndex].quote}
+                  </p>
+                  <div className="flex items-center mt-6">
+                    <div className="mr-4">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#fbc800] to-[#ffa100] p-0.5">
+                        <img
+                          src={testimonials[currentIndex].image}
+                          alt={testimonials[currentIndex].name}
+                          width={52}
+                          height={52}
+                          className="rounded-full object-cover border-2 border-white"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonials[currentIndex].name}</p>
+                      <p className="text-sm text-gray-600">{testimonials[currentIndex].role}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            
+            <div className="flex justify-between items-center mt-6">
+              <div className="flex space-x-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToTestimonial(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${index === currentIndex ? "bg-[#ffa100] w-6" : "bg-gray-300"}`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <div className="flex space-x-3">
+                <button 
+                  onClick={prevTestimonial} 
+                  className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+                  aria-label="Previous testimonial"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button 
+                  onClick={nextTestimonial} 
+                  className="rounded-full h-12 w-12 border border-[#ffa100] flex items-center justify-center hover:bg-[#ffa100] transition-colors hover:border-[#ffa100] hover:text-gray shadow-sm"
+                  aria-label="Next testimonial"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    </section>
+  );
+}
+
+function StarIcon({ filled }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`h-4 w-4 md:h-5 md:w-5 ${filled ? "text-yellow-400" : "text-gray-300"}`}
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+      />
+    </svg>
+  );
 }

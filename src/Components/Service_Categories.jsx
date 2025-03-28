@@ -1,83 +1,86 @@
-import React, { useState, useEffect } from "react";
-import { FaWifi, FaShoppingBag, FaMobileAlt, FaGamepad, FaMicrophone } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaWifi, FaMobile, FaGamepad, FaMicrophone, FaBolt } from "react-icons/fa";
+import '../Styles/styles.css'; // Ensure you have a CSS file with clip-path styles
 
-const categories = [
-  { name: "Wi-Fi", icon: <FaWifi />, description: "Fast internet up to 1Gbps.", price: "$30/month" },
-  { name: "Home Appliances", icon: <FaShoppingBag />, description: "Latest energy-efficient appliances.", price: "From $100" },
-  { name: "Mobile & PC", icon: <FaMobileAlt />, description: "Top-rated devices at the best prices.", price: "From $200" },
-  { name: "Gaming Consoles", icon: <FaGamepad />, description: "Next-gen gaming with immersive experience.", price: "$400" },
-  { name: "Audio & Microphone", icon: <FaMicrophone />, description: "High-quality sound for professionals.", price: "From $50" },
-];
-
-export default function ServiceCategories() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const visibleBoxes = 3; // Show 3 boxes at a time
-
-  // Function to go to the next slide
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % categories.length);
-  };
-
-  // Function to go to the previous slide
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length);
-  };
-
-  // Auto-scroll every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleBooking = (service) => {
-    alert(`Booking confirmed for: ${service}`);
-  };
+export default function ProductCards() {
+  const products = [
+    {
+      title: "WiFi Router",
+      description: "High-speed internet connection for seamless browsing.",
+      price: "$120",
+      icon: <FaWifi className="text-5xl text-gray-800" />,
+      bgColor: "bg-[#fcb800]",
+    },
+    {
+      title: "Smartphone",
+      description: "Latest technology in your hands.",
+      price: "$999",
+      icon: <FaMobile className="text-5xl text-gray-800" />,
+      bgColor: "bg-gray-500",
+    },
+    {
+      title: "Gaming Console",
+      description: "Experience the next level of gaming.",
+      price: "$500",
+      icon: <FaGamepad className="text-5xl text-gray-800" />,
+      bgColor: "bg-black",
+    },
+    {
+      title: "Microphone",
+      description: "Professional audio recording quality.",
+      price: "$150",
+      icon: <FaMicrophone className="text-5xl text-gray-800" />,
+      bgColor: "bg-white",
+    },
+  ];
 
   return (
-    <div className="relative max-w-5xl mx-auto p-10 font-[Poppins]">
-      <h2 className="text-4xl font-bold text-center text-gray-900 mb-8">Our Services</h2>
-
-      {/* Carousel Container */}
-      <div className="relative overflow-hidden">
-        <motion.div
-          className="flex"
-          animate={{ x: `-${currentIndex * (100 / visibleBoxes)}%` }}
-          transition={{ ease: "easeInOut", duration: 0.6 }}
-        >
-          {[...categories, ...categories].map((category, index) => (
-            <div key={index} className="min-w-[33.33%] flex justify-center p-3">
-              <motion.div
-                className="w-64 h-80 flex flex-col items-center justify-center bg-white/20 backdrop-blur-xl border border-gray-300 rounded-2xl shadow-lg hover:shadow-xl p-4 cursor-pointer transition-transform transform hover:scale-105"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="text-[#fbc800] text-5xl mb-3">{category.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900">{category.name}</h3>
-                <p className="text-gray-600 mt-2 text-center text-sm">{category.description}</p>
-                <p className="text-[#fbc800] font-bold text-md mt-2">{category.price}</p>
-
-                {/* Book Now Button */}
-                <button
-                  className="mt-3 px-4 py-2 bg-[#fbc800] text-white font-semibold rounded-lg hover:bg-yellow-600 transition"
-                  onClick={() => handleBooking(category.name)}
-                >
-                  Book Now
-                </button>
-              </motion.div>
-            </div>
-          ))}
-        </motion.div>
+    <div className="p-6 mt-20 bg-white min-h-screen font-[Poppins] flex flex-col items-center">
+        <button className="flex items-center gap-2 bg-gray-200 text-black px-6 py-2 rounded-lg shadow-md mb-4 hover:bg-yellow-600 transition">
+        <FaBolt className="text-xl" /> Flash Deals
+      </button>
+      
+      {/* Title and Description */}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-800">Our Exclusive Products</h1>
+        <p className="text-gray-600 mt-2">Discover the best tech products at unbeatable prices.</p>
       </div>
 
-      {/* Navigation Buttons */}
-      <button onClick={prevSlide} className="absolute top-1/2 left-0 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-600 transition">
-        ◀
-      </button>
-      <button onClick={nextSlide} className="absolute top-1/2 right-0 -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-600 transition">
-        ▶
-      </button>
+      <div className="flex justify-center gap-6 flex-wrap">
+        {products.map((product, index) => (
+          <div key={index} className="relative bg-white rounded-xl shadow-lg overflow-hidden w-72 h-96 flex flex-col items-center">
+            {/* Background Triangular Section */}
+            <div className="absolute top-0 left-0 w-full h-1/2">
+              <div className={`absolute top-0 left-0 w-full h-full ${product.bgColor} clip-triangle`}></div>
+            </div>
+            
+            {/* Price Circle */}
+            <div className="absolute top-4 right-4 bg-yellow-200 text-gray-800 font-bold rounded-full w-12 h-12 flex items-center justify-center shadow-md">
+              {product.price}
+            </div>
+            
+            {/* Icon Circle */}
+            <div className="relative w-32 h-32 mt-16 bg-white rounded-full border-4 border-white overflow-hidden flex items-center justify-center shadow-md">
+              {product.icon}
+            </div>
+            
+            {/* Text Content */}
+            <div className="p-4 text-center">
+              <h3 className="font-bold text-lg text-gray-800">{product.title}</h3>
+              <p className="text-gray-500 text-sm mt-2">{product.description}</p>
+            </div>
+            
+            {/* Bottom Section */}
+            <div className="w-full flex justify-between items-center p-4 absolute bottom-0">
+              <div className="flex space-x-2">
+                <span className="w-3 h-3 bg-gray-300 rounded-full"></span>
+                <span className="w-3 h-3 bg-gray-400 rounded-full"></span>
+                <span className="w-3 h-3 bg-gray-500 rounded-full"></span>
+              </div>
+              <button className="bg-black text-white px-4 py-2 rounded-lg text-sm">BOOK NOW</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Search, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +18,47 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  // Services organized in a 3x5 grid
+  const services = [
+    [
+      "Electrical Repair & Installation",
+      "AC / Refrigerator / Washing Machine Repair",
+      "CCTV Installation & Repair"
+    ],
+    [
+      "Inverter & Battery Installation / Repair",
+      "Home Appliance Repair",
+      "Computer & Laptop Repair"
+    ],
+    [
+      "Plumbing Services",
+      "Carpenter Services",
+      "Mobile Phone Repair"
+    ],
+    [
+      "Solar Panel Installation & Maintenance",
+      "Smart Home Setup",
+      "Wiring & Circuit Fixing"
+    ],
+    [
+      "Generator Repair & Installation",
+      "Electrical Inspection & Consultation",
+      "Emergency Repair Services (24x7)"
+    ]
+  ];
+
   const navLinks = [
-    { href: "/services", label: "Services" },
+    { href: "/service", label: "Services", dropdown: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
+
+  // Convert service name to URL-friendly format
+  const toServicePath = (service) => {
+    return service.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/-$/, "");
+  };
 
   return (
     <nav
@@ -35,13 +73,13 @@ const Navbar = () => {
             className="flex items-center"
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img
                 src="https://ghc53p2bgg.ufs.sh/f/47CofKs94FnTI3LXexAi9tm1GlkdxoZwpsugDFHvWrN3KfbU"
                 alt="Wirely Logo"
                 className="h-[6rem] w-auto md:h-[8rem] transition-all duration-300"
               />
-            </a>
+            </Link>
           </motion.div>
 
           {/* Desktop Search */}
@@ -61,33 +99,94 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="relative group font-medium text-gray-700 hover:text-black transition-colors"
-              >
-                <span className="relative">
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                </span>
-              </a>
+              <div key={link.href} className="relative group">
+                {link.dropdown ? (
+                  <>
+                    <div
+                      className="flex items-center font-medium text-gray-700 hover:text-black transition-colors cursor-pointer"
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onClick={() => {
+                        setIsServicesOpen(!isServicesOpen);
+                        // Navigate to main services page when clicked
+                        window.location.href = "/service";
+                      }}
+                    >
+                      <span className="relative">
+                        {link.label}
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                      </span>
+                      <ChevronDown
+                        size={16}
+                        className={`ml-1 transition-transform ${
+                          isServicesOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
+                    <AnimatePresence>
+                      {isServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
+                          onMouseEnter={() => setIsServicesOpen(true)}
+                          onMouseLeave={() => setIsServicesOpen(false)}
+                        >
+                          <div className="p-4">
+                            <table className="w-full">
+                              <tbody>
+                                {services.map((row, rowIndex) => (
+                                  <tr key={rowIndex}>
+                                    {row.map((service, colIndex) => (
+                                      <td key={colIndex} className="p-2">
+                                        <Link
+                                          to={`/service/${toServicePath(service)}`}
+                                          className="block text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                          onClick={() => setIsServicesOpen(false)}
+                                        >
+                                          {service}
+                                        </Link>
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link
+                    to={link.href}
+                    className="relative group font-medium text-gray-700 hover:text-black transition-colors"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
 
           {/* Desktop User Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="/login"
+            <Link
+              to="/register"
               className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
             >
               Login
-            </a>
-            <a
-              href="/signup"
+            </Link>
+            <Link
+              to="/register"
               className="px-4 py-2 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
             >
               Sign Up
-            </a>
+            </Link>
             <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
               <User size={24} className="text-gray-700" />
             </button>
@@ -135,33 +234,88 @@ const Navbar = () => {
                 {/* Mobile Navigation Links */}
                 <div className="space-y-3">
                   {navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      className="block text-gray-700 hover:text-black py-2 font-medium transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {link.label}
-                    </a>
+                    <div key={link.href}>
+                      {link.dropdown ? (
+                        <>
+                          <div className="flex items-center justify-between">
+                            <Link
+                              to="/service"
+                              className="text-gray-700 hover:text-black py-2 font-medium transition-colors"
+                              onClick={() => {
+                                setIsMenuOpen(false);
+                                setIsServicesOpen(false);
+                              }}
+                            >
+                              {link.label}
+                            </Link>
+                            <button
+                              onClick={() => setIsServicesOpen(!isServicesOpen)}
+                              className="p-2"
+                            >
+                              <ChevronDown
+                                size={16}
+                                className={`transition-transform ${
+                                  isServicesOpen ? "rotate-180" : ""
+                                }`}
+                              />
+                            </button>
+                          </div>
+                          {isServicesOpen && (
+                            <div className="pl-2">
+                              <table className="w-full">
+                                <tbody>
+                                  {services.map((row, rowIndex) => (
+                                    <tr key={rowIndex}>
+                                      {row.map((service, colIndex) => (
+                                        <td key={colIndex} className="p-1">
+                                          <Link
+                                            to={`/service/${toServicePath(service)}`}
+                                            className="block text-xs text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                            onClick={() => {
+                                              setIsServicesOpen(false);
+                                              setIsMenuOpen(false);
+                                            }}
+                                          >
+                                            {service}
+                                          </Link>
+                                        </td>
+                                      ))}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className="block text-gray-700 hover:text-black py-2 font-medium transition-colors"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      )}
+                    </div>
                   ))}
                 </div>
 
                 {/* Mobile Action Buttons */}
                 <div className="space-y-3 pt-2">
-                  <a
-                    href="/login"
+                  <Link
+                    to="/login"
                     className="block w-full text-center px-4 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
-                  </a>
-                  <a
-                    href="/signup"
+                  </Link>
+                  <Link
+                    to="/signup"
                     className="block w-full text-center px-4 py-3 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

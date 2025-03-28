@@ -42,6 +42,7 @@ const ContactUs = () => {
     subject: '',
     message: ''
   });
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -65,6 +66,48 @@ const ContactUs = () => {
       subject: '',
       message: ''
     });
+  };
+
+  const commonProblems = [
+    {
+      title: "Order not received",
+      subject: "My order hasn't arrived",
+      message: "Hello,\n\nI placed an order on [date] with order number [order number], but I haven't received it yet. The tracking information shows [status]. Can you please help me with this?\n\nThank you."
+    },
+    {
+      title: "Wrong item received",
+      subject: "Received wrong item in my order",
+      message: "Hello,\n\nI received my order today (order number [order number]), but it contains the wrong items. I ordered [item name] but received [wrong item name] instead. Please advise on how to proceed with this issue.\n\nThank you."
+    },
+    {
+      title: "Product damaged",
+      subject: "Damaged product received",
+      message: "Hello,\n\nI received my order today (order number [order number]), but the product arrived damaged. The [product name] has [describe damage]. Please let me know how to get a replacement or refund.\n\nThank you."
+    },
+    {
+      title: "Return request",
+      subject: "Request for return authorization",
+      message: "Hello,\n\nI would like to return my recent purchase (order number [order number]). The item is [product name] and I would like to return it because [reason]. Please provide instructions on how to proceed with the return.\n\nThank you."
+    },
+    {
+      title: "Payment issue",
+      subject: "Problem with payment processing",
+      message: "Hello,\n\nI'm having trouble completing my payment for order [order number]. I tried to pay with [payment method] but received the following error: [describe error]. Please help me resolve this issue.\n\nThank you."
+    },
+    {
+      title: "Account access problem",
+      subject: "Can't access my account",
+      message: "Hello,\n\nI'm unable to access my account. When I try to log in with my email [your email], I receive [describe error message]. I've tried resetting my password but [describe what happened]. Please assist me in regaining access to my account.\n\nThank you."
+    }
+  ];
+
+  const selectSuggestion = (suggestion) => {
+    setFormData(prev => ({
+      ...prev,
+      subject: suggestion.subject,
+      message: suggestion.message
+    }));
+    setShowSuggestions(false);
   };
 
   const faqs = [
@@ -286,6 +329,40 @@ const ContactUs = () => {
                     placeholder="Your message here..."
                   ></textarea>
                 </div>
+                
+                {/* Common Problems Suggestions */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowSuggestions(!showSuggestions)}
+                    className="text-[#fbc800] hover:text-[#fbc800]/80 text-sm font-medium flex items-center"
+                  >
+                    Common issues
+                    {showSuggestions ? (
+                      <FaChevronUp className="ml-1 text-xs" />
+                    ) : (
+                      <FaChevronDown className="ml-1 text-xs" />
+                    )}
+                  </button>
+                  
+                  {showSuggestions && (
+                    <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                      <div className="py-1">
+                        {commonProblems.map((problem, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => selectSuggestion(problem)}
+                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-[#fbc800]/10 hover:text-gray-900"
+                          >
+                            {problem.title}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
                 <div>
                   <button
                     type="submit"

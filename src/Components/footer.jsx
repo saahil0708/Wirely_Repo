@@ -1,25 +1,25 @@
-import React from 'react';
-import { Linkedin, Instagram, ArrowRight, Github, Mail } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
+import React from "react";
+import { Linkedin, Instagram, ArrowRight, Github, Mail } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <footer className="bg-white text-black py-12 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         
         {/* Column 1: Branding */}
-        <div className="space-y-5">
-          <div className="flex items-center">
+        <div className="space-y-5 text-center md:text-left">
+          <div className="flex justify-center md:justify-start">
             <img 
               src="https://ghc53p2bgg.ufs.sh/f/47CofKs94FnTI3LXexAi9tm1GlkdxoZwpsugDFHvWrN3KfbU" 
               alt="Wirely Logo" 
-              className="h-24 object-contain" /* Increased from h-20 to h-24 */
+              className="h-24 object-contain" 
             />
           </div>
           <p className="text-gray-600 text-sm leading-relaxed">
             Connect with certified professionals instantly. Comprehensive support tailored to your unique needs.
           </p>
-          <div className="flex space-x-4 pt-3">
+          <div className="flex justify-center md:justify-start space-x-4 pt-3">
             <a href="#" className="text-gray-500 hover:text-[#fbc800] transition-colors duration-300">
               <Linkedin className="w-5 h-5" />
             </a>
@@ -36,12 +36,12 @@ const Footer = () => {
         </div>
         
         {/* Column 2: Quick Links */}
-        <div className="space-y-4 mt-4 md:mt-0">
+        <div className="space-y-4 text-center md:text-left">
           <h3 className="text-base font-semibold text-gray-800 border-b border-[#fbc800] pb-2 inline-block">
             Quick Links
           </h3>
           <ul className="space-y-2.5 mt-3">
-            {['Home', 'Features', 'Solutions', 'Pricing'].map((item) => (
+            {["Home", "Features", "Solutions", "Pricing"].map((item) => (
               <li key={item}>
                 <a href="#" className="text-gray-600 hover:text-[#fbc800] text-sm transition-colors">
                   {item}
@@ -52,12 +52,12 @@ const Footer = () => {
         </div>
         
         {/* Column 3: Company */}
-        <div className="space-y-4 mt-4 md:mt-0">
+        <div className="space-y-4 text-center md:text-left">
           <h3 className="text-base font-semibold text-gray-800 border-b border-[#fbc800] pb-2 inline-block">
             Company
           </h3>
           <ul className="space-y-2.5 mt-3">
-            {['About Us', 'Our Team', 'Careers', 'Contact'].map((item) => (
+            {["About Us", "Our Team", "Careers", "Contact"].map((item) => (
               <li key={item}>
                 <a href="#" className="text-gray-600 hover:text-[#fbc800] text-sm transition-colors">
                   {item}
@@ -68,7 +68,7 @@ const Footer = () => {
         </div>
         
         {/* Column 4: Newsletter */}
-        <div className="space-y-4 mt-4 md:mt-0">
+        <div className="space-y-4 text-center md:text-left">
           <h3 className="text-base font-semibold text-gray-800 border-b border-[#fbc800] pb-2 inline-block">
             Newsletter
           </h3>
@@ -97,7 +97,7 @@ const Footer = () => {
 
       {/* Bottom Footer */}
       <div className="max-w-7xl mx-auto px-6 pt-8 mt-8 border-t border-gray-200">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <p className="text-gray-500 text-xs">
             &copy; {new Date().getFullYear()} Wirely. All rights reserved.
           </p>

@@ -1,248 +1,161 @@
-// // import React, { useEffect, useRef } from "react";
-// // import { motion, useScroll, useTransform } from "framer-motion";
-
-// // // Define timeline events
-// // const timelineEvents = [
-// //   { 
-// //     time: "9 AM", 
-// //     title: "Orientation", 
-// //     description: "Kickstart the day with an introduction to the company’s vision, mission, and culture. This session includes a welcome address from HR, an overview of company policies, and completion of essential paperwork."
-// //   },
-// //   { 
-// //     time: "10 AM", 
-// //     title: "HR Panel", 
-// //     description: "Meet the human resources team and key personnel who will guide you through your journey in the organization. Get familiar with your workspace, facilities, and available resources."
-// //   },
-// //   { 
-// //     time: "11 AM", 
-// //     title: "Industry Panel", 
-// //     description: "Gain insights into industry trends and expectations from experienced professionals. Learn about the company’s role in the sector and how your contributions align with its goals."
-// //   },
-// //   { 
-// //     time: "12 PM", 
-// //     title: "Lunch", 
-// //     description: "Take a break and enjoy a specially arranged welcome lunch. This is a great opportunity to connect with your colleagues in a relaxed setting and build professional relationships."
-// //   },
-// // ];
-
-// // const ProgressIndicator = ({ progress }) => {
-// //   const progressWidth = useTransform(progress, [0, 1], ["0%", "100%"]);
-  
-// //   return (
-// //     <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-gray-200">
-// //       <motion.div 
-// //         className="h-full bg-[#005F73]"
-// //         style={{ width: progressWidth }}
-// //       />
-// //     </div>
-// //   );
-// // };
-
-// // // Main Timeline component
-// // function Timeline() {
-// //   const containerRef = useRef(null);
-// //   const { scrollYProgress } = useScroll({ 
-// //     target: containerRef,
-// //     offset: ["start start", "end end"] 
-  // });
-
-// //   return (
-// //     <>
-// //       <ProgressIndicator progress={scrollYProgress} />
-      
-// //       <div className="min-h-screen flex justify-center items-center bg-white text-gray-800" ref={containerRef}>
-// //         <div className="w-full max-w-4xl px-6">
-// //           {/* Header section */}
-// //           <div className="text-center pt-20 pb-10">
-// //             <motion.h1 
-// //               initial={{ opacity: 0, y: -50 }}
-// //               animate={{ opacity: 1, y: 0 }}
-// //               transition={{ duration: 1, delay: 0.2 }}
-// //               className="text-5xl font-bold mb-6 text-[#005F73]"
-// //             >
-// //               Event Timeline
-// //             </motion.h1>
-// //             <p className="text-xl text-gray-600">
-// //               Follow your journey through our carefully crafted schedule of events.
-// //             </p>
-// //           </div>
-
-// //           {/* Timeline events */}
-// //           <div className="relative">
-// //             <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gray-300"></div>
-
-// //             {timelineEvents.map((event, index) => (
-// //               <motion.div
-// //                 key={index}
-// //                 className="relative mb-12 flex items-center justify-center"
-// //                 initial={{ opacity: 0 }}
-// //                 whileInView={{ opacity: 1 }}
-// //                 viewport={{ once: true, amount: 0.2 }}
-// //                 transition={{ duration: 0.5 }}
-// //               >
-// //                 {/* Event card */}
-// //                 <motion.div
-// //                   className={`bg-white shadow-lg p-6 rounded-lg border w-[80%] max-w-lg ${
-// //                     index % 2 === 0 ? "ml-auto text-right" : "mr-auto text-left"
-// //                   }`}
-// //                   whileHover={{
-// //                     boxShadow: "0 10px 30px rgba(0, 95, 115, 0.1)",
-// //                     borderColor: "#005F73",
-// //                   }}
-// //                   initial={{ y: 30, opacity: 0 }}
-// //                   whileInView={{ y: 0, opacity: 1 }}
-// //                   viewport={{ once: true, amount: 0.2 }}
-// //                   transition={{ duration: 0.5, delay: index * 0.1 }}
-// //                 >
-// //                   <div className="text-sm font-medium mb-2 text-[#005F73]">
-// //                     {event.time}
-// //                   </div>
-// //                   <h3 className="text-xl font-bold mb-2 text-[#005F73]">{event.title}</h3>
-// //                   <p className="text-gray-600">{event.description}</p>
-// //                 </motion.div>
-// //               </motion.div>
-// //             ))}
-// //           </div>
-// //         </div>
-// //       </div>
-// //     </>
-// //   );
-// // }
-
-// export default Timeline;
-import { useState } from "react";
+import React, { useState } from "react";
+import { Stepper, Step, StepLabel, Button } from "@mui/material";
 import { motion } from "framer-motion";
-import { FaCheckCircle, FaUndo } from "react-icons/fa"; // Importing icons
 
-const ProgressRoadmap = () => {
-  const [step, setStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState([]);
+// Importing local images
+import bookingWiFi from "../assets/confirm.svg";
+import wifiTroubleshooting from "../assets/Start.svg";
+import wifiLoading from "../assets/75.svg";
+import confirmed from "../assets/maximum.svg";
 
-  const totalSteps = 5;
+function Workflow() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [direction, setDirection] = useState(-1); // -1 for Next (left), 1 for Previous (right)
 
-  const stepsData = [
-    { title: "Step 1", description: "Starting point of the journey." },
-    { title: "Step 2", description: "Gaining momentum and moving forward." },
-    { title: "Step 3", description: "Halfway through, keeping up the pace." },
-    { title: "Step 4", description: "Almost there, final efforts in motion." },
-    { title: "Step 5", description: "Destination reached! Completion achieved." },
+  const steps = ["Booking Feature", "Work Started", "Approximate Done", "Completed"];
+  const stepImages = [bookingWiFi, wifiTroubleshooting, wifiLoading, confirmed];
+
+  // Step descriptions
+  const stepDescriptions = [
+    "You have successfully booked a WiFi service. Our team will get in touch with you shortly to assist further.",
+    "The troubleshooting process has started. Our system is diagnosing the potential issues with your WiFi.",
+    "The issue has been 75% resolved. Some final optimizations are being made to ensure smooth connectivity.",
+    "Your WiFi is now fully operational! Enjoy seamless internet without any interruptions.",
   ];
 
   const handleNext = () => {
-    if (step < totalSteps - 1) {
-      setStep(step + 1);
+    if (activeStep < steps.length - 1) {
+      setDirection(-1);
+      setActiveStep((prev) => prev + 1);
     }
   };
 
-  const handlePrevious = () => {
-    if (step > 0) {
-      setStep(step - 1);
+  const handleBack = () => {
+    if (activeStep > 0) {
+      setDirection(1);
+      setActiveStep((prev) => prev - 1);
     }
   };
 
-  const markAsDone = (index) => {
-    if (!completedSteps.includes(index)) {
-      setCompletedSteps([...completedSteps, index]);
-    }
-  };
-
-  const markAsPending = (index) => {
-    setCompletedSteps(completedSteps.filter((s) => s !== index));
+  const handleStepClick = (index) => {
+    setDirection(index > activeStep ? -1 : 1);
+    setActiveStep(index);
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-white text-black p-6 overflow-hidden">
-      <h1 className="text-4xl font-extrabold text-[#fcb800] mb-10">Know Your Flow</h1>
+    <div className="bg-white p-8 w-full min-h-screen text-center shadow-md">
+      {/* Heading & Description */}
+      <h1 className="text-3xl font-bold text-black">Track Your Work</h1>
+      <p className="text-gray-600 text-lg mt-2 max-w-lg mx-auto">
+        Stay updated with your progress step by step. Monitor the status of your task in real-time.
+      </p>
 
-      {/* Progress Path */}
-      <div className="relative w-full max-w-4xl flex flex-col items-center">
-        {stepsData.map((stepData, index) => (
-          <div key={index} className="relative w-full flex flex-col items-center">
-            {/* Dotted Path */}
-            {index > 0 && (
-              <motion.div
-                className="absolute w-1 h-16 border-l-4 border-dotted border-gray-600 top-[-40px] left-[50%] translate-x-[-50%]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              ></motion.div>
-            )}
-
-            {/* Step Circle */}
-            <motion.div
-              className={`w-16 h-16 flex items-center justify-center rounded-full border-4 text-white relative z-10 shadow-xl
-                ${
-                  completedSteps.includes(index)
-                    ? "border-green-600 bg-green-600" // Completed steps
-                    : index === step
-                    ? "border-[#fcb800] bg-[#fcb800]" // Current step
-                    : "border-gray-400 bg-gray-400" // Upcoming steps
-                }`}
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.5 }}
-            >
-              {index + 1}
-            </motion.div>
-
-            {/* Step Description Box */}
-            <motion.div
-              className={`w-80 p-6 bg-white text-black rounded-lg shadow-xl mt-4 relative z-20 border-l-4 ${
-                completedSteps.includes(index) ? "border-green-600" : "border-[#fcb800]"
-              } ${index % 2 === 0 ? "self-start ml-20" : "self-end mr-20"}`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2
-                className={`text-2xl font-bold ${
-                  completedSteps.includes(index) ? "text-green-600" : "text-[#fcb800]"
-                }`}
+      {/* Stepper */}
+      <div className="w-full mt-6">
+        <Stepper activeStep={activeStep} alternativeLabel className="w-full">
+          {steps.map((label, index) => (
+            <Step key={index} onClick={() => handleStepClick(index)} className="cursor-pointer">
+              <StepLabel
+                sx={{
+                  "& .MuiStepIcon-root": { 
+                    color: activeStep >= index ? "#000000" : "#fcb800"  // Black for completed/active, Yellow otherwise
+                  },
+                  "& .MuiStepConnector-line": { 
+                    borderColor: activeStep >= index ? "#000000" : "#fcb800" 
+                  },
+                  "& .MuiStepIcon-text": { fill: "#ffffff" }, // White text inside icons
+                  "& .MuiTypography-root": { 
+                    color: activeStep >= index ? "#000000" : "#fcb800", 
+                    fontWeight: "bold" 
+                  }, 
+                }}
               >
-                {stepData.title}
-              </h2>
-              <p className="text-gray-700 font-medium">{stepData.description}</p>
-
-              {/* Action Buttons */}
-              <div className="flex gap-4 mt-4">
-                <button
-                  className="text-green-600 text-2xl hover:text-green-800 transition-transform transform hover:scale-110"
-                  onClick={() => markAsDone(index)}
-                  disabled={completedSteps.includes(index)}
-                >
-                  <FaCheckCircle />
-                </button>
-                <button
-                  className="text-[#fcb800] text-2xl hover:text-[#fcb800] transition-transform transform hover:scale-110"
-                  onClick={() => markAsPending(index)}
-                  disabled={!completedSteps.includes(index)}
-                >
-                  <FaUndo />
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        ))}
+                {label}
+              </StepLabel>
+            </Step>
+          ))}
+        </Stepper>
       </div>
 
+      {/* Step Image */}
+      <div className="relative overflow-hidden w-full max-w-lg mx-auto mt-6">
+        <motion.img
+          key={activeStep}
+          src={stepImages[activeStep]}
+          alt={`Step ${activeStep + 1}`}
+          initial={{ x: direction * 300, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{ x: -direction * 300, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-h-52 object-contain rounded-lg shadow-md bg-white"
+        />
+      </div>
+
+      {/* Step Title & Description */}
+      <h2 className="text-xl font-semibold text-black mt-4">{steps[activeStep]}</h2>
+      <p className="text-gray-600 text-lg mt-2 max-w-lg mx-auto">{stepDescriptions[activeStep]}</p>
+
       {/* Navigation Buttons */}
-      <div className="mt-8 flex gap-4">
-        <button
-          className="px-6 py-3 bg-gray-700 hover:bg-gray-900 text-white font-bold rounded-lg shadow-xl transition-transform transform hover:scale-105 disabled:opacity-50"
-          onClick={handlePrevious}
-          disabled={step <= 0}
-        >
-          Previous
-        </button>
-        <button
-          className="px-6 py-3 bg-[#fcb800] hover:bg-yellow-600 text-black font-bold rounded-lg shadow-xl transition-transform transform hover:scale-105 disabled:opacity-50"
-          onClick={handleNext}
-          disabled={step >= totalSteps - 1}
-        >
-          Next
-        </button>
+      <div className="flex justify-between mt-6 max-w-lg mx-auto">
+      <Button
+  disabled={activeStep === 0}
+  onClick={handleBack}
+  sx={{
+    backgroundColor: "black",
+    color: "white",
+    px: 3,
+    py: 1,
+    borderRadius: "6px",
+    border: "2px solid black",
+    transition: "all 0.3s ease-in-out",
+    "&:hover": {
+      backgroundColor: "white",  // Change to white on hover
+      color: "black",  // Ensure text remains visible
+      border: "2px solid black", // Keep border visible
+    },
+    "&:disabled": {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      backgroundColor: "black",
+      color: "white", // Ensure disabled text remains visible
+    },
+  }}
+>
+  Previous
+</Button>
+
+
+<Button
+  onClick={handleNext}
+  disabled={activeStep === steps.length - 1}
+  sx={{
+    backgroundColor: "#fcb800",
+    color: "black",
+    px: 3,
+    py: 1,
+    borderRadius: "6px",
+    border: "2px solid #fcb800",
+    transition: "all 0.3s ease-in-out",
+    "&:hover": {
+      backgroundColor: "white",  // Change background to black on hover
+      color: "#fcb800",  // Text becomes white for contrast
+      border: "2px solid #fcb800", // Keep border visible
+    },
+    "&:disabled": {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      backgroundColor: "#fcb800",
+      color: "black", // Ensure disabled text remains visible
+    },
+  }}
+>
+  Move Forward
+</Button>
+
+
       </div>
     </div>
   );
-};
+}
 
-export default ProgressRoadmap;
+export default Workflow;

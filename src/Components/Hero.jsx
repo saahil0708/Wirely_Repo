@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { 
   Zap, Phone, Shield, Clock, Users, 
   CheckCircle, Wifi, Server, Code, 
@@ -6,6 +6,28 @@ import {
 } from "lucide-react";
 
 const Hero = () => {
+  const [typedText, setTypedText] = useState("");
+  const fullText = "On Demand";
+  
+  // Services for marquee
+  const marqueeServices = [
+    "Electrical Repair & Installation",
+    "AC / Refrigerator / Washing Machine Repair",
+    "CCTV Installation & Repair",
+    "Inverter & Battery Installation / Repair",
+    "Home Appliance Repair",
+    "Computer & Laptop Repair",
+    "Plumbing Services",
+    "Carpenter Services",
+    "Mobile Phone Repair",
+    "Solar Panel Installation & Maintenance",
+    "Smart Home Setup",
+    "Wiring & Circuit Fixing",
+    "Generator Repair & Installation",
+    "Electrical Inspection & Consultation",
+    "Emergency Repair Services (24x7)"
+  ];
+
   const cards = [
     // Large primary cards
     {
@@ -67,15 +89,29 @@ const Hero = () => {
     }
   ];
 
+  useEffect(() => {
+    let i = 0;
+    const typingInterval = setInterval(() => {
+      if (i < fullText.length) {
+        setTypedText(fullText.substring(0, i + 1));
+        i++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 150);
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
   return (
-    <section className="relative bg-white min-h-screen flex items-center px-6 sm:px-8 py-16 overflow-hidden">
+    <section className="relative bg-white min-h-screen flex flex-col items-center px-6 sm:px-8 py-16 overflow-hidden font-opensauce">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-[#FBC800]/5 blur-xl"></div>
         <div className="absolute bottom-1/3 -right-32 w-96 h-96 rounded-full bg-[#FBC800]/5 blur-xl"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
         {/* Left content */}
         <div className="space-y-8">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-[#FBC800]/10 rounded-full border border-[#FBC800]/20 w-fit">
@@ -87,7 +123,8 @@ const Hero = () => {
 
           <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
             Expert Solutions <br />
-            <span className="text-[#FBC800]">On Demand</span>
+            <span className="text-[#FBC800]">{typedText}</span>
+            <span className="animate-pulse">|</span>
           </h1>
 
           <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
@@ -162,6 +199,49 @@ const Hero = () => {
           ))}
         </div>
       </div>
+
+      {/* Marquee Section - Added at the bottom of the Hero */}
+      <div className="w-full mt-16 bg-[#FBC800]/10 py-4 overflow-hidden">
+        <div className="whitespace-nowrap">
+          <div className="inline-block animate-marquee whitespace-nowrap">
+            {marqueeServices.map((service, index) => (
+              <span key={index} className="mx-8 text-lg font-medium text-gray-900 inline-block">
+                {service}
+                {index < marqueeServices.length - 1 && (
+                  <span className="mx-4 text-[#FBC800]">•</span>
+                )}
+              </span>
+            ))}
+            {/* Duplicate for seamless looping */}
+            {marqueeServices.map((service, index) => (
+              <span key={`duplicate-${index}`} className="mx-8 text-lg font-medium text-gray-900 inline-block">
+                {service}
+                {index < marqueeServices.length - 1 && (
+                  <span className="mx-4 text-[#FBC800]">•</span>
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Add Open Sauce font via style tag */}
+      <style jsx global>{`
+        @import url('https://fonts.cdnfonts.com/css/open-sauce-one');
+        
+        body {
+          font-family: 'Open Sauce One', sans-serif;
+        }
+        
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
+          display: inline-block;
+        }
+      `}</style>
     </section>
   );
 };

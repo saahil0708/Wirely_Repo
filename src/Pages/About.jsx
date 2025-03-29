@@ -1,3 +1,7 @@
-export default () => {
-    return <>This is About Page</>
+import Mission from '../Components/Mission'
+
+export default()=>{
+  return(
+    <Mission/>
+  )
 }

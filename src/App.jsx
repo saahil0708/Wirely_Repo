@@ -1,12 +1,8 @@
 import React from 'react'
-import AuthPage from './Pages/Login_Regis'
+import About from './Pages/About'
 
-function App() {
-  return (
-    <div>
-      <AuthPage/>
-    </div>
+export default()=>{
+  return(
+    <About/>
   )
 }
-
-export default App

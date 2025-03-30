@@ -253,8 +253,6 @@ const MissionVisionValues = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.6 }}
                 >
-                    <div className="w-[250px] sm:w-[300px] md:w-[360px] h-1 bg-gradient-to-r from-[#ffa100] to-[#fbc800]"></div>
-                    <div className="w-[250px] sm:w-[300px] md:w-[360px] h-1 bg-gradient-to-r from-[#ffa100] to-[#fbc800] self-center"></div>
                 </motion.div>
             </div>
 

@@ -1,8 +1,14 @@
-import About from './Pages/About'
+import React from "react";
+import TeamMember10 from "./Components/Team";
+import Choose from "./Components/Choose";
 
-export default function() {
+function App() {
     return (
-    //    <h1 className="font-[Poppins]">Hello World</h1>
-       <About />
-    )
+        <div>
+            <TeamMember10 />
+            <Choose />
+        </div>
+    );
 }
+
+export default App;

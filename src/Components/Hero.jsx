@@ -104,7 +104,18 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative bg-white min-h-screen flex flex-col items-center px-6 sm:px-8 py-16 overflow-hidden font-opensauce">
+    <section className="relative bg-white min-h-screen flex flex-col items-center px-6 sm:px-8 mt-[4rem] py-16 overflow-hidden font-opensauce">
+      <div 
+  className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_70%)]"
+  style={{
+    backgroundImage: `linear-gradient(to right, #f5f5f5 1px, transparent 1px), 
+                      linear-gradient(to bottom, #f5f5f5 1px, transparent 1px)`,
+    backgroundSize: "40px 40px",
+    animation: "gridScroll 80s linear infinite",
+  }}
+></div>
+
+      
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-[#FBC800]/5 blur-xl"></div>

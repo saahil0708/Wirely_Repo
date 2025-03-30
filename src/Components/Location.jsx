@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiInstagram, FiTwitter, FiFacebook, FiLinkedin } from "react-icons/fi";
-import { MdOutlineSupportAgent, MdSend } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 
 const FAQItem = ({ question, answer, isOpen, toggle, index }) => {
   return (
@@ -69,34 +69,34 @@ const ContactUs = () => {
 
   const commonProblems = [
     {
-      title: "Order not received",
-      subject: "My order hasn't arrived",
-      message: "Hello,\n\nI placed an order on [date] with order number [order number], but I haven't received it yet. The tracking information shows [status]. Can you please help me with this?\n\nThank you."
+      title: "Service not scheduled",
+      subject: "Need to schedule electrical service",
+      message: "Hello,\n\nI would like to schedule an electrical service for [describe service needed]. Please contact me to arrange a convenient time.\n\nThank you."
     },
     {
-      title: "Wrong item received",
-      subject: "Received wrong item in my order",
-      message: "Hello,\n\nI received my order today (order number [order number]), but it contains the wrong items. I ordered [item name] but received [wrong item name] instead. Please advise on how to proceed with this issue.\n\nThank you."
+      title: "Emergency repair needed",
+      subject: "Urgent electrical repair required",
+      message: "Hello,\n\nI'm experiencing an electrical emergency at [location]. The issue is [describe problem]. Please contact me as soon as possible.\n\nThank you."
     },
     {
-      title: "Product damaged",
-      subject: "Damaged product received",
-      message: "Hello,\n\nI received my order today (order number [order number]), but the product arrived damaged. The [product name] has [describe damage]. Please let me know how to get a replacement or refund.\n\nThank you."
+      title: "Installation inquiry",
+      subject: "Question about electrical installation",
+      message: "Hello,\n\nI'm interested in having [describe installation] installed. Could you provide more information about your services and pricing?\n\nThank you."
     },
     {
-      title: "Return request",
-      subject: "Request for return authorization",
-      message: "Hello,\n\nI would like to return my recent purchase (order number [order number]). The item is [product name] and I would like to return it because [reason]. Please provide instructions on how to proceed with the return.\n\nThank you."
+      title: "Maintenance request",
+      subject: "Request for electrical maintenance",
+      message: "Hello,\n\nI would like to schedule regular electrical maintenance for my [home/business]. Please provide details about your maintenance plans.\n\nThank you."
     },
     {
-      title: "Payment issue",
-      subject: "Problem with payment processing",
-      message: "Hello,\n\nI'm having trouble completing my payment for order [order number]. I tried to pay with [payment method] but received the following error: [describe error]. Please help me resolve this issue.\n\nThank you."
+      title: "Payment question",
+      subject: "Question about payment for services",
+      message: "Hello,\n\nI have a question about payment for my recent service. [Describe your question]. Please provide clarification.\n\nThank you."
     },
     {
-      title: "Account access problem",
-      subject: "Can't access my account",
-      message: "Hello,\n\nI'm unable to access my account. When I try to log in with my email [your email], I receive [describe error message]. I've tried resetting my password but [describe what happened]. Please assist me in regaining access to my account.\n\nThank you."
+      title: "Warranty inquiry",
+      subject: "Question about service warranty",
+      message: "Hello,\n\nI have a question about the warranty for work performed on [date]. Could you provide details about what's covered?\n\nThank you."
     }
   ];
 
@@ -111,45 +111,76 @@ const ContactUs = () => {
 
   const faqs = [
     {
-      question: "How can I track my order?",
-      answer: "You can track your order by logging into your account and visiting the 'My Orders' section. You'll receive tracking information via email once your order ships. Tracking numbers are typically available within 24 hours of purchase."
+      question: "What areas do you service?",
+      answer: "We provide electrical services throughout the Chandigarh region. Contact us to confirm if we service your specific location."
     },
     {
-      question: "What are your shipping options?",
-      answer: "We offer three shipping options:\n\n1. Standard shipping (3-5 business days)\n2. Expedited shipping (2 business days)\n3. Overnight shipping (for select locations)\n\nShipping costs vary based on the option selected and your location."
+      question: "Are you licensed and insured?",
+      answer: "Yes, all of our electricians are fully licensed and insured for your protection and peace of mind."
     },
     {
-      question: "What is your return policy?",
-      answer: "We accept returns within 30 days of purchase. Items must be:\n\n• Unused\n• In original packaging\n• With all tags attached\n\nPlease contact our support team to initiate a return and receive a prepaid shipping label."
+      question: "What are your emergency service hours?",
+      answer: "We offer 24/7 emergency electrical services. Call us anytime at +1 987 654 321 for immediate assistance."
     },
     {
-      question: "Do you offer international shipping?",
-      answer: "Yes, we ship to over 50 countries worldwide. International shipping rates and delivery times vary depending on the destination. Additional customs fees may apply upon delivery in some countries."
+      question: "How quickly can you respond to service calls?",
+      answer: "For emergency calls, we typically respond within 2 hours. Standard service calls are scheduled within 24-48 hours."
     },
     {
-      question: "How can I contact customer support?",
-      answer: "Our customer support team is available:\n\n• 24/7 via phone: +1 987 654 321\n• Email: support@yourcompany.com\n• Live chat on our website\n• Through the contact form on this page\n\nAverage response time is under 2 hours during business hours."
+      question: "Do you offer free estimates?",
+      answer: "Yes, we provide free estimates for all electrical work. Contact us to schedule an assessment."
     },
     {
       question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards (Visa, Mastercard, American Express), PayPal, Apple Pay, Google Pay, and bank transfers for certain orders over $500."
+      answer: "We accept cash, all major credit cards, bank transfers, and online payments for your convenience."
     },
     {
-      question: "Can I change or cancel my order?",
-      answer: "You can modify or cancel your order within 1 hour of placement by contacting our support team. After this window, orders enter processing and cannot be changed."
+      question: "Do you provide warranties on your work?",
+      answer: "Yes, all our work comes with a 1-year warranty covering both parts and labor."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fbc800]/10 to-gray-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#fbc800] to-[#fbc800]/90 text-white py-20 px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
-        <p className="text-xl max-w-2xl mx-auto">We're here to help and answer any questions you might have.</p>
+    <div className="min-h-screen to-gray-50">
+      {/* Electrical Services Hero Section */}
+      <div className="relative bg-gray-900 overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://img.freepik.com/premium-photo/contact-us-hand-man-holding-mobile-smartphone-with-mail-phone-email-chat-icon-cutomer-support-concept-blue-wide-banner_256259-3866.jpg?w=1380"
+            alt="Electrical services background"
+            className="w-full h-25 object-cover opacity-70"
+          />
+          <div className="absolute inset-0 bg-[#fbc800]/20 mix-blend-multiply"></div>
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto py-32 px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Powering Your <span className="text-[#fbc800]">Electrical</span> Needs
+          </h1>
+          <p className="text-xl text-white max-w-3xl mx-auto mb-8">
+            Expert electrical services you can trust. Contact us for all your residential and commercial needs.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a 
+              href="#contact-form" 
+              className="px-6 py-3 bg-[#fbc800] hover:bg-[#fbc800]/90 text-white font-medium rounded-lg shadow-sm transition-colors duration-200"
+            >
+              Get a Free Quote
+            </a>
+            <a 
+              href="tel:+1234567890" 
+              className="px-6 py-3 bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 font-medium rounded-lg transition-colors duration-200"
+            >
+              <span className="flex items-center justify-center">
+                <FaPhoneAlt className="mr-2" /> Emergency Call
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* Contact Information and Form */}
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 -mt-16">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           {/* Contact Information */}
           <div className="bg-white rounded-xl shadow-sm overflow-hidden lg:col-span-1">
@@ -185,7 +216,7 @@ const ContactUs = () => {
                   <div>
                     <h3 className="text-lg font-medium text-gray-800">Phone</h3>
                     <p className="mt-1 text-gray-600">+1 234 567 890</p>
-                    <p className="mt-1 text-gray-600">Support: +1 987 654 321</p>
+                    <p className="mt-1 text-gray-600">Emergency: +1 987 654 321</p>
                   </div>
                 </div>
 
@@ -195,8 +226,8 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-800">Email</h3>
-                    <p className="mt-1 text-gray-600">info@yourcompany.com</p>
-                    <p className="mt-1 text-gray-600">support@yourcompany.com</p>
+                    <p className="mt-1 text-gray-600">info@electricalservices.com</p>
+                    <p className="mt-1 text-gray-600">support@electricalservices.com</p>
                   </div>
                 </div>
 
@@ -206,8 +237,8 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-800">Hours</h3>
-                    <p className="mt-1 text-gray-600">Monday - Friday: 9am - 6pm</p>
-                    <p className="mt-1 text-gray-600">Saturday: 10am - 4pm</p>
+                    <p className="mt-1 text-gray-600">Monday - Friday: 7am - 7pm</p>
+                    <p className="mt-1 text-gray-600">24/7 Emergency Service</p>
                   </div>
                 </div>
 
@@ -215,7 +246,7 @@ const ContactUs = () => {
                   <h3 className="text-lg font-medium text-gray-800 mb-3">Follow Us</h3>
                   <div className="flex space-x-4">
                     <a
-                      href="https://www.instagram.com/yourprofile"
+                      href="https://www.instagram.com/electricalservices"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#fbc800]/10 p-3 rounded-full text-gray-700 hover:bg-[#fbc800]/20 hover:text-[#fbc800] transition-colors duration-200"
@@ -224,7 +255,7 @@ const ContactUs = () => {
                       <FiInstagram className="text-xl" />
                     </a>
                     <a
-                      href="https://www.twitter.com/yourprofile"
+                      href="https://www.twitter.com/electricalservices"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#fbc800]/10 p-3 rounded-full text-gray-700 hover:bg-[#fbc800]/20 hover:text-[#fbc800] transition-colors duration-200"
@@ -233,7 +264,7 @@ const ContactUs = () => {
                       <FiTwitter className="text-xl" />
                     </a>
                     <a
-                      href="https://www.facebook.com/yourprofile"
+                      href="https://www.facebook.com/electricalservices"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#fbc800]/10 p-3 rounded-full text-gray-700 hover:bg-[#fbc800]/20 hover:text-[#fbc800] transition-colors duration-200"
@@ -242,7 +273,7 @@ const ContactUs = () => {
                       <FiFacebook className="text-xl" />
                     </a>
                     <a
-                      href="https://www.linkedin.com/yourprofile"
+                      href="https://www.linkedin.com/company/electricalservices"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#fbc800]/10 p-3 rounded-full text-gray-700 hover:bg-[#fbc800]/20 hover:text-[#fbc800] transition-colors duration-200"
@@ -331,7 +362,7 @@ const ContactUs = () => {
                     onClick={() => setShowSuggestions(!showSuggestions)}
                     className="text-[#fbc800] hover:text-[#fbc800]/80 text-sm font-medium flex items-center"
                   >
-                    Common issues
+                    Common electrical issues
                     {showSuggestions ? (
                       <FaChevronUp className="ml-1 text-xs" />
                     ) : (
@@ -340,7 +371,7 @@ const ContactUs = () => {
                   </button>
                   
                   {showSuggestions && (
-                    <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                       <div className="py-1">
                         {commonProblems.map((problem, index) => (
                           <button
@@ -373,26 +404,13 @@ const ContactUs = () => {
 
         {/* Enhanced FAQ Section */}
         <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-xl overflow-hidden">
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
             <div className="p-8 sm:p-10">
               <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold text-gray-800 mb-3">Frequently Asked Questions</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">Find quick answers to common questions about our products and services.</p>
+                <p className="text-gray-600 max-w-2xl mx-auto">Find quick answers to common questions about our electrical services.</p>
               </div>
 
-              {/* FAQ Categories */}
-              {/* <div className="flex flex-wrap justify-center gap-3 mb-8">
-                {['Shipping', 'Returns', 'Payments', 'Orders', 'Support'].map((category) => (
-                  <button
-                    key={category}
-                    className="px-4 py-2 bg-[#fbc800]/10 text-[#fbc800] rounded-full text-sm font-medium hover:bg-[#fbc800]/20 transition-colors"
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div> */}
-
-              {/* FAQ Results */}
               <div className="max-w-3xl mx-auto">
                 {faqs.map((faq, index) => (
                   <FAQItem
@@ -406,7 +424,6 @@ const ContactUs = () => {
                 ))}
               </div>
 
-              {/* Still have questions? */}
               <div className="mt-12 text-center">
                 <h3 className="text-xl font-medium text-gray-800 mb-3">Still have questions?</h3>
                 <p className="text-gray-600 mb-5">Can't find what you're looking for? Our team is happy to help.</p>

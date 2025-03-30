@@ -1,4 +1,4 @@
-import Team from '../Components/Team'
+import Team from '../Components/Founder'
 import Choose from '../Components/Choose'
 
 export default() => {

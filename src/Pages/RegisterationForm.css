@@ -1,140 +1,145 @@
 /* RegistrationForm.css */
 .auth-container {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
+  min-height: 680px;
+}
+
+.image-section {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width, height, border-radius, left, right;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+}
+
+.image-section > div:first-child {
+  transition: opacity 0.8s ease;
+}
+
+.form-section {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+  max-height: 100%;
+}
+
+/* Smooth overlay */
+.image-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  transition: opacity 0.8s ease;
+}
+
+/* Form elements */
+.group {
+  transition: all 0.5s ease;
+}
+
+input {
+  transition: all 0.5s ease;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
+}
+
+button {
+  transition: all 0.5s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Technician form transition */
+.flex-1 {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 1rem;
+  gap: 1rem;
+}
+
+/* Form content animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .image-section {
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: width, height, border-radius, left, right;
-    background-size: cover;
-    background-position: center;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .image-section > div:first-child {
-    transition: opacity 0.8s ease;
+}
+
+.form-section > div {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Button hover effects */
+button[type="submit"] {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+}
+
+/* Toggle button effects */
+button[onClick*="handleTechnicianToggle"] {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Input icons transition */
+.relative svg {
+  transition: all 0.4s ease;
+}
+
+/* Checkbox transition */
+.form-checkbox {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .image-section,
+  .form-section,
+  .group,
+  input,
+  button,
+  .flex-1,
+  .form-section > div,
+  .image-section::before,
+  .relative svg,
+  .form-checkbox {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .auth-container {
+    height: auto !important;
+    min-height: 650px;
   }
   
   .form-section {
-    transition: opacity 0.8s ease, transform 0.8s ease;
-    will-change: opacity, transform;
+    height: auto;
+    padding-bottom: 2rem;
   }
   
-  /* Smooth overlay */
-  .image-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-    transition: opacity 0.8s ease;
-  }
-  
-  /* Form elements */
-  .group {
-    transition: all 0.5s ease;
-  }
-  
-  input {
-    transition: all 0.5s ease;
-  }
-  
-  input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.2);
-  }
-  
-  button {
-    transition: all 0.5s ease;
-  }
-  
-  button:hover {
-    transform: translateY(-2px);
-  }
-  
-  /* Technician form transition */
   .flex-1 {
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 1.5rem;
   }
   
-  /* Form content animation */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .form-section {
+    padding: 1.5rem;
   }
-  
-  .form-section > div {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  
-  /* Button hover effects */
-  button[type="submit"] {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  button[type="submit"]:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
-  }
-  
-  /* Toggle button effects */
-  button[onClick*="handleTechnicianToggle"] {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  /* Input icons transition */
-  .relative svg {
-    transition: all 0.4s ease;
-  }
-  
-  /* Checkbox transition */
-  .form-checkbox {
-    transition: all 0.3s ease;
-  }
-  
-  /* Reduced motion preference */
-  @media (prefers-reduced-motion: reduce) {
-    .image-section,
-    .form-section,
-    .group,
-    input,
-    button,
-    .flex-1,
-    .form-section > div,
-    .image-section::before,
-    .relative svg,
-    .form-checkbox {
-      transition: none !important;
-      animation: none !important;
-    }
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    .image-section {
-      display: none;
-    }
-    
-    .form-section {
-      width: 100% !important;
-      margin-left: 0 !important;
-    }
-    
-    /* Slower transitions on mobile */
-    .form-section,
-    .image-section,
-    .group,
-    input,
-    button {
-      transition-duration: 0.6s !important;
-    }
-  }
+}

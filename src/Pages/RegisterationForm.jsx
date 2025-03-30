@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="min-h-screen font-['Open_Sans'] flex items-center justify-center shadow-xl p-4">
-      <div className="auth-container bg-white rounded-3xl w-full max-w-4xl flex overflow-hidden shadow-lg border border-[#d0d0d0] h-[600px]">
+      <div className="auth-container bg-white rounded-3xl w-full max-w-5xl flex overflow-hidden shadow-lg border border-[#d0d0d0] h-[680px]">
         {/* Image Section */}
         <div 
           className={`image-section hidden md:flex flex-col items-center justify-center relative overflow-hidden ${
@@ -98,7 +98,7 @@ function App() {
           </div>
 
           {/* Form content with dynamic positioning */}
-          <div className={`flex-1 flex flex-col ${isTechnician ? 'justify-start' : 'justify-center'} transition-all duration-500`}>
+          <div className={`flex-1 flex flex-col ${isTechnician ? 'justify-start' : 'justify-center'} transition-all duration-500 gap-4`}>
             <div>
               <h1 className="text-2xl font-bold text-center mb-2">
                 {isLogin ? 'Sign In to Your Account' : 'Join Us Today'}
@@ -184,14 +184,14 @@ function App() {
 
                 <button
                   type="submit"
-                  className="w-full bg-yellow-400 text-white py-3 rounded-lg hover:bg-yellow-500 transition-all duration-500 font-semibold hover:shadow-lg"
+                  className="w-full bg-yellow-400 text-white py-3 rounded-lg hover:bg-yellow-500 transition-all duration-500 font-semibold hover:shadow-lg mt-4"
                 >
                   {isLogin ? 'Sign In' : 'Create Account'}
                 </button>
               </form>
 
               {!isLogin && (
-                <p className="mt-2 text-xs text-gray-500 text-center transition-all duration-500">
+                <p className="mt-4 text-xs text-gray-500 text-center transition-all duration-500">
                   By registering, you agree to our Terms of Service and Privacy Policy
                 </p>
               )}

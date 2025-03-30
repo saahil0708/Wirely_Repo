@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { 
-  Search, User, Menu, X, ChevronDown,
-  Zap, AirVent, Refrigerator, Home, Laptop,
-  Plug, Hammer, Smartphone, Sun, Wrench,
-  Battery, Settings, AlertTriangle, HardDrive
-} from "lucide-react";
+import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Search, User, Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -12,8 +8,37 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredServices, setFilteredServices] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const searchRef = useRef(null);
+
+  // All services flattened for search
+  const allServices = [
+    "Electrical Repair & Installation",
+    "AC / Refrigerator / Washing Machine Repair",
+    "CCTV Installation & Repair",
+    "Inverter & Battery Installation / Repair",
+    "Home Appliance Repair",
+    "Computer & Laptop Repair",
+    "Plumbing Services",
+    "Carpenter Services",
+    "Mobile Phone Repair",
+    "Solar Panel Installation & Maintenance",
+    "Smart Home Setup",
+    "Wiring & Circuit Fixing",
+    "Generator Repair & Installation",
+    "Electrical Inspection & Consultation",
+    "Emergency Repair Services (24x7)"
+  ];
+
+  // Services organized in a 3x5 grid for display
+  const services = [
+    allServices.slice(0, 3),
+    allServices.slice(3, 6),
+    allServices.slice(6, 9),
+    allServices.slice(9, 12),
+    allServices.slice(12, 15)
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,74 +49,56 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredServices([]);
-      setShowSearchResults(false);
-      return;
-    }
-
-    const allServices = services.flat();
-    const results = allServices.filter(service =>
-      service.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredServices(results);
-    setShowSearchResults(results.length > 0);
-  }, [searchQuery]);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    // Close search results when clicking outside
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSearchResults(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.length > 0) {
+      const results = allServices.filter(service =>
+        service.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(results);
+      setShowSearchResults(true);
+    } else {
+      setSearchResults([]);
+      setShowSearchResults(false);
+    }
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (filteredServices.length > 0) {
-      setIsServicesOpen(true);
+    if (searchResults.length > 0) {
+      // Navigate to the first result
+      window.location.href = `/service/${toServicePath(searchResults[0])}`;
     }
   };
 
-  const handleServiceClick = () => {
-    setSearchQuery("");
-    setShowSearchResults(false);
-    setIsServicesOpen(false);
-    setIsMenuOpen(false);
-  };
-
-  // Services with corresponding icons
-  const services = [
-    [
-      { name: "Electrical Repair & Installation", icon: <Zap className="w-4 h-4 mr-2" />, slug: "electrical-repair-installation" },
-      { name: "AC / Refrigerator / Washing Machine Repair", icon: <Refrigerator className="w-4 h-4 mr-2" />, slug: "ac-refrigerator-washing-machine-repair" },
-      { name: "CCTV Installation & Repair", icon: <Home className="w-4 h-4 mr-2" />, slug: "cctv-installation-repair" }
-    ],
-    [
-      { name: "Inverter & Battery Installation / Repair", icon: <Battery className="w-4 h-4 mr-2" />, slug: "inverter-battery-installation-repair" },
-      { name: "Home Appliance Repair", icon: <Settings className="w-4 h-4 mr-2" />, slug: "home-appliance-repair" },
-      { name: "Computer & Laptop Repair", icon: <Laptop className="w-4 h-4 mr-2" />, slug: "computer-laptop-repair" }
-    ],
-    [
-      { name: "Plumbing Services", icon: <Wrench className="w-4 h-4 mr-2" />, slug: "plumbing-services" },
-      { name: "Carpenter Services", icon: <Hammer className="w-4 h-4 mr-2" />, slug: "carpenter-services" },
-      { name: "Mobile Phone Repair", icon: <Smartphone className="w-4 h-4 mr-2" />, slug: "mobile-phone-repair" }
-    ],
-    [
-      { name: "Solar Panel Installation & Maintenance", icon: <Sun className="w-4 h-4 mr-2" />, slug: "solar-panel-installation-maintenance" },
-      { name: "Smart Home Setup", icon: <Home className="w-4 h-4 mr-2" />, slug: "smart-home-setup" },
-      { name: "Wiring & Circuit Fixing", icon: <Plug className="w-4 h-4 mr-2" />, slug: "wiring-circuit-fixing" }
-    ],
-    [
-      { name: "Generator Repair & Installation", icon: <HardDrive className="w-4 h-4 mr-2" />, slug: "generator-repair-installation" },
-      { name: "Electrical Inspection & Consultation", icon: <Zap className="w-4 h-4 mr-2" />, slug: "electrical-inspection-consultation" },
-      { name: "Emergency Repair Services (24x7)", icon: <AlertTriangle className="w-4 h-4 mr-2" />, slug: "emergency-repair-services" }
-    ]
-  ];
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const navLinks = [
-    { href: "/services", label: "Services", dropdown: true },
+    { href: "/service", label: "Services", dropdown: true },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
+
+  // Convert service name to URL-friendly format
+  const toServicePath = (service) => {
+    return service.toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/-$/, "");
+  };
 
   return (
     <nav
@@ -106,17 +113,17 @@ const Navbar = () => {
             className="flex items-center"
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <a href="/" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <img
                 src="https://ghc53p2bgg.ufs.sh/f/47CofKs94FnTI3LXexAi9tm1GlkdxoZwpsugDFHvWrN3KfbU"
                 alt="Wirely Logo"
                 className="h-[6rem] w-auto md:h-[8rem] transition-all duration-300"
               />
-            </a>
+            </Link>
           </motion.div>
 
           {/* Desktop Search */}
-          <div className="hidden md:flex items-center w-1/3 mx-6">
+          <div className="hidden md:flex items-center w-1/3 mx-6" ref={searchRef}>
             <div className="relative w-full">
               <form onSubmit={handleSearchSubmit}>
                 <input
@@ -125,30 +132,32 @@ const Navbar = () => {
                   className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
                   value={searchQuery}
                   onChange={handleSearchChange}
+                  onFocus={() => searchQuery.length > 0 && setShowSearchResults(true)}
                 />
                 <button 
                   type="submit"
                   className="absolute right-0 top-0 bottom-0 px-4 bg-black text-white rounded-r-lg flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
-                  <Search className="w-5 h-5" />
+                  <Search size={20} />
                 </button>
               </form>
               
-              {/* Search Results Dropdown - No Icons */}
-              {showSearchResults && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg z-50 border border-gray-200 max-h-96 overflow-y-auto">
-                  <div className="p-2">
-                    {filteredServices.map((service, index) => (
-                      <a
-                        key={index}
-                        href={`/services/${service.slug}`}
-                        className="block p-2 text-sm text-gray-700 hover:text-black hover:bg-gray-50 rounded transition-colors"
-                        onClick={handleServiceClick}
-                      >
-                        {service.name}
-                      </a>
-                    ))}
-                  </div>
+              {/* Search results dropdown */}
+              {showSearchResults && searchResults.length > 0 && (
+                <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                  {searchResults.map((service, index) => (
+                    <Link
+                      key={index}
+                      to={`/service/${toServicePath(service)}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                      onClick={() => {
+                        setShowSearchResults(false);
+                        setSearchQuery(service);
+                      }}
+                    >
+                      {service}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -163,14 +172,18 @@ const Navbar = () => {
                     <div
                       className="flex items-center font-medium text-gray-700 hover:text-black transition-colors cursor-pointer"
                       onMouseEnter={() => setIsServicesOpen(true)}
-                      onMouseLeave={() => setIsServicesOpen(false)}
+                      onClick={() => {
+                        setIsServicesOpen(!isServicesOpen);
+                        window.location.href = "/service";
+                      }}
                     >
                       <span className="relative">
                         {link.label}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
                       </span>
                       <ChevronDown
-                        className={`w-4 h-4 ml-1 transition-transform ${
+                        size={16}
+                        className={`ml-1 transition-transform ${
                           isServicesOpen ? "rotate-180" : ""
                         }`}
                       />
@@ -193,14 +206,13 @@ const Navbar = () => {
                                   <tr key={rowIndex}>
                                     {row.map((service, colIndex) => (
                                       <td key={colIndex} className="p-2">
-                                        <a
-                                          href={`/services/${service.slug}`}
-                                          className="flex items-center text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                        <Link
+                                          to={`/service/${toServicePath(service)}`}
+                                          className="block text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
                                           onClick={() => setIsServicesOpen(false)}
                                         >
-                                          {service.icon}
-                                          {service.name}
-                                        </a>
+                                          {service}
+                                        </Link>
                                       </td>
                                     ))}
                                   </tr>
@@ -213,15 +225,15 @@ const Navbar = () => {
                     </AnimatePresence>
                   </>
                 ) : (
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="relative group font-medium text-gray-700 hover:text-black transition-colors"
                   >
                     <span className="relative">
                       {link.label}
                       <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
                     </span>
-                  </a>
+                  </Link>
                 )}
               </div>
             ))}
@@ -229,20 +241,20 @@ const Navbar = () => {
 
           {/* Desktop User Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="/login"
+            <Link
+              to="/register"
               className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
             >
               Login
-            </a>
-            <a
-              href="/signup"
+            </Link>
+            <Link
+              to="/register"
               className="px-4 py-2 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
             >
               Sign Up
-            </a>
+            </Link>
             <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
-              <User className="w-5 h-5 text-gray-700" />
+              <User size={24} className="text-gray-700" />
             </button>
           </div>
 
@@ -254,9 +266,9 @@ const Navbar = () => {
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
-                <X className="w-5 h-5 text-gray-700" />
+                <X size={24} className="text-gray-700" />
               ) : (
-                <Menu className="w-5 h-5 text-gray-700" />
+                <Menu size={24} className="text-gray-700" />
               )}
             </button>
           </div>
@@ -274,38 +286,39 @@ const Navbar = () => {
             >
               <div className="px-4 pt-2 pb-6 space-y-4">
                 {/* Mobile Search */}
-                <div className="relative w-full">
-                  <form onSubmit={handleSearchSubmit}>
-                    <input
-                      type="text"
-                      placeholder="Search services..."
-                      className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      value={searchQuery}
-                      onChange={handleSearchChange}
-                    />
-                    <button 
-                      type="submit"
-                      className="absolute right-0 top-0 bottom-0 px-4 bg-black text-white rounded-r-lg flex items-center justify-center"
-                    >
-                      <Search className="w-5 h-5" />
-                    </button>
-                  </form>
+                <div className="relative w-full" ref={searchRef}>
+                  <input
+                    type="text"
+                    placeholder="Search services..."
+                    className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    onFocus={() => searchQuery.length > 0 && setShowSearchResults(true)}
+                  />
+                  <button 
+                    className="absolute right-0 top-0 bottom-0 px-4 bg-black text-white rounded-r-lg flex items-center justify-center"
+                    onClick={handleSearchSubmit}
+                  >
+                    <Search size={20} />
+                  </button>
                   
-                  {/* Mobile Search Results - No Icons */}
-                  {showSearchResults && (
-                    <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg z-50 border border-gray-200 max-h-96 overflow-y-auto">
-                      <div className="p-2">
-                        {filteredServices.map((service, index) => (
-                          <a
-                            key={index}
-                            href={`/services/${service.slug}`}
-                            className="block p-2 text-sm text-gray-600 hover:text-black hover:bg-gray-50 rounded transition-colors"
-                            onClick={handleServiceClick}
-                          >
-                            {service.name}
-                          </a>
-                        ))}
-                      </div>
+                  {/* Mobile search results */}
+                  {showSearchResults && searchResults.length > 0 && (
+                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+                      {searchResults.map((service, index) => (
+                        <Link
+                          key={index}
+                          to={`/service/${toServicePath(service)}`}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                          onClick={() => {
+                            setShowSearchResults(false);
+                            setSearchQuery(service);
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          {service}
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -316,17 +329,29 @@ const Navbar = () => {
                     <div key={link.href}>
                       {link.dropdown ? (
                         <>
-                          <button
-                            onClick={() => setIsServicesOpen(!isServicesOpen)}
-                            className="flex items-center justify-between w-full text-gray-700 hover:text-black py-2 font-medium transition-colors"
-                          >
-                            <span>{link.label}</span>
-                            <ChevronDown
-                              className={`w-4 h-4 transition-transform ${
-                                isServicesOpen ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
+                          <div className="flex items-center justify-between">
+                            <Link
+                              to="/service"
+                              className="text-gray-700 hover:text-black py-2 font-medium transition-colors"
+                              onClick={() => {
+                                setIsMenuOpen(false);
+                                setIsServicesOpen(false);
+                              }}
+                            >
+                              {link.label}
+                            </Link>
+                            <button
+                              onClick={() => setIsServicesOpen(!isServicesOpen)}
+                              className="p-2"
+                            >
+                              <ChevronDown
+                                size={16}
+                                className={`transition-transform ${
+                                  isServicesOpen ? "rotate-180" : ""
+                                }`}
+                              />
+                            </button>
+                          </div>
                           {isServicesOpen && (
                             <div className="pl-2">
                               <table className="w-full">
@@ -335,17 +360,16 @@ const Navbar = () => {
                                     <tr key={rowIndex}>
                                       {row.map((service, colIndex) => (
                                         <td key={colIndex} className="p-1">
-                                          <a
-                                            href={`/services/${service.slug}`}
-                                            className="flex items-center text-sm text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                          <Link
+                                            to={`/service/${toServicePath(service)}`}
+                                            className="block text-xs text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
                                             onClick={() => {
                                               setIsServicesOpen(false);
                                               setIsMenuOpen(false);
                                             }}
                                           >
-                                            {service.icon}
-                                            {service.name}
-                                          </a>
+                                            {service}
+                                          </Link>
                                         </td>
                                       ))}
                                     </tr>
@@ -356,13 +380,13 @@ const Navbar = () => {
                           )}
                         </>
                       ) : (
-                        <a
-                          href={link.href}
+                        <Link
+                          to={link.href}
                           className="block text-gray-700 hover:text-black py-2 font-medium transition-colors"
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {link.label}
-                        </a>
+                        </Link>
                       )}
                     </div>
                   ))}
@@ -370,20 +394,20 @@ const Navbar = () => {
 
                 {/* Mobile Action Buttons */}
                 <div className="space-y-3 pt-2">
-                  <a
-                    href="/login"
+                  <Link
+                    to="/login"
                     className="block w-full text-center px-4 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
-                  </a>
-                  <a
-                    href="/signup"
+                  </Link>
+                  <Link
+                    to="/signup"
                     className="block w-full text-center px-4 py-3 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

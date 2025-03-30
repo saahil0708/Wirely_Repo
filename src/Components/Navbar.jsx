@@ -18,7 +18,7 @@ import {
   Sun,               // Solar
   Wifi,              // Smart Home
   CircuitBoard,      // Wiring
-  Fuel,              // Generator (using Fuel as alternative)
+  Power,             // Generator (using Power icon)
   ClipboardCheck,    // Inspection
   AlertTriangle      // Emergency
 } from "lucide-react";
@@ -76,7 +76,7 @@ const serviceData = [
   },
   { 
     name: "Generator Repair & Installation", 
-    icon: <Fuel size={16} className="text-primary-500 mr-2" />  // Using Fuel icon as generator
+    icon: <Power size={16} className="text-primary-500 mr-2" />  // Using Power icon
   },
   { 
     name: "Electrical Inspection & Consultation", 

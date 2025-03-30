@@ -1,7 +1,92 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
-import { Search, User, Menu, X, ChevronDown } from "lucide-react";
+import { 
+  Search, 
+  User, 
+  Menu, 
+  X, 
+  ChevronDown,
+  Zap,               // Electrical
+  AirVent,           // AC
+  Video,             // CCTV
+  BatteryFull,       // Inverter
+  Home,              // Home Appliance
+  Laptop,            // Computer
+  Droplets,          // Plumbing
+  Hammer,            // Carpenter
+  Smartphone,        // Mobile
+  Sun,               // Solar
+  Wifi,              // Smart Home
+  CircuitBoard,      // Wiring
+  Generator,         // Generator
+  ClipboardCheck,    // Inspection
+  AlertTriangle      // Emergency
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Service with icon mapping
+const serviceData = [
+  { 
+    name: "Electrical Repair & Installation", 
+    icon: <Zap size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "AC / Refrigerator / Washing Machine Repair", 
+    icon: <AirVent size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "CCTV Installation & Repair", 
+    icon: <Video size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Inverter & Battery Installation / Repair", 
+    icon: <BatteryFull size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Home Appliance Repair", 
+    icon: <Home size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Computer & Laptop Repair", 
+    icon: <Laptop size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Plumbing Services", 
+    icon: <Droplets size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Carpenter Services", 
+    icon: <Hammer size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Mobile Phone Repair", 
+    icon: <Smartphone size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Solar Panel Installation & Maintenance", 
+    icon: <Sun size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Smart Home Setup", 
+    icon: <Wifi size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Wiring & Circuit Fixing", 
+    icon: <CircuitBoard size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Generator Repair & Installation", 
+    icon: <Generator size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Electrical Inspection & Consultation", 
+    icon: <ClipboardCheck size={16} className="text-primary-500 mr-2" /> 
+  },
+  { 
+    name: "Emergency Repair Services (24x7)", 
+    icon: <AlertTriangle size={16} className="text-primary-500 mr-2" /> 
+  }
+];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,33 +97,17 @@ const Navbar = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const searchRef = useRef(null);
 
-  // All services flattened for search
-  const allServices = [
-    "Electrical Repair & Installation",
-    "AC / Refrigerator / Washing Machine Repair",
-    "CCTV Installation & Repair",
-    "Inverter & Battery Installation / Repair",
-    "Home Appliance Repair",
-    "Computer & Laptop Repair",
-    "Plumbing Services",
-    "Carpenter Services",
-    "Mobile Phone Repair",
-    "Solar Panel Installation & Maintenance",
-    "Smart Home Setup",
-    "Wiring & Circuit Fixing",
-    "Generator Repair & Installation",
-    "Electrical Inspection & Consultation",
-    "Emergency Repair Services (24x7)"
+  // Services organized in a 3x5 grid with icons
+  const services = [
+    serviceData.slice(0, 3),
+    serviceData.slice(3, 6),
+    serviceData.slice(6, 9),
+    serviceData.slice(9, 12),
+    serviceData.slice(12, 15)
   ];
 
-  // Services organized in a 3x5 grid for display
-  const services = [
-    allServices.slice(0, 3),
-    allServices.slice(3, 6),
-    allServices.slice(6, 9),
-    allServices.slice(9, 12),
-    allServices.slice(12, 15)
-  ];
+  // All services flattened for search
+  const allServices = serviceData.map(service => service.name);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,7 +149,6 @@ const Navbar = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchResults.length > 0) {
-      // Navigate to the first result
       window.location.href = `/service/${toServicePath(searchResults[0])}`;
     }
   };
@@ -145,19 +213,23 @@ const Navbar = () => {
               {/* Search results dropdown */}
               {showSearchResults && searchResults.length > 0 && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-96 overflow-y-auto">
-                  {searchResults.map((service, index) => (
-                    <Link
-                      key={index}
-                      to={`/service/${toServicePath(service)}`}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
-                      onClick={() => {
-                        setShowSearchResults(false);
-                        setSearchQuery(service);
-                      }}
-                    >
-                      {service}
-                    </Link>
-                  ))}
+                  {searchResults.map((serviceName, index) => {
+                    const service = serviceData.find(s => s.name === serviceName);
+                    return (
+                      <Link
+                        key={index}
+                        to={`/service/${toServicePath(serviceName)}`}
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                        onClick={() => {
+                          setShowSearchResults(false);
+                          setSearchQuery(serviceName);
+                        }}
+                      >
+                        {service?.icon || <Zap size={16} className="text-primary-500 mr-2" />}
+                        {serviceName}
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -207,11 +279,12 @@ const Navbar = () => {
                                     {row.map((service, colIndex) => (
                                       <td key={colIndex} className="p-2">
                                         <Link
-                                          to={`/service/${toServicePath(service)}`}
-                                          className="block text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                          to={`/service/${toServicePath(service.name)}`}
+                                          className="flex items-center text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
                                           onClick={() => setIsServicesOpen(false)}
                                         >
-                                          {service}
+                                          {service.icon}
+                                          {service.name}
                                         </Link>
                                       </td>
                                     ))}
@@ -305,20 +378,24 @@ const Navbar = () => {
                   {/* Mobile search results */}
                   {showSearchResults && searchResults.length > 0 && (
                     <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
-                      {searchResults.map((service, index) => (
-                        <Link
-                          key={index}
-                          to={`/service/${toServicePath(service)}`}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
-                          onClick={() => {
-                            setShowSearchResults(false);
-                            setSearchQuery(service);
-                            setIsMenuOpen(false);
-                          }}
-                        >
-                          {service}
-                        </Link>
-                      ))}
+                      {searchResults.map((serviceName, index) => {
+                        const service = serviceData.find(s => s.name === serviceName);
+                        return (
+                          <Link
+                            key={index}
+                            to={`/service/${toServicePath(serviceName)}`}
+                            className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition-colors"
+                            onClick={() => {
+                              setShowSearchResults(false);
+                              setSearchQuery(serviceName);
+                              setIsMenuOpen(false);
+                            }}
+                          >
+                            {service?.icon || <Zap size={16} className="text-primary-500 mr-2" />}
+                            {serviceName}
+                          </Link>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -361,14 +438,15 @@ const Navbar = () => {
                                       {row.map((service, colIndex) => (
                                         <td key={colIndex} className="p-1">
                                           <Link
-                                            to={`/service/${toServicePath(service)}`}
-                                            className="block text-xs text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                            to={`/service/${toServicePath(service.name)}`}
+                                            className="flex items-center text-xs text-gray-600 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
                                             onClick={() => {
                                               setIsServicesOpen(false);
                                               setIsMenuOpen(false);
                                             }}
                                           >
-                                            {service}
+                                            {service.icon}
+                                            {service.name}
                                           </Link>
                                         </td>
                                       ))}

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import Loader from './Loader/Loader'
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Router from './Routes/AppLayout'
 

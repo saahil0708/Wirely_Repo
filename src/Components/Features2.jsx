@@ -22,8 +22,8 @@ const StatsSection = () => {
           <StatBox 
             value={99.9}
             label="Uptime Guarantee"
-            gradientFrom="#fbc800"
-            gradientTo="#ffa100"
+            gradientFrom="#fcd34d"  // Lighter yellow
+            gradientTo="#fbbf24"     // Lighter orange
             icon={<Server className="w-6 h-6" />}
           />
           
@@ -31,8 +31,8 @@ const StatsSection = () => {
           <StatBox 
             value={24}
             label="Support Availability"
-            gradientFrom="#fbc800"
-            gradientTo="#ffa100"
+            gradientFrom="#fcd34d"   // Lighter yellow
+            gradientTo="#fbbf24"     // Lighter orange
             icon={<Headphones className="w-6 h-6" />}
           />
           
@@ -40,8 +40,8 @@ const StatsSection = () => {
           <StatBox 
             value={30}
             label="Average Response Time"
-            gradientFrom="#fbc800"
-            gradientTo="#ffa100"
+            gradientFrom="#fcd34d"   // Lighter yellow
+            gradientTo="#fbbf24"     // Lighter orange
             icon={<Zap className="w-6 h-6" />}
           />
         </div>

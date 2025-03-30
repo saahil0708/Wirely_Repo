@@ -92,7 +92,7 @@ export default function TestimonialSection() {
   };
 
   return (
-    <section className="py-20 mt-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 font-[Poppins]">
+    <section className="py-20 mt-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-gray-100 font-[Poppins]">
       <div className="max-w-7xl mx-auto">
         {/* Mobile Layout - Column */}
         <div className="flex flex-col md:hidden space-y-6">

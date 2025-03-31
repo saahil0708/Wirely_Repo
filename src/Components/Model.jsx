@@ -51,7 +51,7 @@ export default function SubscriptionPlans() {
     {
       name: "Premium",
       description: "Priority technical support with fast response",
-      price: isAnnual ? 49 : 4.99,
+      price: isAnnual ? 1599 : 129,
       responseTime: "1 hour",
       color: "from-[#fbc800] to-[#e6b800]",
       bgColor: "bg-gradient-to-br from-white to-[#fff9e6]",
@@ -202,7 +202,7 @@ export default function SubscriptionPlans() {
                   <div className="mb-6">
                     <div className="flex items-baseline">
                       <span className="text-4xl font-bold text-gray-900">
-                        {plan.price === 0 ? "Free" : `$${plan.price}`}
+                        {plan.price === 0 ? "Free" : `₹${plan.price}`}
                       </span>
                       {plan.price !== 0 && (
                         <span className="ml-2 text-gray-600">/{isAnnual ? "year" : "month"}</span>

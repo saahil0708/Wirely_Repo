@@ -326,9 +326,11 @@ const Navbar = () => {
             >
               Sign Up
             </Link>
-            <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
-              <User size={24} className="text-gray-700" />
-            </button>
+            <Link to='/profile'>
+              <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                <User size={24} className="text-gray-700" />
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -468,6 +470,20 @@ const Navbar = () => {
                       )}
                     </div>
                   ))}
+                </div>
+
+                {/* Mobile Profile Section */}
+                <div className="flex items-center space-x-4 pt-2 border-t border-gray-200">
+                  <Link 
+                    to="/profile" 
+                    className="flex items-center space-x-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="p-2 rounded-full bg-gray-100">
+                      <User size={20} className="text-gray-700" />
+                    </div>
+                    <span className="font-medium">My Profile</span>
+                  </Link>
                 </div>
 
                 {/* Mobile Action Buttons */}

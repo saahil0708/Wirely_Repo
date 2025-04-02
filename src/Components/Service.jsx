@@ -1,27 +1,49 @@
-import { useRef } from "react";
-import { FaWindows, FaApple, FaGoogle } from "react-icons/fa";
+import { useRef, useState } from "react";
+import { FaWindows, FaApple, FaGoogle, FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 
-const ServiceCard = ({ title, rating, reviews, price, description, image }) => {
+const ServiceCard = ({ title, rating, reviews, price, description, image, onBook, isBooked }) => {
+  const handleAddClick = () => {
+    onBook();
+  };
+
   return (
-    <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 flex" style={{ minHeight: '280px', width: '100%' }}>
+    <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 flex hover:shadow-md transition-shadow" style={{ minHeight: '280px', width: '100%' }}>
       <div className="w-3/4 pr-4">
         <h2 className="font-bold text-lg">{title}</h2>
         <p className="text-sm text-gray-500">⭐ {rating} ({reviews} reviews)</p>
         <p className="font-semibold mt-1">Starts at ₹{price}</p>
         <p className="text-sm text-gray-600 mt-2 line-clamp-4">{description}</p>
-        <a href="#" className="text-blue-500 text-sm block mt-2">View details</a>
+        <a href="#" className="text-blue-500 hover:text-blue-700 text-sm block mt-2 transition-colors">View details</a>
       </div>
 
-      <div className="w-1/4 flex flex-col items-center justify-between h-full">
-        <div className="relative h-3/4 w-full">
+      <div className="w-1/4 flex flex-col items-center">
+        <div className="relative w-full h-full">
           <img 
             src={image} 
             alt={title} 
             className="w-full h-full object-cover rounded-md border border-gray-200"
+            style={{ minHeight: '200px', maxHeight: '200px' }}
           />
-          <button className="absolute top-[90%] left-[30%] bg-yellow-500 text-white px-3 py-1 rounded-md text-sm">
-            Add
-          </button>
+          <div className="flex justify-center w-full absolute bottom-2">
+            <button 
+              onClick={handleAddClick}
+              className={`text-white px-4 py-2 rounded-md text-sm font-medium shadow-md flex items-center justify-center ${
+                isBooked ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 hover:bg-yellow-600'
+              }`}
+            >
+              {isBooked ? (
+                <>
+                  <FaCheck className="text-xs mr-1 mt-[-4]" />
+                  <span>Booked</span>
+                </>
+              ) : (
+                <>
+                  <FaPlus className="text-xs mr-1 mt-[-4]" />
+                  <span>Book</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -30,6 +52,9 @@ const ServiceCard = ({ title, rating, reviews, price, description, image }) => {
 
 export default function LaptopRepairPage() {
   const scrollRef = useRef(null);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [bookedServices, setBookedServices] = useState([]);
+  
   const galleryImages = [
     "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
     "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
@@ -39,16 +64,90 @@ export default function LaptopRepairPage() {
     "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
   ];
 
+  const services = [
+    {
+      id: 1,
+      title: "Quick visit",
+      rating: 4.83,
+      reviews: "20K",
+      price: 159,
+      description: "Visit charge of Rs 159 waived in final bill; spare part/repair cost extra",
+      image: "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
+      brand: null
+    },
+    {
+      id: 2,
+      title: "Windows laptop repair",
+      rating: 4.43,
+      reviews: "10K",
+      price: 159,
+      description: "Visit charge of Rs 159 waived in final bill; spare part/repair cost extra",
+      image: "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
+      brand: "windows"
+    },
+    {
+      id: 3,
+      title: "MacBook screen replacement",
+      rating: 4.65,
+      reviews: "8.5K",
+      price: 1299,
+      description: "Original Apple parts with 180-day warranty",
+      image: "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
+      brand: "apple"
+    },
+    {
+      id: 4,
+      title: "Laptop battery replacement",
+      rating: 4.72,
+      reviews: "15K",
+      price: 799,
+      description: "Genuine battery with 1-year warranty",
+      image: "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
+      brand: null
+    },
+    {
+      id: 5,
+      title: "Liquid damage repair",
+      rating: 4.35,
+      reviews: "5.2K",
+      price: 499,
+      description: "Diagnosis and repair for liquid damaged devices",
+      image: "https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg",
+      brand: null
+    }
+  ];
+
+  const handleBookService = (service) => {
+    // Check if service is already booked
+    const isAlreadyBooked = bookedServices.some(s => s.id === service.id);
+    
+    if (isAlreadyBooked) {
+      // Remove from booked services
+      setBookedServices(bookedServices.filter(s => s.id !== service.id));
+    } else {
+      // Add to booked services
+      setBookedServices([...bookedServices, service]);
+    }
+  };
+
+  const handleRemoveService = (serviceId) => {
+    setBookedServices(bookedServices.filter(s => s.id !== serviceId));
+  };
+
+  const filteredServices = selectedBrand
+    ? services.filter(service => !service.brand || service.brand === selectedBrand)
+    : services;
+
   return (
     <div className="laptop-repair-container">
-      {/* Left Sidebar */}
+      {/* Left Sidebar - unchanged */}
       <div className="left-sidebar">
         {/* Image Gallery Section */}
         <div className="mb-6">
           <h3 className="font-semibold mb-3">Popular Services</h3>
           <div className="gallery-grid">
             {galleryImages.map((img, index) => (
-              <div key={index} className="gallery-item">
+              <div key={index} className="gallery-item hover:shadow-md transition-shadow cursor-pointer">
                 <img 
                   src={img} 
                   alt={`Service ${index+1}`}
@@ -77,15 +176,24 @@ export default function LaptopRepairPage() {
               <div>
                 <p className="font-medium">Quick home booking</p>
                 <div className="option-items">
-                  <div className="option-item">
+                  <div 
+                    className={`option-item cursor-pointer p-2 rounded-md ${selectedBrand === 'windows' ? 'bg-blue-50' : ''}`}
+                    onClick={() => setSelectedBrand('windows')}
+                  >
                     <FaWindows className="text-blue-500 mr-2" />
                     <p className="text-sm">Windows</p>
                   </div>
-                  <div className="option-item">
+                  <div 
+                    className={`option-item cursor-pointer p-2 rounded-md ${selectedBrand === 'apple' ? 'bg-blue-50' : ''}`}
+                    onClick={() => setSelectedBrand('apple')}
+                  >
                     <FaApple className="text-gray-700 mr-2" />
                     <p className="text-sm">Apple</p>
                   </div>
-                  <div className="option-item">
+                  <div 
+                    className={`option-item cursor-pointer p-2 rounded-md ${selectedBrand === 'chrome' ? 'bg-blue-50' : ''}`}
+                    onClick={() => setSelectedBrand('chrome')}
+                  >
                     <FaGoogle className="text-red-500 mr-2" />
                     <p className="text-sm">Chrome OS</p>
                   </div>
@@ -97,7 +205,7 @@ export default function LaptopRepairPage() {
               <div>
                 <p className="font-medium">Desktop</p>
                 <div className="option-items">
-                  <p className="text-sm">Upgrade/service</p>
+                  <p className="text-sm p-2 hover:bg-blue-50 rounded-md cursor-pointer">Upgrade/service</p>
                 </div>
               </div>
             </div>
@@ -112,52 +220,19 @@ export default function LaptopRepairPage() {
       >
         <h2 className="font-bold text-lg mb-4">Quick home booking</h2>
         
-        <ServiceCard 
-          title="Quick visit" 
-          rating={4.83} 
-          reviews="20K" 
-          price={159}
-          description="Visit charge of Rs 159 waived in final bill; spare part/repair cost extra"
-          image="https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
-        />
-        
-        <h3 className="font-medium">Windows</h3>
-        
-        <ServiceCard 
-          title="Windows laptop repair" 
-          rating={4.43} 
-          reviews="10K" 
-          price={159}
-          description="Visit charge of Rs 159 waived in final bill; spare part/repair cost extra"
-          image="https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
-        />
-        
-        <ServiceCard 
-          title="MacBook screen replacement" 
-          rating={4.65} 
-          reviews="8.5K" 
-          price={1299}
-          description="Original Apple parts with 180-day warranty"
-          image="https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
-        />
-        
-        <ServiceCard 
-          title="Laptop battery replacement" 
-          rating={4.72} 
-          reviews="15K" 
-          price={799}
-          description="Genuine battery with 1-year warranty"
-          image="https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
-        />
-        
-        <ServiceCard 
-          title="Liquid damage repair" 
-          rating={4.35} 
-          reviews="5.2K" 
-          price={499}
-          description="Diagnosis and repair for liquid damaged devices"
-          image="https://i.pinimg.com/736x/dd/47/8a/dd478a0eabcb5979522626ab3223fa8c.jpg"
-        />
+        {filteredServices.map((service) => (
+          <ServiceCard 
+            key={service.id}
+            title={service.title} 
+            rating={service.rating} 
+            reviews={service.reviews} 
+            price={service.price}
+            description={service.description}
+            image={service.image}
+            onBook={() => handleBookService(service)}
+            isBooked={bookedServices.some(s => s.id === service.id)}
+          />
+        ))}
       </div>
 
       {/* Right Sidebar */}
@@ -169,14 +244,43 @@ export default function LaptopRepairPage() {
           <p className="promise-item">✅ Transparent Pricing</p>
         </div>
         
-        <div className="add-button-container">
-          <button className="add-button">
-            Add
+        {/* Booked Services Section */}
+        {bookedServices.length > 0 && (
+          <div className="mt-4">
+            <h3 className="font-semibold mb-2">Your Booked Services</h3>
+            <div className="border rounded-lg p-2">
+              {bookedServices.map((service) => (
+                <div key={service.id} className="mb-2 pb-2 border-b last:border-b-0 flex justify-between items-center">
+                  <div>
+                    <p className="font-medium">{service.title}</p>
+                    <p className="text-sm">₹{service.price}</p>
+                  </div>
+                  <button 
+                    onClick={() => handleRemoveService(service.id)}
+                    className="text-gray-400 hover:text-red-500 transition-colors"
+                    aria-label="Remove service"
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div className="add-button-container mt-4">
+          <button 
+            className="add-button hover:bg-yellow-600 transition-colors"
+            disabled={bookedServices.length === 0}
+          >
+            <FaPlus className="mr-2" />
+            {bookedServices.length > 0 ? 'Proceed to Checkout' : 'Book a Service'}
           </button>
-          <p className="options-text">11 options</p>
+          <p className="options-text">{services.length} options available</p>
         </div>
       </div>
 
+      {/* Styles */}
       <style jsx>{`
         .laptop-repair-container {
           display: flex;
@@ -235,15 +339,15 @@ export default function LaptopRepairPage() {
         
         .option-items {
           margin-left: 0.5rem;
-          margin-top: 0.5rem;
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
+          gap: 0.25rem;
         }
         
         .option-item {
           display: flex;
           align-items: center;
+          transition: background-color 0.2s;
         }
         
         .promise-items {
@@ -265,18 +369,26 @@ export default function LaptopRepairPage() {
         .add-button {
           width: 100%;
           background-color: #f59e0b;
-          padding: 0.5rem;
+          padding: 0.75rem;
           color: white;
           border-radius: 0.375rem;
           font-size: 0.875rem;
           font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .add-button:disabled {
+          background-color: #d1d5db;
+          cursor: not-allowed;
         }
         
         .options-text {
           font-size: 0.75rem;
           color: #6b7280;
           text-align: center;
-          margin-top: 0.25rem;
+          margin-top: 0.5rem;
         }
         
         @media (min-width: 1024px) {

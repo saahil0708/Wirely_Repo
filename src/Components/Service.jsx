@@ -40,9 +40,9 @@ export default function LaptopRepairPage() {
   ];
 
   return (
-    <div className="flex h-screen w-full bg-gray-100 justify-center p-4">
-      {/* Left Sidebar */}
-      <div className="w-72 bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto mr-4">
+    <div className="flex flex-col lg:flex-row h-screen w-full bg-gray-100 justify-center p-4">
+      {/* Left Sidebar - Hidden on small screens, shown on large screens */}
+      <div className="hidden lg:block w-72 bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto mr-4">
         {/* Image Gallery Section */}
         <div className="mb-6">
           <h3 className="font-semibold mb-3">Popular Services</h3>
@@ -105,10 +105,10 @@ export default function LaptopRepairPage() {
         </div>
       </div>
 
-      {/* Middle Section */}
+      {/* Middle Section - Full width on small screens, fixed width on large screens */}
       <div
         ref={scrollRef}
-        className="w-[600px] bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto"
+        className="w-full lg:w-[600px] bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto mb-4 lg:mb-0"
       >
         <h2 className="font-bold text-lg mb-4">Quick home booking</h2>
         
@@ -160,8 +160,8 @@ export default function LaptopRepairPage() {
         />
       </div>
 
-      {/* Right Sidebar */}
-      <div className="w-72 bg-white p-4 shadow-lg rounded-xl h-full ml-4">
+      {/* Right Sidebar - Hidden on small screens, shown on large screens */}
+      <div className="hidden lg:block w-72 bg-white p-4 shadow-lg rounded-xl h-full ml-4">
         <h2 className="font-semibold mb-4">UCPromise</h2>
         <div className="space-y-2 text-sm">
           <p className="flex items-center">✅ Verified Professionals</p>

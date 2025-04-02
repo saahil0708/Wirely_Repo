@@ -3,7 +3,7 @@ import { FaWindows, FaApple, FaGoogle } from "react-icons/fa";
 
 const ServiceCard = ({ title, rating, reviews, price, description, image }) => {
   return (
-    <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 flex" style={{ height: '280px', width: '100%' }}>
+    <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 flex" style={{ minHeight: '280px', width: '100%' }}>
       <div className="w-3/4 pr-4">
         <h2 className="font-bold text-lg">{title}</h2>
         <p className="text-sm text-gray-500">⭐ {rating} ({reviews} reviews)</p>
@@ -40,19 +40,19 @@ export default function LaptopRepairPage() {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-full bg-gray-100 justify-center p-4">
-      {/* Left Sidebar - Hidden on small screens, shown on large screens */}
-      <div className="hidden lg:block w-72 bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto mr-4">
+    <div className="laptop-repair-container">
+      {/* Left Sidebar */}
+      <div className="left-sidebar">
         {/* Image Gallery Section */}
         <div className="mb-6">
           <h3 className="font-semibold mb-3">Popular Services</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="gallery-grid">
             {galleryImages.map((img, index) => (
-              <div key={index} className="rounded-md overflow-hidden border border-gray-200">
+              <div key={index} className="gallery-item">
                 <img 
                   src={img} 
                   alt={`Service ${index+1}`}
-                  className="w-full h-16 object-cover"
+                  className="gallery-image"
                 />
               </div>
             ))}
@@ -64,39 +64,39 @@ export default function LaptopRepairPage() {
           <h1 className="text-xl font-bold">Laptop</h1>
           <p className="text-sm text-yellow-500 mb-4">4.81 (321K bookings)</p>
           
-          <div className="p-3 bg-yellow-500 text-white rounded-md mb-6">
+          <div className="uc-cover">
             <p className="font-medium">UC COVER</p>
             <p className="text-xs">Upto 180-day warranty on all repairs</p>
           </div>
 
           <div className="mb-2">
             <h2 className="font-semibold text-gray-700">Select a service</h2>
-            <div className="border-t border-gray-200 my-3"></div>
+            <div className="divider"></div>
             
-            <div className="space-y-4">
+            <div className="service-options">
               <div>
                 <p className="font-medium">Quick home booking</p>
-                <div className="ml-2 mt-2 space-y-2">
-                  <div className="flex items-center">
+                <div className="option-items">
+                  <div className="option-item">
                     <FaWindows className="text-blue-500 mr-2" />
                     <p className="text-sm">Windows</p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="option-item">
                     <FaApple className="text-gray-700 mr-2" />
                     <p className="text-sm">Apple</p>
                   </div>
-                  <div className="flex items-center">
+                  <div className="option-item">
                     <FaGoogle className="text-red-500 mr-2" />
                     <p className="text-sm">Chrome OS</p>
                   </div>
                 </div>
               </div>
               
-              <div className="border-t border-gray-200 my-3"></div>
+              <div className="divider"></div>
               
               <div>
                 <p className="font-medium">Desktop</p>
-                <div className="ml-2 mt-2">
+                <div className="option-items">
                   <p className="text-sm">Upgrade/service</p>
                 </div>
               </div>
@@ -105,10 +105,10 @@ export default function LaptopRepairPage() {
         </div>
       </div>
 
-      {/* Middle Section - Full width on small screens, fixed width on large screens */}
+      {/* Middle Section */}
       <div
         ref={scrollRef}
-        className="w-full lg:w-[600px] bg-white p-4 shadow-lg rounded-xl h-full overflow-y-auto mb-4 lg:mb-0"
+        className="middle-section"
       >
         <h2 className="font-bold text-lg mb-4">Quick home booking</h2>
         
@@ -160,22 +160,161 @@ export default function LaptopRepairPage() {
         />
       </div>
 
-      {/* Right Sidebar - Hidden on small screens, shown on large screens */}
-      <div className="hidden lg:block w-72 bg-white p-4 shadow-lg rounded-xl h-full ml-4">
+      {/* Right Sidebar */}
+      <div className="right-sidebar">
         <h2 className="font-semibold mb-4">UCPromise</h2>
-        <div className="space-y-2 text-sm">
-          <p className="flex items-center">✅ Verified Professionals</p>
-          <p className="flex items-center">✅ Hassle Free Booking</p>
-          <p className="flex items-center">✅ Transparent Pricing</p>
+        <div className="promise-items">
+          <p className="promise-item">✅ Verified Professionals</p>
+          <p className="promise-item">✅ Hassle Free Booking</p>
+          <p className="promise-item">✅ Transparent Pricing</p>
         </div>
         
-        <div className="mt-6">
-          <button className="w-full bg-yellow-500 py-2 text-white rounded-md text-sm font-medium">
+        <div className="add-button-container">
+          <button className="add-button">
             Add
           </button>
-          <p className="text-xs text-gray-500 mt-1 text-center">11 options</p>
+          <p className="options-text">11 options</p>
         </div>
       </div>
+
+      <style jsx>{`
+        .laptop-repair-container {
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          width: 100%;
+          background-color: #f3f4f6;
+          padding: 1rem;
+          box-sizing: border-box;
+        }
+        
+        .left-sidebar, .middle-section, .right-sidebar {
+          background-color: white;
+          padding: 1rem;
+          border-radius: 0.75rem;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          margin-bottom: 1rem;
+        }
+        
+        .uc-cover {
+          padding: 0.75rem;
+          background-color: #f59e0b;
+          color: white;
+          border-radius: 0.375rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .divider {
+          border-top: 1px solid #e5e7eb;
+          margin: 0.75rem 0;
+        }
+        
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.5rem;
+        }
+        
+        .gallery-item {
+          border-radius: 0.375rem;
+          overflow: hidden;
+          border: 1px solid #e5e7eb;
+        }
+        
+        .gallery-image {
+          width: 100%;
+          height: 4rem;
+          object-fit: cover;
+        }
+        
+        .service-options {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        .option-items {
+          margin-left: 0.5rem;
+          margin-top: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        
+        .option-item {
+          display: flex;
+          align-items: center;
+        }
+        
+        .promise-items {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          font-size: 0.875rem;
+        }
+        
+        .promise-item {
+          display: flex;
+          align-items: center;
+        }
+        
+        .add-button-container {
+          margin-top: 1.5rem;
+        }
+        
+        .add-button {
+          width: 100%;
+          background-color: #f59e0b;
+          padding: 0.5rem;
+          color: white;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+        
+        .options-text {
+          font-size: 0.75rem;
+          color: #6b7280;
+          text-align: center;
+          margin-top: 0.25rem;
+        }
+        
+        @media (min-width: 1024px) {
+          .laptop-repair-container {
+            flex-direction: row;
+            justify-content: center;
+            padding: 1rem;
+          }
+          
+          .left-sidebar {
+            width: 18rem;
+            margin-right: 1rem;
+            margin-bottom: 0;
+            height: 100%;
+            overflow-y: auto;
+          }
+          
+          .middle-section {
+            width: 37.5rem;
+            height: 100%;
+            overflow-y: auto;
+            margin-bottom: 0;
+          }
+          
+          .right-sidebar {
+            width: 18rem;
+            margin-left: 1rem;
+            height: 100%;
+            margin-bottom: 0;
+          }
+        }
+        
+        @media (max-width: 1023px) {
+          .left-sidebar, .middle-section, .right-sidebar {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 }

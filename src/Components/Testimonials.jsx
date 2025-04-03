@@ -14,7 +14,9 @@ const TestimonialGrid = () => {
       name: 'Jane Smith',
       role: 'Marketing Director',
       image: 'https://randomuser.me/api/portraits/women/44.jpg',
-      review: 'Incredible service! The support team was responsive and helped us implement the solution quickly.'
+      review: 'Incredible service! The support team was responsive and helped us implement the solution quickly.',
+      rating: 4,
+      
     },
     {
       id: 3,
@@ -63,7 +65,7 @@ const TestimonialGrid = () => {
   return (
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-12">What People Say</h2>
+        <h2 className="text-6xl font-extrabold text-yellow-500 text-center mb-20">What Our Users Love</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {testimonials.map((testimonial, index) => (

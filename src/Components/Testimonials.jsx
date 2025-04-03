@@ -16,13 +16,13 @@ const TestimonialGrid = () => {
       image: 'https://randomuser.me/api/portraits/women/44.jpg',
       review: 'Incredible service! The support team was responsive and helped us implement the solution quickly.'
     },
-    // {
-    //   id: 3,
-    //   name: 'Robert Johnson',
-    //   role: 'Product Manager',
-    //   image: 'https://randomuser.me/api/portraits/men/67.jpg',
-    //   review: 'We saw immediate results after implementation. The analytics dashboard provides valuable insights that help us make data-driven decisions on a daily basis.'
-    // },
+    {
+      id: 3,
+      name: 'Robert Johnson',
+      role: 'Product Manager',
+      image: 'https://randomuser.me/api/portraits/men/67.jpg',
+      review: 'We saw immediate results after implementation. The analytics dashboard provides valuable insights that help us make data-driven decisions on a daily basis. We saw immediate results after implementation. The analytics dashboard provides valuable insights that help us make data-driven decisions on a daily basis. We saw immediate results after implementation. The analytics dashboard provides valuable insights that help us make data-driven decisions on a daily basis. '
+    },
     {
       id: 4,
       name: 'Emily Davis',
@@ -43,6 +43,13 @@ const TestimonialGrid = () => {
       role: 'CTO',
       image: 'https://randomuser.me/api/portraits/men/75.jpg',
       review: 'The technical implementation was straightforward and the documentation was excellent.'
+    },
+    {
+      id: 6,
+      name: 'Sarah Brown',
+      role: 'Customer Support Lead',
+      image: 'https://randomuser.me/api/portraits/women/63.jpg',
+      review: 'Our support tickets have decreased significantly since using this solution. Highly recommend! The automated features save us hours each week.'
     },
     {
       id: 6,

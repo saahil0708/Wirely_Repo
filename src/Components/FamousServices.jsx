@@ -6,7 +6,7 @@ import Windows from '../assets/windows3.png';
 import DataRecovery from '../assets/data recovery.png';
 import SpareParts from '../assets/spareparts.png'
 import Software from '../assets/software.png'
-import Menu from '../assets/menu.png'
+import Menu from '../assets/Menu (2).png'
 import Networking from '../assets/networking.png'
 
 const categories = [

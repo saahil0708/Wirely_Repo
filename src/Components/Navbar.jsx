@@ -177,7 +177,7 @@ const Navbar = () => {
             </Link>
           </motion.div>
 
-          {/* Desktop Search - Moved to the right */}
+          {/* Desktop Search - Centered */}
           <div className="hidden md:flex items-center w-1/3 mx-6" ref={searchRef}>
             <div className="relative w-full">
               <form onSubmit={handleSearchSubmit}>
@@ -222,8 +222,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center justify-center flex-1">
+          {/* Desktop Navigation - Moved to the right */}
+          <div className="hidden md:flex items-center justify-end flex-1">
             <div className="flex items-center space-x-8">
               {navLinks.map((link) => (
                 <div key={link.href} className="relative group">
@@ -255,7 +255,7 @@ const Navbar = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
+                            className="absolute right-0 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
                             onMouseEnter={() => setIsServicesOpen(true)}
                             onMouseLeave={() => setIsServicesOpen(false)}
                           >
@@ -300,9 +300,6 @@ const Navbar = () => {
               ))}
             </div>
           </div>
-
-          {/* Spacer to balance the layout */}
-          <div className="hidden md:block w-1/3"></div>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden">

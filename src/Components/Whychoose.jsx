@@ -72,44 +72,91 @@ export default function ProcessFlowWave() {
     {
       id: 1,
       title: "Discovery & Analysis",
-      description:
-        "We conduct comprehensive research and stakeholder interviews to fully understand your business objectives and technical requirements.",
+      description: "We conduct comprehensive research and stakeholder interviews to fully understand your business objectives and technical requirements.",
       icon: <FileSearch className="w-4 h-4 md:w-5 md:h-5" />,
       color: primaryColor,
       image: (
-        <svg width="100%" height="100%" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
-          {/* SVG content */}
+        <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M300 200C300 310.457 210.457 400 100 400C-10.4574 400 -100 310.457 -100 200C-100 89.5431 -10.4574 0 100 0C210.457 0 300 89.5431 300 200Z" fill="#F3F4F6"/>
+          {/* Magnifying glass analyzing data */}
+          <circle cx="150" cy="150" r="80" fill="white" stroke={primaryColor} strokeWidth="8"/>
+          <path d="M200 200L280 280" stroke={primaryColor} strokeWidth="8" strokeLinecap="round"/>
+          <path d="M100 100H120V120H100V100Z" fill={primaryColor}/>
+          <path d="M140 100H160V120H140V100Z" fill={primaryColor}/>
+          <path d="M180 100H200V120H180V100Z" fill={primaryColor}/>
+          <path d="M100 140H120V160H100V140Z" fill={primaryColor}/>
+          <path d="M140 140H160V160H140V140Z" fill={primaryColor}/>
+          <path d="M180 140H200V160H180V140Z" fill={primaryColor}/>
+          <path d="M100 180H120V200H100V180Z" fill={primaryColor}/>
+          <path d="M140 180H160V200H140V180Z" fill={primaryColor}/>
+          <path d="M180 180H200V200H180V180Z" fill={primaryColor}/>
+          {/* Chart elements */}
+          <path d="M300 250H400V300H300V250Z" fill={primaryColor} fillOpacity="0.2" stroke={primaryColor} strokeWidth="2"/>
+          <path d="M320 220V250" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M350 200V250" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M380 180V250" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M300 300H400" stroke={primaryColor} strokeWidth="2"/>
+          <path d="M300 280H400" stroke={primaryColor} strokeWidth="2" strokeDasharray="4 4"/>
         </svg>
-      ),
+      )
     },
     {
       id: 2,
       title: "Solution Development",
-      description:
-        "Our certified experts architect and implement robust solutions using industry best practices and cutting-edge technologies.",
+      description: "Our certified experts architect and implement robust solutions using industry best practices and cutting-edge technologies.",
       icon: <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />,
       color: primaryColor,
       image: (
-        <svg width="100%" height="100%" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
-          {/* SVG content */}
+        <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M300 200C300 310.457 210.457 400 100 400C-10.4574 400 -100 310.457 -100 200C-100 89.5431 -10.4574 0 100 0C210.457 0 300 89.5431 300 200Z" fill="#F3F4F6"/>
+          {/* Code development illustration */}
+          <rect x="100" y="100" width="200" height="200" rx="10" fill="white" stroke={primaryColor} strokeWidth="8"/>
+          <path d="M120 140H260" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 160H220" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 180H240" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 200H180" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 220H270" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 240H200" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 260H230" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          {/* Puzzle pieces representing modular development */}
+          <path d="M350 150C350 130 370 130 370 150C370 170 390 170 390 150C390 130 410 130 410 150V200C410 220 390 220 390 200C390 180 370 180 370 200C370 220 350 220 350 200V150Z" fill={primaryColor} fillOpacity="0.2" stroke={primaryColor} strokeWidth="4"/>
+          <path d="M350 250C350 230 370 230 370 250V270H390V250C390 230 410 230 410 250C410 270 430 270 430 250C430 230 450 230 450 250V270H470V250C470 230 490 230 490 250V300C490 320 470 320 470 300C470 280 450 280 450 300C450 320 430 320 430 300C430 280 410 280 410 300C410 320 390 320 390 300V280H370V300C370 320 350 320 350 300V250Z" fill={primaryColor} fillOpacity="0.2" stroke={primaryColor} strokeWidth="4"/>
         </svg>
-      ),
+      )
     },
     {
       id: 3,
       title: "Deployment & Optimization",
-      description:
-        "We ensure seamless implementation with comprehensive documentation, training, and continuous performance monitoring.",
+      description: "We ensure seamless implementation with comprehensive documentation, training, and continuous performance monitoring.",
       icon: <Rocket className="w-4 h-4 md:w-5 md:h-5" />,
       color: primaryColor,
       image: (
-        <svg width="100%" height="100%" viewBox="0 0 300 200" preserveAspectRatio="xMidYMid meet">
-          {/* SVG content */}
+        <svg viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M300 200C300 310.457 210.457 400 100 400C-10.4574 400 -100 310.457 -100 200C-100 89.5431 -10.4574 0 100 0C210.457 0 300 89.5431 300 200Z" fill="#F3F4F6"/>
+          {/* Rocket launch with metrics */}
+          <path d="M200 300L220 220L240 240L260 200L280 220L300 140L320 220L340 200L360 240L380 220L400 300" stroke={primaryColor} strokeWidth="4" strokeLinecap="round" fill="none"/>
+          <path d="M300 140L300 100" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M280 120L320 120" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M290 110L310 110" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M295 105L305 105" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          {/* Speedometer */}
+          <circle cx="150" cy="150" r="50" fill="white" stroke={primaryColor} strokeWidth="6"/>
+          <path d="M150 100V120" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M120 150H140" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M150 180V160" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <path d="M180 150H160" stroke={primaryColor} strokeWidth="4" strokeLinecap="round"/>
+          <circle cx="150" cy="150" r="10" fill={primaryColor}/>
+          {/* Progress bars */}
+          <rect x="350" y="120" width="100" height="20" rx="10" fill={primaryColor} fillOpacity="0.1" stroke={primaryColor} strokeWidth="2"/>
+          <rect x="350" y="120" width="70" height="20" rx="10" fill={primaryColor} fillOpacity="0.3"/>
+          <rect x="350" y="160" width="100" height="20" rx="10" fill={primaryColor} fillOpacity="0.1" stroke={primaryColor} strokeWidth="2"/>
+          <rect x="350" y="160" width="90" height="20" rx="10" fill={primaryColor} fillOpacity="0.3"/>
+          <rect x="350" y="200" width="100" height="20" rx="10" fill={primaryColor} fillOpacity="0.1" stroke={primaryColor} strokeWidth="2"/>
+          <rect x="350" y="200" width="40" height="20" rx="10" fill={primaryColor} fillOpacity="0.3"/>
         </svg>
-      ),
-    },
+      )
+    }
   ];
-
   // Calculate card width based on window width
   const getCardWidth = () => {
     if (windowWidth < 400) return "w-[220px]";
@@ -346,7 +393,9 @@ export default function ProcessFlowWave() {
           <div className="bg-white rounded-lg shadow-md border overflow-hidden" style={{ borderColor: primaryColor }}>
             <div className="flex flex-col md:flex-row">
               <div className="w-full h-48 sm:h-56 md:h-auto md:w-2/5 relative">
-                <div className="absolute inset-0">{steps[activeStep].image}</div>
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                  {steps[activeStep].image}
+                </div>
                 <div
                   className="absolute top-0 left-0 w-full h-full opacity-10"
                   style={{ backgroundColor: primaryColor }}

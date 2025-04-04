@@ -493,15 +493,15 @@ const Navbar = () => {
                     className="block w-full text-center px-4 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Login
+                    Login / Sign Up
                   </Link>
-                  <Link
+                  {/* <Link
                     to="/signup"
                     className="block w-full text-center px-4 py-3 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </motion.div>

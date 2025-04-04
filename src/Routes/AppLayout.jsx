@@ -1,13 +1,9 @@
 import React from "react"
 import { createBrowserRouter } from "react-router-dom"
 import Outlet from "./Outlet"
-// import Home from "../Pages/Home"
-// import Service from "../Pages/Service"
-// import Contact from "../Pages/Contact"
-// import Register from "../Pages/Register"
-// import About from "../Pages/About"
-// import ServicesPage from "../Components/ServicesPage"
-// import Profile from "../Pages/Profile"
+import LaptopRepairPage from "../Pages/RepairPage"
+import ServiceBookingForm from "../Pages/BookingForm"
+import Repair from '../Pages/Repair2'
 
 const Home = React.lazy(() => import ('../Pages/Home'))
 const Service = React.lazy(() => import ('../Pages/Service'))
@@ -28,11 +24,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/about',
-                element: <About / >
+                element: <About />
             },
             {
                 path: '/service',
-                element: <Service />,
+                element: <ServicesPage />,
             },
             {
                 path: '/contact',
@@ -49,6 +45,17 @@ const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile />
+            },
+            {
+                path: '/book',
+                element: 
+                <>
+                    <LaptopRepairPage />
+                </> 
+            },
+            {
+                path: '/booking',
+                element: <ServiceBookingForm />
             }
         ]
     }

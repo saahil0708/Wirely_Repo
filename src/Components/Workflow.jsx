@@ -42,7 +42,7 @@ function Workflow() {
   };
 
   return (
-    <div className="bg-white p-8 w-full min-h-screen font-[Poppins] text-center shadow-md mt-40">
+    <div className="bg-white p-8 w-full min-h-screen font-[Poppins] text-center shadow-md mt-10">
       {/* Heading & Description */}
       <h1 className="text-3xl font-bold text-black">Track Your Work</h1>
       <p className="text-gray-600 text-lg mt-2 max-w-lg mx-auto">

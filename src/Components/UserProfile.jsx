@@ -605,7 +605,16 @@ const CustomerProfile = () => {
           {/* Account Settings Tab */}
           {activeTab === 'settings' && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-800 mb-6">My Account Settings</h2>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-semibold text-gray-800">My Account Settings</h2>
+                <button 
+                  className="px-4 py-2 bg-[#fbc800] text-gray-900 rounded-lg hover:bg-[#e6b400] transition font-medium flex items-center"
+                  onClick={() => console.log('Edit Profile clicked')}
+                >
+                  <FiUser className="mr-2" size={16} />
+                  Edit Profile
+                </button>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>

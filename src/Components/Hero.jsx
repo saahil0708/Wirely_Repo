@@ -1,260 +1,317 @@
-import React, { useEffect, useState } from "react";
-import { 
-  Zap, Phone, Shield, Clock, Users, 
-  CheckCircle, Wifi, Server, Code, 
-  Database, Cloud, Cpu 
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const Hero = () => {
-  const [typedText, setTypedText] = useState("");
-  const fullText = "On Demand";
-  
-  // Services for marquee
-  const marqueeServices = [
-    "Electrical Repair & Installation",
-    "AC / Refrigerator / Washing Machine Repair",
-    "CCTV Installation & Repair",
-    "Inverter & Battery Installation / Repair",
-    "Home Appliance Repair",
-    "Computer & Laptop Repair",
-    "Plumbing Services",
-    "Carpenter Services",
-    "Mobile Phone Repair",
-    "Solar Panel Installation & Maintenance",
-    "Smart Home Setup",
-    "Wiring & Circuit Fixing",
-    "Generator Repair & Installation",
-    "Electrical Inspection & Consultation",
-    "Emergency Repair Services (24x7)"
-  ];
-
-  const cards = [
-    // Large primary cards
-    {
-      icon: <Shield size={24} className="text-[#FBC800]" />,
-      title: "Enterprise Security",
-      description: "Military-grade protection",
-      size: "large",
-      position: "top-12 left-12",
-      rotation: "rotate-3"
-    },
-    {
-      icon: <Users size={24} className="text-[#FBC800]" />,
-      title: "Global Experts",
-      description: "200+ certified professionals",
-      size: "large",
-      position: "bottom-12 right-12",
-      rotation: "-rotate-3"
-    },
-    
-    // Medium secondary cards
-    {
-      icon: <Clock size={20} className="text-[#FBC800]" />,
-      title: "24/7 Support",
-      description: "Always available",
-      size: "medium",
-      position: "top-8 right-8",
-      rotation: "-rotate-2"
-    },
-    {
-      icon: <Database size={20} className="text-[#FBC800]" />,
-      title: "Data Solutions",
-      description: "Scalable infrastructure",
-      size: "medium",
-      position: "bottom-8 left-8",
-      rotation: "rotate-2"
-    },
-    
-    // Small accent cards
-    {
-      icon: <Cpu size={16} className="text-[#FBC800]" />,
-      title: "AI Tech",
-      size: "small",
-      position: "top-4 left-4",
-      rotation: "rotate-1"
-    },
-    {
-      icon: <Cloud size={16} className="text-[#FBC800]" />,
-      title: "Cloud",
-      size: "small",
-      position: "top-24 right-4",
-      rotation: "-rotate-1"
-    },
-    {
-      icon: <Code size={16} className="text-[#FBC800]" />,
-      title: "DevOps",
-      size: "small",
-      position: "bottom-4 right-24",
-      rotation: "rotate-1"
-    }
-  ];
+function RotatingText({
+  texts,
+  interval = 3000,
+  animationDuration = 0.5,
+  className = "",
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    let i = 0;
-    const typingInterval = setInterval(() => {
-      if (i < fullText.length) {
-        setTypedText(fullText.substring(0, i + 1));
-        i++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 150);
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+    }, interval);
 
-    return () => clearInterval(typingInterval);
-  }, []);
+    return () => clearInterval(timer);
+  }, [texts.length, interval]);
 
   return (
-    <section className="relative bg-white min-h-screen flex flex-col items-center px-6 sm:px-8 mt-[4rem] py-16 overflow-hidden font-[Poppins]">
-      <div 
-  className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_70%)]"
-  style={{
-    backgroundImage: `linear-gradient(to right, #f5f5f5 1px, transparent 1px), 
-                      linear-gradient(to bottom, #f5f5f5 1px, transparent 1px)`,
-    backgroundSize: "40px 40px",
-    animation: "gridScroll 80s linear infinite",
-  }}
-></div>
+    <div
+      className={`relative font-[Poppins] h-12 overflow-hidden ${className}`}
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -50, opacity: 0 }}
+          transition={{ duration: animationDuration }}
+          className="absolute inset-0 font-bold text-2xl text-[#FBC800]"
+        >
+          {texts[currentIndex]}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
-      
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-[#FBC800]/5 blur-xl"></div>
-        <div className="absolute bottom-1/3 -right-32 w-96 h-96 rounded-full bg-[#FBC800]/5 blur-xl"></div>
-      </div>
+export default function BusinessDirectory() {
+  const [location, setLocation] = useState("Mumbai");
+  const [search, setSearch] = useState("");
+  const [hoveredCard, setHoveredCard] = useState(null);
 
-      <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
-        {/* Left content */}
-        <div className="space-y-8">
-          <div className="inline-flex items-center gap-3 px-5 py-3 bg-[#FBC800]/10 rounded-full border border-[#FBC800]/20 w-fit">
-            <Zap className="w-6 h-6 text-[#FBC800]" />
-            <span className="text-base font-medium text-gray-900">
-              PROFESSIONAL SUPPORT
-            </span>
-          </div>
+  const services = [
+    {
+      title: "Pay Bills",
+      subheading: "Instant Payments",
+      desc: "Mobile, Electricity, DTH & more",
+      gradient: "bg-gradient-to-br from-blue-500 to-blue-700",
+      text: "text-blue-700",
+      border: "border-blue-300",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
+      hoverVector: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png",
+      alt: "Online payment illustration",
+    },
+    {
+      title: "Quick Quotes",
+      subheading: "Compare Prices",
+      desc: "Get multiple quotes instantly",
+      gradient: "bg-gradient-to-br from-indigo-500 to-indigo-700",
+      text: "text-indigo-700",
+      border: "border-indigo-300",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/3523/3523888.png",
+      hoverVector: "https://cdn-icons-png.flaticon.com/512/3523/3523881.png",
+      alt: "Price tags illustration",
+    },
+    {
+      title: "Home Repairs",
+      subheading: "Professional Services",
+      desc: "Find verified service providers",
+      gradient: "bg-gradient-to-br from-emerald-500 to-emerald-700",
+      text: "text-emerald-700",
+      border: "border-emerald-300",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/619/619032.png",
+      hoverVector: "https://cdn-icons-png.flaticon.com/512/2933/2933245.png",
+      alt: "Tools illustration",
+    },
+    {
+      title: "Book Doctors",
+      subheading: "Healthcare Services",
+      desc: "Instant specialist appointments",
+      gradient: "bg-gradient-to-br from-purple-500 to-purple-700",
+      text: "text-purple-700",
+      border: "border-purple-300",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/3003/3003984.png",
+      hoverVector: "https://cdn-icons-png.flaticon.com/512/2964/2964430.png",
+      alt: "Doctor illustration",
+    },
+  ];
 
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight">
-            Expert Solutions <br />
-            <span className="text-[#FBC800]">{typedText}</span>
-            <span className="animate-pulse">|</span>
-          </h1>
-
-          <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
-          Your one-stop solution for all appliances! Repair, maintain, and upgrade with ease—anytime, anywhere ⚡
-          </p>
-
-          <div className="flex flex-wrap gap-5 mt-8">
-            <button className="flex items-center gap-3 px-8 py-4 bg-[#FBC800] hover:bg-[#E6B500] text-gray-900 font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl text-lg group">
-              <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-              Get Instant Support
-            </button>
-            <button className="flex items-center gap-3 px-8 py-4 bg-white text-gray-900 font-semibold rounded-lg border-2 border-gray-200 hover:bg-gray-50 transition-all duration-300 text-lg group">
-              Explore Services
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Right side - Organized Collage */}
-        <div className="relative h-[500px] w-full">
-          {/* Decorative backdrop */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-64 h-64 border-2 border-[#FBC800]/20 rounded-full"></div>
-          </div>
-          
-          {/* Cards */}
-          {cards.map((card, index) => (
-            <div
-              key={index}
-              className={`absolute ${card.position} ${card.rotation} ${
-                card.size === "large" 
-                  ? "w-56 h-56 p-6 rounded-2xl shadow-md" 
-                  : card.size === "medium" 
-                    ? "w-40 h-40 p-4 rounded-xl shadow-sm" 
-                    : "w-32 h-32 p-3 rounded-lg"
-              } bg-white border border-gray-200 hover:rotate-0 transition-all duration-300 ${
-                index % 2 === 0 ? "hover:-translate-y-2" : "hover:translate-y-2"
-              }`}
-            >
-              <div className={`${
-                card.size === "large" 
-                  ? "p-3 rounded-lg mb-4" 
-                  : card.size === "medium" 
-                    ? "p-2 rounded-lg mb-2" 
-                    : "p-2 rounded-md"
-              } ${
-                card.size === "small" ? "bg-white" : "bg-[#FBC800]/10"
-              } w-fit`}>
-                {card.icon}
-              </div>
-              <h3 className={`${
-                card.size === "large" 
-                  ? "font-bold text-lg" 
-                  : card.size === "medium" 
-                    ? "font-semibold text-base" 
-                    : "font-medium text-sm"
-              } text-gray-900`}>
-                {card.title}
-              </h3>
-              {card.description && (
-                <p className={`${
-                  card.size === "large" 
-                    ? "text-sm mt-2" 
-                    : "text-xs mt-1"
-                } text-gray-600`}>
-                  {card.description}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Marquee Section - Added at the bottom of the Hero */}
-      <div className="w-full mt-16 bg-[#FBC800]/10 py-4 overflow-hidden">
-        <div className="whitespace-nowrap">
-          <div className="inline-block animate-marquee whitespace-nowrap">
-            {marqueeServices.map((service, index) => (
-              <span key={index} className="mx-8 text-lg font-medium text-gray-900 inline-block">
-                {service}
-                {index < marqueeServices.length - 1 && (
-                  <span className="mx-4 text-[#FBC800]">•</span>
-                )}
-              </span>
-            ))}
-            {/* Duplicate for seamless looping */}
-            {marqueeServices.map((service, index) => (
-              <span key={`duplicate-${index}`} className="mx-8 text-lg font-medium text-gray-900 inline-block">
-                {service}
-                {index < marqueeServices.length - 1 && (
-                  <span className="mx-4 text-[#FBC800]">•</span>
-                )}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Add Open Sauce font via style tag */}
+  return (
+    <div className="min-h-screen font-[Poppins] mt-20 bg-gray-50">
       <style jsx global>{`
-        @import url('https://fonts.cdnfonts.com/css/open-sauce-one');
-        
+        @import url("https://fonts.cdnfonts.com/css/open-sauce-one");
         body {
-          font-family: 'Open Sauce One', sans-serif;
+          font-family: "Open Sauce One", sans-serif;
         }
-        
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 25s linear infinite;
-          display: inline-block;
+        @supports (font-variation-settings: normal) {
+          body {
+            font-family: "Open Sauce One Variable", sans-serif;
+          }
         }
       `}</style>
-    </section>
-  );
-};
 
-export default Hero;
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8 text-center md:text-left px-2">
+          <div className="grid grid-cols-12 gap-4 items-center">
+            <div className="col-span-12 md:col-span-2 w-full">
+              <div className="flex h-full items-center justify-center md:justify-start">
+                <span className="text-xl md:text-2xl font-bold">
+                  Search across{" "}
+                </span>
+              </div>
+            </div>
+            <div className="col-span-12 md:col-span-10 w-full relative top-2 md:right-3">
+              <RotatingText
+                texts={["4.7 crore+ Services", "5.9 crore+ Services"]}
+                interval={2000}
+                animationDuration={0.5}
+                className="text-xl md:text-2xl font-bold"
+              />
+            </div>
+          </div>
+
+          <p className="text-gray-600 text-base sm:text-lg max-w-4xl mt-4">
+            Find and connect with the best local businesses in your area. Over
+            10 million businesses listed.
+          </p>
+        </div>
+
+        <div className="relative rounded-2xl p-4 sm:p-6 mb-8 mx-2 sm:mx-0">
+          <div className="flex flex-col md:flex-row gap-3">
+            <div className="flex items-center bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl w-full md:w-64 flex-shrink-0 hover:border-amber-300 transition-colors">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-amber-500 mr-2 h-5 w-5"
+              >
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <input
+                type="text"
+                className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-400"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Your location"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center bg-gray-50 border border-gray-200 px-4 py-3 rounded-xl w-full md:w-[30rem] hover:border-amber-300 transition-colors">
+              <input
+                type="text"
+                className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-400 mb-2 sm:mb-0"
+                placeholder="What are you looking for?"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button className="bg-gradient-to-r from-amber-500 to-amber-400 text-white font-medium px-5 py-2 rounded-lg flex items-center shadow hover:shadow-md transition-all sm:ml-3 transform hover:scale-[1.02] active:scale-95 w-full sm:w-auto justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2 h-4 w-4"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 mb-12 px-2 sm:px-0 overflow-x-auto sm:overflow-visible pb-2 sm:pb-0">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className={`h-60 min-w-[calc(100%-1rem)] sm:min-w-0 transition-all duration-300 ease-in-out ${
+                hoveredCard === index
+                  ? "sm:w-2/6 w-full"
+                  : hoveredCard === null && index === 0
+                  ? "sm:w-2/6 w-full"
+                  : "sm:w-1/6 w-full"
+              }`}
+            >
+              <div
+                className={`${service.gradient} text-white rounded-xl h-full overflow-hidden relative group transition-all duration-300 hover:shadow-md`}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-white transition-opacity"></div>
+                <div className="p-5 h-full flex flex-col">
+                  <div className="flex flex-col sm:flex-row justify-between h-full">
+                    <div className="flex flex-col justify-between h-full w-full">
+                      <div>
+                        <p className="text-xs font-medium opacity-80">
+                          {service.subheading}
+                        </p>
+                        <h3 className="text-lg font-bold mt-1">
+                          {service.title}
+                        </h3>
+                        <p className="text-xs opacity-90 mt-1">
+                          {service.desc}
+                        </p>
+                      </div>
+
+                      {hoveredCard !== index &&
+                        !(index === 0 && hoveredCard === null) && (
+                          <div className="mt-3 flex justify-end pr-2">
+                            <img
+                              src={service.defaultVector}
+                              alt={service.alt}
+                              className="w-16 h-16 object-contain opacity-90 transition-opacity"
+                            />
+                          </div>
+                        )}
+
+                      {(hoveredCard === index ||
+                        (index === 0 && hoveredCard === null)) && (
+                        <button
+                          className={`flex items-center mt-3 text-xs font-medium ${service.text} bg-white px-3 py-1.5 rounded-md shadow-sm hover:shadow transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto`}
+                        >
+                          Explore Now
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className={`ml-1 h-3 w-3 ${service.text}`}
+                          >
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+
+                    {(hoveredCard === index ||
+                      (index === 0 && hoveredCard === null)) && (
+                      <div className="hidden sm:flex ml-3 items-center justify-start">
+                        <img
+                          src={
+                            hoveredCard === index
+                              ? service.hoverVector
+                              : service.defaultVector
+                          }
+                          alt={service.alt}
+                          className="w-32 h-32 object-contain opacity-90 transition-opacity"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="h-60 w-full sm:w-1/6">
+            <div className="bg-gradient-to-br from-gray-200 to-gray-300 text-gray-800 rounded-xl h-full overflow-hidden relative transition-all duration-300 hover:shadow-md">
+              <div className="p-5 h-full flex flex-col justify-between">
+                <div>
+                  <p className="text-xs font-medium opacity-80">
+                    Complete Directory
+                  </p>
+                  <h3 className="text-lg font-bold mt-1">All Services</h3>
+                  <p className="text-xs opacity-90 mt-1">
+                    Browse our complete service directory
+                  </p>
+                </div>
+                <Link to="/service">
+                  <button className="flex items-center mt-3 text-xs font-medium text-gray-800 bg-white px-3 py-1.5 rounded-md shadow-sm hover:shadow transition-all hover:scale-[1.02] active:scale-95 w-full sm:w-auto">
+                    View All
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="ml-1 h-3 w-3 text-gray-800"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}

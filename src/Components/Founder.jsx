@@ -171,7 +171,7 @@ const FoundersSection = () => {
               viewport={{ once: true, margin: "-50px" }}
             >
               {/* Premium Glass Card */}
-              <div className="relative h-full overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-xl">
+              <div className="relative h-full overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-md">
                 {/* Subtle texture overlay */}
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/subtle-dots.png')] opacity-5"></div>
                 

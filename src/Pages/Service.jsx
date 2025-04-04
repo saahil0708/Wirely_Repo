@@ -5,8 +5,8 @@ import ServicesPage from '../Components/ServicesPage'
 export default() => {
     return (
       <>
-          <Workflow />
           <Category />
+          <Workflow />
       </>
     )
 }

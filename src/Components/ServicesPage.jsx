@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { FiChevronLeft, FiChevronRight, FiPhone, FiCalendar, FiClock, FiCheck } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { FiChevronLeft, FiChevronRight, FiPhone, FiCalendar, FiClock, FiCheck, FiStar } from "react-icons/fi";
 
 const serviceData = {
   services: [
@@ -146,7 +146,6 @@ const ServicesPage = () => {
   const [showRightArrow, setShowRightArrow] = useState(true);
   const servicesContainerRef = useRef(null);
 
-  // Get current service details or fallback to default
   const currentService = serviceData.details[activeService] || serviceData.details.default;
 
   const scrollServices = (direction) => {
@@ -203,37 +202,37 @@ const ServicesPage = () => {
   }, [activeService]);
 
   return (
-    <div className="min-h-screen mt-20 font-[Poppins] flex flex-col bg-[#f8f8f8] overflow-x-hidden">
-      {/* Services Navigation */}
-      <div className="relative w-full bg-white shadow-lg z-20 border-b-2 border-[#fbc800]">
-        <div className="relative w-full">
+    <div className="min-h-screen font-[Poppins] bg-[#f8f8f8] overflow-x-hidden">
+      {/* Services Navigation - Enhanced */}
+      <div className="sticky top-20 z-20 bg-white shadow-sm border-b-2 border-[#fbc800]">
+        <div className="relative max-w-7xl mx-auto px-4">
           {showLeftArrow && (
             <button 
               onClick={() => scrollServices('left')}
-              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all border border-[#372828]"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md hover:bg-gray-50 transition-all border border-gray-200"
               aria-label="Scroll services left"
             >
-              <FiChevronLeft className="text-[#372828] text-xl" />
+              <FiChevronLeft className="text-[#372828] text-lg" />
             </button>
           )}
           
           <div 
             ref={servicesContainerRef}
-            className="w-full overflow-x-auto whitespace-nowrap flex gap-4 p-4 scroll-smooth hide-scrollbar"
+            className="w-full overflow-x-auto whitespace-nowrap flex gap-3 py-3 scroll-smooth hide-scrollbar"
             style={{ scrollbarWidth: 'none' }}
           >
             {serviceData.services.map((service, index) => (
               <button
                 key={index}
                 onClick={() => setActiveService(serviceData.fullServiceNames[service])}
-                className={`px-5 py-3 rounded-lg transition-all duration-300 flex-shrink-0 ${
+                className={`px-5 py-2 rounded-full transition-all duration-200 flex-shrink-0 ${
                   activeService === serviceData.fullServiceNames[service] 
-                    ? "bg-gradient-to-r from-[#fbc800] to-[#ffa100] text-[#372828] shadow-lg font-bold transform scale-[1.02]" 
-                    : "bg-white hover:bg-[#fbc800]/10 text-[#372828] border border-[#372828]/20"
+                    ? "bg-[#fbc800] text-[#372828] shadow-md font-semibold" 
+                    : "bg-white hover:bg-[#fbc800]/20 text-[#372828] border border-gray-200"
                 }`}
                 aria-current={activeService === serviceData.fullServiceNames[service] ? "true" : "false"}
               >
-                <span className="font-semibold text-[14px]">{service}</span>
+                <span className="text-sm">{service}</span>
               </button>
             ))}
           </div>
@@ -241,18 +240,19 @@ const ServicesPage = () => {
           {showRightArrow && (
             <button 
               onClick={() => scrollServices('right')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all border border-[#372828]"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow-md hover:bg-gray-50 transition-all border border-gray-200"
               aria-label="Scroll services right"
             >
-              <FiChevronRight className="text-[#372828] text-xl" />
+              <FiChevronRight className="text-[#372828] text-lg" />
             </button>
           )}
         </div>
       </div>
 
+
       {/* Hero Section with dynamic background */}
       <div 
-        className="relative h-[400px] text-white overflow-hidden bg-center bg-cover transition-all duration-500"
+        className="relative mt-20 h-[400px] text-white overflow-hidden bg-center bg-cover transition-all duration-500"
         style={{ backgroundImage: `url(${currentService.heroImage})` }}
       >
         <div className="absolute inset-0 bg-black opacity-30"></div>
@@ -262,12 +262,14 @@ const ServicesPage = () => {
             {currentService.description.split('. ')[0]}
           </p>
           <div className="mt-8 flex gap-4 flex-wrap justify-center">
-            <button 
-              className="px-8 py-3 bg-[#fbc800] hover:bg-[#ffa100] text-[#372828] font-bold rounded-lg shadow-lg transition-all transform hover:scale-105"
-              onClick={() => navigate('/booking')}
-            >
-              Book Now
-            </button>
+            <Link to='/booking'>
+              <button 
+                className="px-8 py-3 bg-[#fbc800] hover:bg-[#ffa100] text-[#372828] font-bold rounded-lg shadow-lg transition-all transform hover:scale-105"
+                onClick={() => navigate('/booking')}
+              >
+                Book Now
+              </button>
+            </Link>
             <button 
               className="px-8 py-3 bg-transparent border-2 border-[#fbc800] text-[#fbc800] hover:bg-[#ffffff10] font-bold rounded-lg transition-all"
               onClick={() => {
@@ -284,80 +286,115 @@ const ServicesPage = () => {
       </div>
 
       {/* Main Content */}
-      <div id="service-details" className="flex-grow w-full px-4 py-12">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Service Image */}
-          <div className="rounded-2xl overflow-hidden shadow-2xl h-full min-h-[400px] border-4 border-[#fbc800]">
-            <img 
-              src={currentService.image} 
-              alt={activeService}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
+      <div id="service-details" className="w-full px-4 py-16 bg-white">
+  <div className="max-w-6xl mx-auto">
+    {/* Service Header */}
+    <div className="text-center mb-16">
+      <div className="inline-flex items-center justify-center bg-[#fbc800]/10 px-6 py-2 rounded-full mb-4">
+        <span className="text-2xl mr-2">{currentService.icon}</span>
+        <span className="font-medium text-[#fbc800]">Professional Service</span>
+      </div>
+      <h2 className="text-4xl font-bold text-[#372828] mb-4">
+        {activeService}
+      </h2>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        {currentService.description}
+      </p>
+    </div>
+
+    <div className="flex flex-col lg:flex-row gap-12 items-start">
+      {/* Service Image */}
+      <div className="lg:w-1/2 w-full">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-[4/3]">
+          <img 
+            src={currentService.image} 
+            alt={activeService}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent flex items-end p-8">
+            <h3 className="text-2xl font-bold text-white">Quality {activeService.split(' ')[0]} Solutions</h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Service Details */}
+      <div className="lg:w-1/2 w-full">
+        <div className="bg-gray-50 rounded-3xl p-8 h-full border border-gray-200">
+          <h3 className="text-2xl font-bold text-[#372828] mb-6">
+            Service Highlights
+          </h3>
+
+          {/* Benefits List */}
+          <div className="space-y-6 mb-10">
+            <div className="flex items-start gap-4">
+              <div className="bg-[#fbc800] p-2 rounded-full mt-1">
+                <FiCheck className="text-white text-lg" />
+              </div>
+              <div>
+                <h4 className="font-bold text-[#372828]">Expert Technicians</h4>
+                <p className="text-gray-600">Our certified professionals deliver top-quality service</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-[#fbc800] p-2 rounded-full mt-1">
+                <FiCheck className="text-white text-lg" />
+              </div>
+              <div>
+                <h4 className="font-bold text-[#372828]">Reliable Service</h4>
+                <p className="text-gray-600">We arrive on time and complete the job efficiently</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="bg-[#fbc800] p-2 rounded-full mt-1">
+                <FiCheck className="text-white text-lg" />
+              </div>
+              <div>
+                <h4 className="font-bold text-[#372828]">Quality Guarantee</h4>
+                <p className="text-gray-600">All work comes with a satisfaction guarantee</p>
+              </div>
+            </div>
           </div>
 
-          {/* Service Details */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 h-full border-t-4 border-[#ffa100]">
-            <div className="flex items-center mb-6">
-              <span className="text-6xl mr-6">{currentService.icon}</span>
-              <h2 className="text-3xl font-bold text-[#372828]">About Our {activeService.split(' ')[0]} Service</h2>
-            </div>
-            
-            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              {currentService.description}
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-              <div className="bg-[#372828] p-6 rounded-xl text-white">
-                <h3 className="font-semibold text-[#fbc800] text-xl mb-4">Why Choose Us?</h3>
-                <ul className="space-y-3 text-gray-200">
-                  <li className="flex items-center"><FiCheck className="text-[#fbc800] mr-2" /> Certified professionals</li>
-                  <li className="flex items-center"><FiCheck className="text-[#fbc800] mr-2" /> Same-day service available</li>
-                  <li className="flex items-center"><FiCheck className="text-[#fbc800] mr-2" /> 12-month warranty</li>
-                  <li className="flex items-center"><FiCheck className="text-[#fbc800] mr-2" /> 24/7 emergency support</li>
-                </ul>
-              </div>
-              
-              <div className="bg-[#fff8e6] p-6 rounded-xl border-2 border-[#fbc800]">
-                <h3 className="font-semibold text-[#372828] text-xl mb-4">Service Includes</h3>
-                <ul className="space-y-3 text-[#372828]">
-                  <li className="flex items-center"><FiCheck className="text-[#ffa100] mr-2" /> Free initial inspection</li>
-                  <li className="flex items-center"><FiCheck className="text-[#ffa100] mr-2" /> Transparent pricing</li>
-                  <li className="flex items-center"><FiCheck className="text-[#ffa100] mr-2" /> Quality replacement parts</li>
-                  <li className="flex items-center"><FiCheck className="text-[#ffa100] mr-2" /> Professional cleanup</li>
-                </ul>
-              </div>
-            </div>
-            
+          {/* Booking Section */}
+          <div className="bg-white rounded-xl p-6 border border-gray-200">
+            <h4 className="text-lg font-semibold text-[#372828] mb-4">
+              Schedule Your Service
+            </h4>
             <div className="space-y-4">
               <button 
-                className="w-full flex items-center justify-center space-x-3 px-6 py-4 bg-gradient-to-r from-[#fbc800] to-[#ffa100] hover:from-[#ffa100] hover:to-[#fbc800] text-[#372828] font-bold rounded-lg shadow-md transition-all transform hover:scale-[1.01]"
+                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#fbc800] hover:bg-[#ffa100] text-[#372828] font-bold rounded-lg shadow-sm transition-all"
                 onClick={() => navigate('/booking')}
               >
                 <FiPhone className="text-xl" />
-                <span>Book Service Now</span>
+                <Link to=''>
+                  <span>Book Now</span>                
+                </Link>
               </button>
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
-                  className="flex items-center justify-center space-x-2 px-4 py-3 bg-white border-2 border-[#372828] text-[#372828] hover:bg-[#372828] hover:text-white font-medium rounded-lg transition-all"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-white border border-gray-300 text-[#372828] hover:bg-gray-100 rounded-lg transition-all"
                   onClick={() => navigate('/schedule')}
                 >
                   <FiCalendar />
-                  <span>Schedule Later</span>
+                  <span>Schedule Appointment</span>
                 </button>
                 <button 
-                  className="flex items-center justify-center space-x-2 px-4 py-3 bg-[#372828] border-2 border-[#372828] text-white hover:bg-[#fbc800] hover:text-[#372828] hover:border-[#fbc800] font-medium rounded-lg transition-all"
+                  className="flex items-center justify-center gap-2 px-4 py-3 bg-[#372828] border border-[#372828] text-white hover:bg-[#fbc800] hover:text-[#372828] rounded-lg transition-all"
                   onClick={() => navigate('/emergency')}
                 >
                   <FiClock />
-                  <span>Emergency Call</span>
+                  <span>Emergency Service</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
       <style jsx>{`
         .hide-scrollbar::-webkit-scrollbar {

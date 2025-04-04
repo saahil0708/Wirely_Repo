@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Cctv from '../assets/cctv.png';
+import Cctv2 from '../assets/cctv2.png';
+import Pc from '../assets/pc.png';
+import Pc2 from '../assets/pc2.png';
+import Windows from '../assets/windows.png';
+import Windows2 from '../assets/windows2.png';
+import DataRecovery from '../assets/data recovery.png';
 
 function RotatingText({
   texts,
@@ -44,48 +51,59 @@ export default function BusinessDirectory() {
 
   const services = [
     {
-      title: "Pay Bills",
-      subheading: "Instant Payments",
-      desc: "Mobile, Electricity, DTH & more",
+      title: "CCTV Installation",
+      subheading: "Security Solutions",
+      desc: "Professional CCTV installation services",
       gradient: "bg-gradient-to-br from-blue-500 to-blue-700",
       text: "text-blue-700",
       border: "border-blue-300",
-      defaultVector: "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
-      hoverVector: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png",
-      alt: "Online payment illustration",
+      defaultVector: Cctv2, // CCTV icon
+      hoverVector: Cctv, // CCTV with alert
+      alt: "CCTV camera illustration",
     },
     {
-      title: "Quick Quotes",
-      subheading: "Compare Prices",
-      desc: "Get multiple quotes instantly",
+      title: "PC Repair",
+      subheading: "Computer Services",
+      desc: "Fast and reliable PC repairs",
       gradient: "bg-gradient-to-br from-indigo-500 to-indigo-700",
       text: "text-indigo-700",
       border: "border-indigo-300",
-      defaultVector: "https://cdn-icons-png.flaticon.com/512/3523/3523888.png",
-      hoverVector: "https://cdn-icons-png.flaticon.com/512/3523/3523881.png",
-      alt: "Price tags illustration",
+      defaultVector: Pc, // PC repair icon
+      hoverVector: Pc2, // PC with tools
+      alt: "PC repair illustration",
     },
     {
-      title: "Home Repairs",
-      subheading: "Professional Services",
-      desc: "Find verified service providers",
+      title: "Windows Installation",
+      subheading: "OS Installation & Setup",
+      desc: "Professional Windows OS installation and configuration",
       gradient: "bg-gradient-to-br from-emerald-500 to-emerald-700",
       text: "text-emerald-700",
       border: "border-emerald-300",
-      defaultVector: "https://cdn-icons-png.flaticon.com/512/619/619032.png",
-      hoverVector: "https://cdn-icons-png.flaticon.com/512/2933/2933245.png",
-      alt: "Tools illustration",
+      defaultVector: Windows, // Laptop icon
+      hoverVector: Windows2, // Laptop with settings
+      alt: "Laptop illustration",
     },
     {
-      title: "Book Doctors",
-      subheading: "Healthcare Services",
-      desc: "Instant specialist appointments",
+      title: "Accessories & Spares",
+      subheading: "Computer Parts",
+      desc: "Genuine accessories and spare parts",
       gradient: "bg-gradient-to-br from-purple-500 to-purple-700",
       text: "text-purple-700",
       border: "border-purple-300",
-      defaultVector: "https://cdn-icons-png.flaticon.com/512/3003/3003984.png",
-      hoverVector: "https://cdn-icons-png.flaticon.com/512/2964/2964430.png",
-      alt: "Doctor illustration",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/3659/3659898.png", // Computer parts icon
+      hoverVector: "https://cdn-icons-png.flaticon.com/512/3659/3659899.png", // Computer parts expanded
+      alt: "Computer parts illustration",
+    },
+    {
+      title: "Data Recovery",
+      subheading: "Hard Drive Services",
+      desc: "Professional hard drive data recovery",
+      gradient: "bg-gradient-to-br from-amber-500 to-amber-700",
+      text: "text-amber-700",
+      border: "border-amber-300",
+      defaultVector: "https://cdn-icons-png.flaticon.com/512/2885/2885417.png", // Hard drive icon
+      hoverVector: DataRecovery, // Data recovery icon
+      alt: "Data recovery illustration",
     },
   ];
 
@@ -108,18 +126,16 @@ export default function BusinessDirectory() {
           <div className="grid grid-cols-12">
             <div className="col-span-2 w-max-co">
               <div className="flex h-full text-2xl font-bold">
-
-              Search across{" "} 
+                Search across{" "} 
               </div>
-              </div>
+            </div>
             <div className="col-span-10">
-
-            <RotatingText
-              texts={["4.7 crore+ Services", "`5.9 crore+ Services`"]}
-              interval={2000}
-              animationDuration={0.5}
+              <RotatingText
+                texts={["4.7 crore+ Services", "5.9 crore+ Services"]}
+                interval={2000}
+                animationDuration={0.5}
               />
-              </div>
+            </div>
           </div>
 
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mt-4">

@@ -13,7 +13,7 @@ export default function() {
             <Hero />
             {/* <EmergencyServices /> */}
             <FamousServices />
-            {/* <WhyChooseUs /> */}
+            <WhyChooseUs />
             <FeaturesSection />
             <HowItWorks />
             <Model />

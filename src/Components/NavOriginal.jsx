@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import { 
   Search, 
+  User, 
   Menu, 
   X, 
   ChevronDown,
@@ -189,7 +190,7 @@ const Navbar = () => {
             </Link>
           </motion.div>
 
-          {/* Desktop Search - Moved to the right */}
+          {/* Desktop Search */}
           <div className="hidden md:flex items-center w-1/3 mx-6" ref={searchRef}>
             <div className="relative w-full">
               <form onSubmit={handleSearchSubmit}>
@@ -234,87 +235,103 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <div key={link.href} className="relative group">
-                  {link.dropdown ? (
-                    <>
-                      <div
-                        className="flex items-center font-medium text-gray-700 hover:text-black transition-colors cursor-pointer"
-                        onMouseEnter={() => setIsServicesOpen(true)}
-                        onClick={() => {
-                          setIsServicesOpen(!isServicesOpen);
-                          window.location.href = "/service";
-                        }}
-                      >
-                        <span className="relative">
-                          {link.label}
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
-                        </span>
-                        <ChevronDown
-                          size={16}
-                          className={`ml-1 transition-transform ${
-                            isServicesOpen ? "rotate-180" : ""
-                          }`}
-                        />
-                      </div>
-                      <AnimatePresence>
-                        {isServicesOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
-                            onMouseEnter={() => setIsServicesOpen(true)}
-                            onMouseLeave={() => setIsServicesOpen(false)}
-                          >
-                            <div className="p-4">
-                              <table className="w-full">
-                                <tbody>
-                                  {services.map((row, rowIndex) => (
-                                    <tr key={rowIndex}>
-                                      {row.map((service, colIndex) => (
-                                        <td key={colIndex} className="p-2">
-                                          <Link
-                                            to={`/service/${toServicePath(service.name)}`}
-                                            className="flex items-center text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
-                                            onClick={() => setIsServicesOpen(false)}
-                                          >
-                                            {service.icon}
-                                            {service.name}
-                                          </Link>
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  ) : (
-                    <Link
-                      to={link.href}
-                      className="relative group font-medium text-gray-700 hover:text-black transition-colors"
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <div key={link.href} className="relative group">
+                {link.dropdown ? (
+                  <>
+                    <div
+                      className="flex items-center font-medium text-gray-700 hover:text-black transition-colors cursor-pointer"
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onClick={() => {
+                        setIsServicesOpen(!isServicesOpen);
+                        window.location.href = "/service";
+                      }}
                     >
                       <span className="relative">
                         {link.label}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
                       </span>
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </div>
+                      <ChevronDown
+                        size={16}
+                        className={`ml-1 transition-transform ${
+                          isServicesOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </div>
+                    <AnimatePresence>
+                      {isServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-0 mt-2 w-[600px] bg-white rounded-lg shadow-lg z-50 border border-gray-200"
+                          onMouseEnter={() => setIsServicesOpen(true)}
+                          onMouseLeave={() => setIsServicesOpen(false)}
+                        >
+                          <div className="p-4">
+                            <table className="w-full">
+                              <tbody>
+                                {services.map((row, rowIndex) => (
+                                  <tr key={rowIndex}>
+                                    {row.map((service, colIndex) => (
+                                      <td key={colIndex} className="p-2">
+                                        <Link
+                                          to={`/service/${toServicePath(service.name)}`}
+                                          className="flex items-center text-sm text-gray-700 hover:text-black hover:bg-gray-50 p-2 rounded transition-colors"
+                                          onClick={() => setIsServicesOpen(false)}
+                                        >
+                                          {service.icon}
+                                          {service.name}
+                                        </Link>
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link
+                    to={link.href}
+                    className="relative group font-medium text-gray-700 hover:text-black transition-colors"
+                  >
+                    <span className="relative">
+                      {link.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-black transition-all duration-300 group-hover:w-full"></span>
+                    </span>
+                  </Link>
+                )}
+              </div>
+            ))}
           </div>
 
-          {/* Spacer to balance the layout */}
-          <div className="hidden md:block w-1/3"></div>
+          {/* Desktop User Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link
+              to="/register"
+              className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="px-4 py-2 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
+            >
+              Sign Up
+            </Link>
+            <Link to='/profile'>
+              <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                <User size={24} className="text-gray-700" />
+              </button>
+            </Link>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden">
@@ -453,6 +470,38 @@ const Navbar = () => {
                       )}
                     </div>
                   ))}
+                </div>
+
+                {/* Mobile Profile Section */}
+                <div className="flex items-center space-x-4 pt-2 border-t border-gray-200">
+                  <Link 
+                    to="/profile" 
+                    className="flex items-center space-x-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="p-2 rounded-full bg-gray-100">
+                      <User size={20} className="text-gray-700" />
+                    </div>
+                    <span className="font-medium">My Profile</span>
+                  </Link>
+                </div>
+
+                {/* Mobile Action Buttons */}
+                <div className="space-y-3 pt-2">
+                  <Link
+                    to="/login"
+                    className="block w-full text-center px-4 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-colors active:scale-95"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Login / Sign Up
+                  </Link>
+                  {/* <Link
+                    to="/signup"
+                    className="block w-full text-center px-4 py-3 border border-black text-black rounded-lg font-medium hover:bg-black hover:text-white transition-colors active:scale-95"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link> */}
                 </div>
               </div>
             </motion.div>

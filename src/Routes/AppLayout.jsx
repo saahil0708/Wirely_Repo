@@ -4,6 +4,7 @@ import Outlet from "./Outlet"
 import LaptopRepairPage from "../Pages/RepairPage"
 import ServiceBookingForm from "../Pages/BookingForm"
 import Repair from '../Pages/Repair2'
+import PopUpServices from '../Components/PopUpServices'
 
 const Home = React.lazy(() => import ('../Pages/Home'))
 const Service = React.lazy(() => import ('../Pages/Service'))
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
             {
                 path: '/booking',
                 element: <ServiceBookingForm />
+            },
+            {
+                path: '/popular',
+                element: <PopUpServices />
             }
         ]
     }

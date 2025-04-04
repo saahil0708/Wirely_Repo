@@ -1,71 +1,121 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { Phone, Ambulance, Shield, AlertTriangle, HeartPulse, Biohazard } from "lucide-react"
 
-const timelineEvents = [
-  { time: "9 AM", title: "Orientation", description: "Kickstart the day with an introduction to the company’s vision, mission, and culture." },
-  { time: "10 AM", title: "HR Panel", description: "Meet the human resources team and key personnel who will guide you through your journey." },
-  { time: "11 AM", title: "Industry Panel", description: "Gain insights into industry trends and expectations from experienced professionals." },
-  { time: "12 PM", title: "Lunch", description: "Take a break and enjoy a welcome lunch to connect with colleagues in a relaxed setting." },
-];
-
-const ProgressIndicator = ({ progress }) => {
-  const progressWidth = useTransform(progress, [0, 1], ["0%", "100%"]);
+export default function EmergencyCards() {
   return (
-    <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-gray-200">
-      <motion.div className="h-full bg-[#fbc800]" style={{ width: progressWidth }} />
-    </div>
-  );
-};
+    <div className="container mx-auto p-4 max-w-4xl">
+      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+        <span className="bg-red-100 px-3 py-1 rounded-lg">Emergency</span> Contacts
+      </h2>
 
-function Timeline() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
-
-  return (
-    <div className="relative overflow-hidden font-[Poppins]">
-      {/* Progress Indicator */}
-      <ProgressIndicator progress={scrollYProgress} />
-
-      <div className="min-h-screen flex justify-center items-center text-gray-800" ref={containerRef}>
-        <div className="w-full max-w-4xl px-6 relative">
-          <div className="text-center pt-20 pb-10">
-            <motion.h1 className="text-5xl font-bold mb-6 text-[#fbc800]"
-              initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}>
-              Event Timeline
-            </motion.h1>
-            <p className="text-xl text-gray-600">
-              Follow your journey through our carefully crafted schedule of events.
-            </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card 1 - Medical Emergency */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-lg border border-red-100 hover:shadow-xl transition-all duration-300 group">
+          <div className="absolute -right-6 -top-6 text-red-100 group-hover:text-red-200 transition-colors">
+            <HeartPulse size={80} />
           </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <Ambulance className="h-6 w-6 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-red-700">Medical Emergency</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-5">Immediate medical assistance and ambulance</p>
+            <div className="mb-6">
+              <p className="text-3xl font-extrabold text-gray-800">911</p>
+              <p className="text-xs text-gray-500 mt-1">Available 24 hours</p>
+            </div>
+            <button className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-medium transition-all transform hover:scale-[1.02] active:scale-95 shadow-md hover:shadow-red-200">
+              <Phone className="h-5 w-5" /> Call Now
+            </button>
+          </div>
+        </div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gray-300"></div>
+        {/* Card 2 - Police */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-lg border border-red-100 hover:shadow-xl transition-all duration-300 group">
+          <div className="absolute -right-6 -top-6 text-red-100 group-hover:text-red-200 transition-colors">
+            <Shield size={80} />
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <Shield className="h-6 w-6 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-red-700">Police Emergency</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-5">For immediate police assistance</p>
+            <div className="mb-6">
+              <p className="text-3xl font-extrabold text-gray-800">911</p>
+              <p className="text-xs text-gray-500 mt-1">Emergency response</p>
+            </div>
+            <button className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-medium transition-all transform hover:scale-[1.02] active:scale-95 shadow-md hover:shadow-red-200">
+              <Phone className="h-5 w-5" /> Call Police
+            </button>
+          </div>
+        </div>
 
-            {timelineEvents.map((event, index) => (
-              <motion.div key={index} className="relative mb-12 flex items-center justify-center"
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5 }}>
+        {/* Card 3 - Fire */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-lg border border-red-100 hover:shadow-xl transition-all duration-300 group">
+          <div className="absolute -right-6 -top-6 text-red-100 group-hover:text-red-200 transition-colors">
+            <AlertTriangle size={80} />
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <AlertTriangle className="h-6 w-6 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-red-700">Fire Emergency</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-5">Fire, smoke, or rescue emergencies</p>
+            <div className="mb-6">
+              <p className="text-3xl font-extrabold text-gray-800">911</p>
+              <p className="text-xs text-gray-500 mt-1">Fire and rescue services</p>
+            </div>
+            <button className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-medium transition-all transform hover:scale-[1.02] active:scale-95 shadow-md hover:shadow-red-200">
+              <Phone className="h-5 w-5" /> Report Fire
+            </button>
+          </div>
+        </div>
 
-                <motion.div className={`bg-white shadow-lg p-6 rounded-lg border w-[80%] max-w-lg ${
-                    index % 2 === 0 ? "ml-auto text-right" : "mr-auto text-left"
-                  }`}
-                  whileHover={{ boxShadow: "0 10px 30px rgba(0, 95, 115, 0.2)", borderColor: "#fbc800" }}
-                  initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }}
-                  viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
+        {/* Card 4 - Poison Control */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-red-50 to-white p-6 rounded-xl shadow-lg border border-red-100 hover:shadow-xl transition-all duration-300 group">
+          <div className="absolute -right-6 -top-6 text-red-100 group-hover:text-red-200 transition-colors">
+            <Biohazard size={80} />
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <Biohazard className="h-6 w-6 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-red-700">Poison Control</h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-5">Toxic substance exposure</p>
+            <div className="mb-6">
+              <p className="text-3xl font-extrabold text-gray-800">1-800-222-1222</p>
+              <p className="text-xs text-gray-500 mt-1">National poison helpline</p>
+            </div>
+            <button className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-lg font-medium transition-all transform hover:scale-[1.02] active:scale-95 shadow-md hover:shadow-red-200">
+              <Phone className="h-5 w-5" /> Get Help
+            </button>
+          </div>
+        </div>
+      </div>
 
-                  <div className="text-sm font-medium mb-2 text-[#fbc800]">{event.time}</div>
-                  <h3 className="text-xl font-bold mb-2 text-[#fbc800]">{event.title}</h3>
-                  <p className="text-gray-600">{event.description}</p>
-                </motion.div>
-              </motion.div>
-            ))}
+      <div className="mt-10 p-6 bg-red-50 border-l-4 border-red-400 rounded-lg">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="h-6 w-6 text-red-600 mt-1 flex-shrink-0" />
+          <div>
+            <h3 className="font-bold text-lg text-red-800">Emergency Tips</h3>
+            <p className="text-sm text-red-700">
+              • Stay calm and speak clearly<br />
+              • Provide your exact location<br />
+              • Describe the emergency<br />
+              • Follow operator instructions<br />
+              • Don't hang up until told to do so
+            </p>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
-
-export default Timeline;
-

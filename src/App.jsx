@@ -1,12 +1,12 @@
 import React from "react";
-import TeamMember10 from "./Components/Founder";
-import Choose from "./Components/Choose";
+import WhyChooseUs from "./Components/Whychoose";
+
 
 function App() {
     return (
         <div>
-            <TeamMember10 />
-            <Choose />
+            <WhyChooseUs/>
+            
         </div>
     );
 }

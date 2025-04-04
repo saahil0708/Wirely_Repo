@@ -26,64 +26,52 @@ import { motion, AnimatePresence } from "framer-motion";
 // Service with icon mapping
 const serviceData = [
   { 
-    name: "Electrical Repair & Installation", 
+    name: "CCTV Installation", 
     icon: <Zap size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "AC / Refrigerator / Washing Machine Repair", 
+    name: "Computer Networking", 
     icon: <AirVent size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "CCTV Installation & Repair", 
+    name: "PC Repair", 
     icon: <Video size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Inverter & Battery Installation / Repair", 
+    name: "Windows Installation", 
     icon: <BatteryFull size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Home Appliance Repair", 
+    name: "Hard Drive Data Recovery", 
     icon: <Home size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Computer & Laptop Repair", 
+    name: "Desktop & Laptop Accessories & Spares", 
     icon: <Laptop size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Plumbing Services", 
+    name: "Regular Software Upgrades", 
     icon: <Droplets size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Carpenter Services", 
+    name: "Virus Removal", 
     icon: <Hammer size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Mobile Phone Repair", 
+    name: "Printer Setup & Repair", 
     icon: <Smartphone size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Solar Panel Installation & Maintenance", 
+    name: "Data Backup Solutions", 
     icon: <Sun size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Smart Home Setup", 
+    name: "IT Consulting", 
     icon: <Wifi size={16} className="text-primary-500 mr-2" /> 
   },
   { 
-    name: "Wiring & Circuit Fixing", 
+    name: "Cloud Services Setup", 
     icon: <CircuitBoard size={16} className="text-primary-500 mr-2" /> 
-  },
-  { 
-    name: "Generator Repair & Installation", 
-    icon: <Power size={16} className="text-primary-500 mr-2" />  // Using Power icon
-  },
-  { 
-    name: "Electrical Inspection & Consultation", 
-    icon: <ClipboardCheck size={16} className="text-primary-500 mr-2" /> 
-  },
-  { 
-    name: "Emergency Repair Services (24x7)", 
-    icon: <AlertTriangle size={16} className="text-primary-500 mr-2" /> 
   }
 ];
 

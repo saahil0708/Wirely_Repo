@@ -262,10 +262,10 @@ const ServicesPage = () => {
             {currentService.description.split('. ')[0]}
           </p>
           <div className="mt-8 flex gap-4 flex-wrap justify-center">
-            <Link to='/booking'>
+            <Link to='/book'>
               <button 
                 className="px-8 py-3 bg-[#fbc800] hover:bg-[#ffa100] text-[#372828] font-bold rounded-lg shadow-lg transition-all transform hover:scale-105"
-                onClick={() => navigate('/booking')}
+                onClick={() => navigate('/book')}
               >
                 Book Now
               </button>
@@ -364,7 +364,7 @@ const ServicesPage = () => {
             <div className="space-y-4">
               <button 
                 className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-[#fbc800] hover:bg-[#ffa100] text-[#372828] font-bold rounded-lg shadow-sm transition-all"
-                onClick={() => navigate('/booking')}
+                onClick={() => navigate('/book')}
               >
                 <FiPhone className="text-xl" />
                 <Link to=''>

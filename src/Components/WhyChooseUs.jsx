@@ -172,7 +172,7 @@ export default function ProcessFlowWave() {
   };
 
   return (
-    <section className="w-full font-[Poppins] bg-white py-6 sm:py-10 md:py-16 relative overflow-hidden process-container">
+    <section className="w-full font-[Poppins] mt-16 bg-white py-6 sm:py-10 md:py-16 relative overflow-hidden process-container">
       <div className="container mx-auto px-4 sm:px-6 max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-[80%] relative z-10">
         <header className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
           <div className="inline-block mb-2 sm:mb-3">
@@ -390,7 +390,7 @@ export default function ProcessFlowWave() {
             isVisible ? "opacity-100 transform translate-y-0" : "opacity-0 transform translate-y-10"
           } ${isMobile ? "mt-4 sm:mt-6" : "mt-12 sm:mt-16 md:mt-20 lg:mt-24"}`}
         >
-          <div className="bg-white rounded-lg shadow-md border overflow-hidden" style={{ borderColor: primaryColor }}>
+          <div className="bg-white relative top-20 rounded-lg shadow-md border overflow-hidden" style={{ borderColor: primaryColor }}>
             <div className="flex flex-col md:flex-row">
               <div className="w-full h-48 sm:h-56 md:h-auto md:w-2/5 relative">
                 <div className="absolute inset-0 flex items-center justify-center p-4">
@@ -414,7 +414,7 @@ export default function ProcessFlowWave() {
                 </div>
               </div>
 
-              <div className="p-3 sm:p-4 md:p-5 md:w-3/5">
+              <div className="p-3 sm:p-4 md:p-5 md:w-3/5 relative">
                 <div className="flex items-center gap-2 mb-2 sm:mb-3">
                   <span
                     className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base"
@@ -466,7 +466,7 @@ export default function ProcessFlowWave() {
 
         <div className="flex flex-col items-center mt-6 sm:mt-8 md:mt-10">
           <div className="text-center max-w-2xl mb-3 sm:mb-4 md:mb-6">
-            <p className="text-gray-700 text-xs sm:text-sm md:text-base">
+            <p className="text-gray-700 text-xs sm:text-sm md:text-base mt-20">
               Our methodology has been refined through years of experience delivering enterprise solutions across
               industries. Each phase is carefully designed to maximize value and minimize risk.
             </p>

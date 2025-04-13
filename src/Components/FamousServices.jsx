@@ -73,7 +73,7 @@ const AllServicesModal = ({ onClose }) => {
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center p-4 border-b sticky top-0 bg-white z-10">
           <h3 className="text-xl font-bold">All Services</h3>
-          <button 
+          <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 p-1"
           >
@@ -119,9 +119,9 @@ const CategoryGrid = () => {
 
   return (
     <>
-      <div className="w-full relative bottom-40 font-[Poppins] mt-28 md:w-4/5 mx-auto p-4 md:p-6">
+      <div className="w-full relative bottom-40 font-[Poppins] md:w-4/5 mx-auto p-4 md:p-6">
         {/* First grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
+        <div className="grid relative top-32 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
           {categories.slice(0, 8).map((category, index) => (
             <div key={index} className="flex flex-col items-center">
               <div

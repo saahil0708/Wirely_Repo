@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
@@ -16,14 +14,26 @@ export default function SubscriptionPlans() {
   const [animatedCount, setAnimatedCount] = useState({ premium: 0, freemium: 0 })
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    // Fast interval for Premium (every 50ms)
+    const premiumInterval = setInterval(() => {
       setAnimatedCount((prev) => ({
-        premium: (prev.premium + 1) % 100,
-        freemium: (prev.freemium + 1) % 100,
+        ...prev,
+        premium: (prev.premium + 2) % 100 // Increment by 2 for faster fill
       }))
-    }, 100)
+    }, 50)
 
-    return () => clearInterval(interval)
+    // Slow interval for Freemium (every 200ms)
+    const freemiumInterval = setInterval(() => {
+      setAnimatedCount((prev) => ({
+        ...prev,
+        freemium: (prev.freemium + 1) % 100 // Increment by 1 for slower fill
+      }))
+    }, 200)
+
+    return () => {
+      clearInterval(premiumInterval)
+      clearInterval(freemiumInterval)
+    }
   }, [])
 
   const plans = [
